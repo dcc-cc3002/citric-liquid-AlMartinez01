@@ -15,18 +15,18 @@ import java.util.Random;
  * @since 1.0
  */
 public class PlayerTest {
-  private final static String PLAYER_NAME = "Suguri";
   private Player suguri;
 
   @BeforeEach
   public void setUp() {
-    suguri = new Player(PLAYER_NAME, 4, 1, -1, 2);
+    suguri = new Player("suguri", 4, 1, -1, 2);
   }
 
   @Test
   public void constructorTest() {
-    final var expectedSuguri = new Player(PLAYER_NAME, 4, 1, -1, 2);
-    Assertions.assertEquals(expectedSuguri, suguri);
+    final var expectSuguri = new Player("suguri",4,1,-1,2);
+    Assertions.assertEquals(expectSuguri,suguri);
+
   }
 
   @Test
@@ -34,7 +34,7 @@ public class PlayerTest {
     final var o = new Object();
     Assertions.assertNotEquals(suguri, o);
     Assertions.assertEquals(suguri, suguri);
-    final var expectedSuguri = new Player(PLAYER_NAME, 4, 1, -1, 2);
+    final var expectedSuguri = new Player("suguri", 4, 1, -1, 2);
     Assertions.assertEquals(expectedSuguri, suguri);
   }
 
@@ -57,7 +57,7 @@ public class PlayerTest {
 
   @Test
   public void copyTest() {
-    final var expectedSuguri = new Player(PLAYER_NAME, 4, 1, -1, 2);
+    final var expectedSuguri = new Player("suguri", 4, 1, -1, 2);
     final var actualSuguri = suguri.copy();
     // Checks that the copied player have the same parameters as the original
     Assertions.assertEquals(expectedSuguri, actualSuguri);
