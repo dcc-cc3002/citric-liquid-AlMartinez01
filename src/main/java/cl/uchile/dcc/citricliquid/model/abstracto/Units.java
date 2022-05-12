@@ -1,6 +1,9 @@
 package cl.uchile.dcc.citricliquid.model.abstracto;
 
+import java.util.Random;
+
 public abstract class Units {
+    private final Random random;
     private String id;//Para diferenciar a las unidades (funciona como nombre
     private int hpMax;
     private int hpActual;
@@ -9,12 +12,82 @@ public abstract class Units {
     private int evd;
 
 
-    public Units(String id, int hpMax, int hp, int atk, int def, int evd) {
+
+    public Units(String id, int hpMax, int atk, int def, int evd) {
+        random = new Random();
         this.id = id;
-        this.hpMax = hpMax;
-        this.hpActual = hp;
+        this.hpMax = hpActual = hpMax;
         this.atk = atk;
         this.def = def;
         this.evd = evd;
+    }
+    /**##########################SETTERS AND GETTER######################*/
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public int getHpMax() {
+        return hpMax;
+    }
+    public void setHpMax(int hpMax) {
+        this.hpMax = hpMax;
+    }
+    public int getHpActual() {
+        return hpActual;
+    }
+    public void setHpActual(int hpActual) {
+        this.hpActual = hpActual;
+    }
+    public int getAtk() {
+        return atk;
+    }
+    public void setAtk(int atk) {
+        this.atk = atk;
+    }
+    public int getDef() {
+        return def;
+    }
+    public void setDef(int def) {
+        this.def = def;
+    }
+    public int getEvd() {
+        return evd;
+    }
+    public void setEvd(int evd) {
+        this.evd = evd;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Units units = (Units) o;
+
+        if (hpMax != units.hpMax) return false;
+        if (hpActual != units.hpActual) return false;
+        if (atk != units.atk) return false;
+        if (def != units.def) return false;
+        if (evd != units.evd) return false;
+        return id != null ? id.equals(units.id) : units.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + hpMax;
+        result = 31 * result + hpActual;
+        result = 31 * result + atk;
+        result = 31 * result + def;
+        result = 31 * result + evd;
+        return result;
+    }
+    public void setSeed(final long seed) {
+        random.setSeed(seed);
+    }
+    public int roll() {
+        return random.nextInt(6) + 1;
     }
 }
