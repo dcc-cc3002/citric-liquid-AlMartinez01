@@ -1,30 +1,24 @@
 package cl.uchile.dcc.citricliquid.model;
 
+import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class UnitsTest {
-    private UnitsPlayer suguri;
+
+    private String NamePla = "ahhh";
+    private UnitsPlayer sugur;
 
     @BeforeEach
     public void setUp() {
-        suguri = new UnitsPlayer("alvaro", 4, 1, -1, 2,1,0,0);
+        sugur = new UnitsPlayer(NamePla, 1,1,2,3,4,null,2,0,1 );
     }
 
     @Test
-    void constructores() {
-        final var expected = new UnitsPlayer("alvaro",4,1,-1,2,1,0,0);
-        Assertions.assertEquals(expected,suguri);
+    public void builders(){
+        var expected = new UnitsPlayer(NamePla, 1,1,2,3,4,null,2,0,1 );
+        Assertions.assertEquals(expected,sugur);
     }
-
-    @Test
-    public void constructorTest() {
-        final var expectedSuguri = new UnitsPlayer("alvaro", 4, 1, -1, 2,1,0,0);
-        System.out.print(suguri.toString() + "\n");
-        System.out.print(expectedSuguri.toString() +"\n");
-        Assertions.assertEquals(expectedSuguri, suguri);
-    }
-
 
 }
