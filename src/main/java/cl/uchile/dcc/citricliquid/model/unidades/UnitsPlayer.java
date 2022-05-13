@@ -73,42 +73,62 @@ public class UnitsPlayer extends Units implements Combat {
         this.lvlNorma = lvlNorma;
     }
     /**#################SETTERS AND GETTERS#######################**/
+    @Override
+    public int loot(){
+        int i = this.getStars()/2;
+        this.setStars(-i);
+        return i;
+    }
+
     /**
-     * funcion que devuelve el ataque del agresor
+     * regresa la cantidad de cartas que tiene un Player
      * @return
      */
-    @Override
-    public int attack() {
-        return this.roll() + this.getAtk();
+    public int cant_carts(){
+        int i = 0;
+        for (Carts j : this.mano){
+            i++;
+        }
+        return i;
     }
 
     /**
-     * funcion que recibe un ataque y actua "defendiendose"
-     * @param damage
+     * muestra las cartas disponibles
      */
-    @Override
-    public void defense(int damage) {
-        int i = damage - (this.roll() + this.getDef());
-        if (i < 1){i = 1;}
-        this.setHpActual(this.getHpActual()-i);
-        System.out.print("daño recibido: " + i + "\n");
+    public void view_carts(){
+        String text = ""; int i = 0;
+        for (Carts j :this.mano){
+            text = text + " " + j + " " + i +"| \n";
+        }
+        System.out.print("Cartas disponibles: \n"
+                        + text);
     }
 
     /**
-     * funcion que recibe un ataque y trata de esquivar
-     * @param damage
+     * elimina la carta establecida de la mano
+     * @param i
      */
+    public void deleteCart(int i){
+        Carts[] manoNew = new Carts[this.cant_carts()-1];
+        int t = 0; //contador//
+        for (Carts j : this.mano){
+            if (t != i){
+                manoNew[t] = j;
+                t++;
+            }
+        }
+        this.setMano(manoNew);
+    }
+
     @Override
-    public void dodge(int damage) {
-        int i = this.roll() + this.getEvd();
-        if (i < damage){
-            this.setHpActual(this.getHpActual()-i);
-            System.out.print("DODGE fallido, se recibio un daño de: " + damage + "\n");
+    public void initio_combat() {
+        System.out.print("seleccion de cartas jugador: " + this.getId() + " \n");
+        boolean b = !(this.cant_carts() == 0);
+        if (b){
+            this.view_carts();
         }
         else {
-            System.out.print("DODGE" + "\n");
+            System.out.print("Sin cartas disponibles\n");
         }
     }
-
-
 }

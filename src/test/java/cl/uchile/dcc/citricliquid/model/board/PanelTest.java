@@ -22,23 +22,23 @@ class PanelTest {
   private final static int BASE_ATK = 1;
   private final static int BASE_DEF = -1;
   private final static int BASE_EVD = 2;
-  private Panel testHomePanel;
-  private Panel testNeutralPanel;
-  private Panel testBonusPanel;
-  private Panel testDropPanel;
-  private Panel testEncounterPanel;
-  private Panel testBossPanel;
+  private Paneltem testHomePanel;
+  private Paneltem testNeutralPanel;
+  private Paneltem testBonusPanel;
+  private Paneltem testDropPanel;
+  private Paneltem testEncounterPanel;
+  private Paneltem testBossPanel;
   private Player suguri;
   private long testSeed;
 
   @BeforeEach
   public void setUp() {
-    testBonusPanel = new Panel(PanelType.BONUS);
-    testBossPanel = new Panel(PanelType.BOSS);
-    testDropPanel = new Panel(PanelType.DROP);
-    testEncounterPanel = new Panel(PanelType.ENCOUNTER);
-    testHomePanel = new Panel(PanelType.HOME);
-    testNeutralPanel = new Panel(PanelType.NEUTRAL);
+    testBonusPanel = new Paneltem(PanelType.BONUS);
+    testBossPanel = new Paneltem(PanelType.BOSS);
+    testDropPanel = new Paneltem(PanelType.DROP);
+    testEncounterPanel = new Paneltem(PanelType.ENCOUNTER);
+    testHomePanel = new Paneltem(PanelType.HOME);
+    testNeutralPanel = new Paneltem(PanelType.NEUTRAL);
     testSeed = new Random().nextLong();
     suguri = new Player(PLAYER_NAME, BASE_HP, BASE_ATK, BASE_DEF, BASE_EVD);
   }
@@ -56,8 +56,8 @@ class PanelTest {
   @Test
   public void nextPanelTest() {
     assertTrue(testNeutralPanel.getNextPanels().isEmpty());
-    final var expectedPanel1 = new Panel(PanelType.NEUTRAL);
-    final var expectedPanel2 = new Panel(PanelType.NEUTRAL);
+    final var expectedPanel1 = new Paneltem(PanelType.NEUTRAL);
+    final var expectedPanel2 = new Paneltem(PanelType.NEUTRAL);
 
     testNeutralPanel.addNextPanel(expectedPanel1);
     assertEquals(1, testNeutralPanel.getNextPanels().size());

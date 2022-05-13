@@ -45,4 +45,9 @@ public class UnitsEnemy extends Units {
         result = 31 * result + bag;
         return result;
     }
+
+    @Override
+    public int loot() {
+        return this.getBag();
+    }
 }

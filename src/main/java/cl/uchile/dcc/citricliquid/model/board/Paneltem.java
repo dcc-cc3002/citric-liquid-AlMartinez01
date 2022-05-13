@@ -12,16 +12,16 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.1.222804
  * @since 1.0
  */
-public class Panel {
+public class Paneltem {
   private final PanelType type;
-  private final Set<Panel> nextPanels = new HashSet<>();
+  private final Set<Paneltem> nextPanels = new HashSet<>();
 
   /**
    * Creates a new panel.
    *
    * @param type the type of the panel.
    */
-  public Panel(final PanelType type) {
+  public Paneltem(final PanelType type) {
     this.type = type;
   }
 
@@ -57,7 +57,7 @@ public class Panel {
   /**
    * Returns a copy of this panel's next ones.
    */
-  public Set<Panel> getNextPanels() {
+  public Set<Paneltem> getNextPanels() {
     return Set.copyOf(nextPanels);
   }
 
@@ -66,7 +66,7 @@ public class Panel {
    *
    * @param panel the panel to be added.
    */
-  public void addNextPanel(final Panel panel) {
+  public void addNextPanel(final Paneltem panel) {
     nextPanels.add(panel);
   }
 

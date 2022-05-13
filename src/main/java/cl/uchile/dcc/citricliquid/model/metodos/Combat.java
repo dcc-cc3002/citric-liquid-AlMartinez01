@@ -5,11 +5,4 @@ public interface Combat {
     public void defense(int damage);
     public void dodge(int damage);
 
-    /**
-    public static void Elect(UnitsPlayer unit) {
-        String name = unit.getId();
-        Carts[] mano = unit.getMano();
-        if ;
-    }
-     */
 }

@@ -4,7 +4,7 @@ import java.util.Random;
 
 public abstract class Units {
     private final Random random;
-    private String id;//Para diferenciar a las unidades (funciona como nombre
+    private String id;//Para diferenciar a las unidades (funciona como nombre)
     private int hpMax;
     private int hpActual;
     private int atk;
@@ -87,7 +87,67 @@ public abstract class Units {
     public void setSeed(final long seed) {
         random.setSeed(seed);
     }
+
+    /**
+     * entrega un lanzamiento de dado
+     * @return
+     */
     public int roll() {
         return random.nextInt(6) + 1;
+    }
+
+    /**
+     * determina si una unidad esta muerta o no.
+     * @return
+     */
+    public boolean dead(){
+        return (this.getHpActual() <= 0);
+    }
+
+    /**
+     * dependera del tipo de unidad el botin a entregar
+     * @return
+     */
+    public int loot(){return 0;}
+    /**
+     * funcion que devuelve el ataque del agresor
+     * @return
+     */
+    public int attack() {
+        return this.roll() + this.getAtk();
+    }
+
+    /**
+     * funcion que recibe un ataque y actua "defendiendose"
+     * @param damage
+     */
+    public void defense(int damage) {
+        int i = damage - (this.roll() + this.getDef());
+        if (i < 1){i = 1;}
+        this.setHpActual(this.getHpActual()-i);
+        System.out.print("daño recibido: " + i + "\n");
+    }
+
+    /**
+     * funcion que recibe un ataque y trata de esquivar
+     * @param damage
+     */
+    public void dodge(int damage) {
+        int i = this.roll() + this.getEvd();
+        if (i < damage){
+            this.setHpActual(this.getHpActual()-i);
+            System.out.print("DODGE fallido, se recibio un daño de: " + damage + "\n");
+        }
+        else {
+            System.out.print("DODGE" + "\n");
+        }
+    }
+    public void combat(Units enemy){
+           this.initio_combat();
+           enemy.initio_combat();
+    }
+
+    public void initio_combat(){
+        System.out.print("personaje no valido para inicio de combate\n");
     }
 }
