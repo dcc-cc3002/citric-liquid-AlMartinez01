@@ -51,13 +51,19 @@ public class Panel {
         return false;
     }
 
+    /**
+     * encuentra la ubicacion de un player
+     * @param u1
+     * @return
+     */
     public int unitUbi(Units u1){
         if (!this.unitExist(u1)){return -1;}
         int i = 0;
         for (Units u : this.units){
-            if (u1.equals(i)){return i;}
+            if (u1.equals(u)){return i;}
             i++;
         }
         return -1;
     }
+
 }

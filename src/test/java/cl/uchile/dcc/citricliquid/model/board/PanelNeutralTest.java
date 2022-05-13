@@ -18,8 +18,8 @@ public class PanelNeutralTest {
     UnitsPlayer suguri2;
     UnitsPlayer suguri3;
 
-    PanelNeutral panel1;
-    PanelNeutral panel2;
+    Panel panel1;
+    Panel panel2;
 
     @BeforeEach
     public void setUp(){
@@ -43,7 +43,11 @@ public class PanelNeutralTest {
 
     @Test
     public void ubicTest(){
-        int i = panel1.unitUbi(suguri2);
+        int i = panel1.unitUbi(suguri3);
+        int n = panel1.unitUbi(suguri2);
+        int m = panel1.unitUbi(suguri);
         Assertions.assertEquals(1,i);
+        Assertions.assertEquals(0,n);
+        Assertions.assertEquals(-1,m); //si no esta, retornara -1
     }
 }
