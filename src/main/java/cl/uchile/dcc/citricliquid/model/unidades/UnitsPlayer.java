@@ -3,21 +3,25 @@ package cl.uchile.dcc.citricliquid.model.unidades;
 import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.metodos.Combat;
+import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class UnitsPlayer extends Units implements Combat {
     Carts[] mano; //mano de cartas disponibles
-
+    Panel ubi;
     //////////////////NORMA///////////////////
     int stars;
     int wins;
     int lvlNorma;
     //////////////////FIN NORMA///////////////
 
-    public UnitsPlayer(String id, int hpMax, int atk, int def, int evd, Carts[] mano, int stars, int wins, int lvlNorma) {
+
+    public UnitsPlayer(String id, int hpMax, int atk, int def, int evd, Carts[] mano, Panel ubi, int stars, int wins, int lvlNorma) {
         super(id, hpMax, atk, def, evd);
         this.mano = mano;
+        this.ubi = ubi;
         this.stars = stars;
         this.wins = wins;
         this.lvlNorma = lvlNorma;
@@ -72,6 +76,13 @@ public class UnitsPlayer extends Units implements Combat {
     public void setLvlNorma(int lvlNorma) {
         this.lvlNorma = lvlNorma;
     }
+    public Panel getUbi() {
+        return ubi;
+    }
+    public void setUbi(Panel ubi) {
+        this.ubi = ubi;
+    }
+
     /**#################SETTERS AND GETTERS#######################**/
     @Override
     public int loot(){
@@ -99,6 +110,7 @@ public class UnitsPlayer extends Units implements Combat {
         String text = ""; int i = 0;
         for (Carts j :this.mano){
             text = text + " " + j + " " + i +"| \n";
+            i++;
         }
         System.out.print("Cartas disponibles: \n"
                         + text);
@@ -110,9 +122,10 @@ public class UnitsPlayer extends Units implements Combat {
      */
     public void deleteCart(int i){
         Carts[] manoNew = new Carts[this.cant_carts()-1];
+        Carts cart = this.getMano()[i];
         int t = 0; //contador//
         for (Carts j : this.mano){
-            if (t != i){
+            if (!(cart.equals(j))){
                 manoNew[t] = j;
                 t++;
             }
@@ -130,5 +143,25 @@ public class UnitsPlayer extends Units implements Combat {
         else {
             System.out.print("Sin cartas disponibles\n");
         }
+    }
+
+    /**
+     * recibe un parametro y se agrega a las starts del player (no permite bajar de 0)
+     * @param stars
+     */
+    public void incrementStars(int stars){
+        this.setStars( this.getStars() + stars);
+        if (this.getStars()<0) {
+            this.setStars(0); //Impedira que se coloque en estrellas negativas
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "UnitsPlayer{" + this.getId()+"}";
+    }
+
+    public void play() throws IOException {
+        this.ubi = this.getUbi().avanzar(this,1/*roll()*/);
     }
 }

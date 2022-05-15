@@ -25,7 +25,7 @@ public class UnitsTest {
     public void setUp() {
         cart = new Carts_ejm(name_cart,name_cart );
         cart2 = new Carts_ejm(name_cart2,name_cart2);
-        sugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},2,0,1 );
+        sugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},null,2,0,1 );
         wild = new UnitsEnemy(name_wild,3,-1,-1,1,false,0);
         boss = new UnitsEnemy(name_boss,8,3,2,-1,true,0);
 
@@ -33,7 +33,7 @@ public class UnitsTest {
 
     @Test
     public void builders(){
-        var expected = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},2,0,1 );
+        var expected = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},null,2,0,1 );
         Assertions.assertEquals(expected,sugur);
 
         var expected_wild = new UnitsEnemy(name_wild,3,-1,-1,1,false,0);
@@ -48,7 +48,7 @@ public class UnitsTest {
         final var o = new Object();
         Assertions.assertNotEquals(sugur, o);
         Assertions.assertEquals(sugur, sugur);
-        final var expectedSuguri = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},2,0,1 );
+        final var expectedSuguri = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},null,2,0,1 );
         Assertions.assertEquals(expectedSuguri, sugur);
 
         Assertions.assertNotEquals(wild, o);
@@ -80,7 +80,7 @@ public class UnitsTest {
     }
     @Test
     public void cant_carts(){
-        final var expectedSuguri = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},2,0,1 );
+        final var expectedSuguri = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},null,2,0,1 );
         Assertions.assertEquals(expectedSuguri.cant_carts(), sugur.cant_carts());
         Assertions.assertNotEquals(3,sugur.cant_carts());
         Assertions.assertEquals(2,sugur.cant_carts());
@@ -91,22 +91,31 @@ public class UnitsTest {
     }
     @Test
     public void deleteCartTest(){
-        final var expectedSuguri = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},2,0,1 );
+        final var expectedSuguri = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},null,2,0,1 );
         sugur.deleteCart(1);
         Assertions.assertNotEquals(expectedSuguri.getMano(),sugur.getMano());
 
 
-        sugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart2},2,0,1 );
+        sugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart2},null,2,0,1 );
         sugur.deleteCart(1);
-        System.out.print(sugur.getMano()[0].getCharacters() +"\n");
-        final var expectedMano = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart},2,0,1 );
+        final var expectedMano = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart},null,2,0,1 );
         Assertions.assertEquals(expectedMano, sugur);
 
-        sugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart2},2,0,1 );
+        sugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart2},null,2,0,1 );
         sugur.deleteCart(0);
-        System.out.print(sugur.getMano()[0].getCharacters()+"\n");
-        final var expectedMano2 = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart2},2,0,1 );
+        final var expectedMano2 = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart2},null,2,0,1 );
         Assertions.assertEquals(expectedMano2, sugur);
+    }
+    @Test
+    public void incrementedTest(){
+        var notExpectSugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},null,2,0,1 );
+        sugur.incrementStars(30);
+        Assertions.assertNotEquals(notExpectSugur,sugur);
+        var expectSugur = new UnitsPlayer(NamePla, 6,2,3,4, new Carts[]{cart,cart},null,32,0,1 );
+        Assertions.assertEquals(expectSugur,sugur);
+
+        sugur.incrementStars(-30);
+        Assertions.assertEquals(notExpectSugur,sugur);
     }
 
 

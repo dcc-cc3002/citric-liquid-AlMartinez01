@@ -20,7 +20,7 @@ class UnitsPlayerTest {
     @BeforeEach
     public void setUp(){
         carts = new Carts_ejm(name_carts,name_carts);
-        player = new UnitsPlayer(name,hp,atk,def,evd,new Carts[] {carts,carts},starts,wins,norma);
+        player = new UnitsPlayer(name,hp,atk,def,evd,new Carts[] {carts,carts},null,starts,wins,norma);
     }
 
     @Test

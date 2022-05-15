@@ -141,7 +141,7 @@ public abstract class Units {
         else {
             System.out.print("DODGE" + "\n");
         }
-    }
+    }// SE LE DIO AL BOSS Y WILD LA CAPACIDAD DE DODGEAR PERO NO LO HARA.
     public void combat(Units enemy){
            this.initio_combat();
            enemy.initio_combat();
@@ -149,5 +149,16 @@ public abstract class Units {
 
     public void initio_combat(){
         System.out.print("personaje no valido para inicio de combate\n");
+    }
+
+    @Override
+    public String toString() {
+        return "Units{" +
+                "id='" + id + '\'' +
+                '}';
+    }
+
+    public void normaCheck(){
+
     }
 }
