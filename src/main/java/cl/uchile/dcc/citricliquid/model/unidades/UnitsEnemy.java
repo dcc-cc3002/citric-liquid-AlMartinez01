@@ -16,9 +16,7 @@ public class UnitsEnemy extends Units {
     public boolean isBoss() {
         return boss;
     }
-    public void setBoss(boolean boss) {
-        this.boss = boss;
-    }
+
     public int getBag() {
         return bag;
     }

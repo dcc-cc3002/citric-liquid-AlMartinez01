@@ -1,6 +1,5 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
-import cl.uchile.dcc.citricliquid.model.Player;
 import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
@@ -8,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Panel {
     private UnitsPlayer[] units;//Unidades en el panel
@@ -32,7 +32,7 @@ public class Panel {
         if (!Arrays.equals(units, panel.units)) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         if (!Arrays.equals(nexts, panel.nexts)) return false;
-        return carta != null ? carta.equals(panel.carta) : panel.carta == null;
+        return Objects.equals(carta, panel.carta);
     }
 
     @Override
@@ -43,9 +43,17 @@ public class Panel {
         return result;
     }
 
+    public Panel[] getNexts() {
+        return nexts;
+    }
+
+    public UnitsPlayer[] getUnits() {
+        return units;
+    }
+
     /**
      * dice si una unidad existe o no
-     * @return
+     * @return boolean
      */
     public boolean unitExist(@NotNull Units u1){
         for (Units i : this.units){
@@ -56,8 +64,7 @@ public class Panel {
 
     /**
      * encuentra la ubicacion de un player
-     * @param u1
-     * @return
+     * @return int
      */
     public int unitUbi(@NotNull Units u1){
         if (!this.unitExist(u1)){return -1;}
@@ -69,32 +76,44 @@ public class Panel {
         return -1;
     }
     public int cantUnits(){
+        if (units == null){return 0;}
         int i = 0;
-        for (UnitsPlayer J : this.units){i++;}
+        for (UnitsPlayer ignored : this.units){i++;}
         return i;
     }
     public void agrePlayer(@NotNull UnitsPlayer u1){
-        int i = this.cantUnits();
-        UnitsPlayer[] newUnits;
-        newUnits = new UnitsPlayer[i+1];
-        int t = 0;
-        for (UnitsPlayer players : this.units){
-            newUnits[t] = this.units[t];
-            t++;
+        if (units == null){this.units = new UnitsPlayer[]{u1};}
+        else {
+            UnitsPlayer[] newUnits;
+            newUnits = new UnitsPlayer[this.cantUnits() + 1];
+            int t = 0;
+            for (UnitsPlayer players : this.units) {
+                newUnits[t] = players;
+                t++;
+            }
+            newUnits[t] = u1;
+            this.units = newUnits;
         }
-        newUnits[t] = u1;
-        this.units = newUnits;
     }
 
+
+    /**
+     * se agregan mutuamente
+     */
+    public void unitPlayer(@NotNull UnitsPlayer u1){
+        this.agrePlayer(u1);
+    }
+    /**
+     * activa el panel
+     */
     public void activator(@NotNull UnitsPlayer u1){
         this.agrePlayer(u1);
-        return;
     }
 
     public int cant_next(){
         if (this.nexts == null){return 0;}
         int j = 0;
-        for (Panel i : this.nexts){
+        for (Panel ignored : this.nexts){
             j++;
         }
         return j;
@@ -106,7 +125,8 @@ public class Panel {
             System.out.print(j + " " + i + "| \n");
         }
     }
-    public Panel avanzar(@NotNull UnitsPlayer u1,@NotNull int i) throws IOException {
+    public Panel avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {
+        if (nexts == null){return this;}
         if (i == 0){
             this.activator(u1);
             return this;
@@ -125,5 +145,19 @@ public class Panel {
                 "units=" + Arrays.toString(units) +
                 ", nexts=" + Arrays.toString(nexts) +
                 '}';
+    }
+
+    public void addNextPanel(final Panel panel) {
+        if (nexts == null) {nexts = new Panel[]{panel};}
+        else{
+            Panel[] newPanel = new Panel[this.cant_next()+1];
+            int j = 0;
+            for (Panel panel1 : nexts){
+                newPanel[j] = panel1;
+                j++;
+            }
+            newPanel[j] = panel;
+            this.nexts = newPanel;
+        }
     }
 }

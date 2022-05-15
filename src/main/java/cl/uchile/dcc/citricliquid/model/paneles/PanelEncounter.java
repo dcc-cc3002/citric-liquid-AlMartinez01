@@ -5,8 +5,10 @@ import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 
+import java.util.Objects;
+
 public class PanelEncounter extends Panel {
-    private UnitsEnemy enemy_default;
+    private final UnitsEnemy enemy_default;
     private UnitsEnemy enemy_actual;
     public PanelEncounter(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsEnemy enemy_default) {
         super(units, nexts, carta);
@@ -26,7 +28,7 @@ public class PanelEncounter extends Panel {
         PanelEncounter that = (PanelEncounter) o;
 
         if (!enemy_default.equals(that.enemy_default)) return false;
-        return enemy_actual != null ? enemy_actual.equals(that.enemy_actual) : that.enemy_actual == null;
+        return Objects.equals(enemy_actual, that.enemy_actual);
     }
 
     @Override

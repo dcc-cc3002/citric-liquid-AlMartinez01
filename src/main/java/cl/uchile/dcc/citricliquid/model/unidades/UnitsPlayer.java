@@ -2,13 +2,12 @@ package cl.uchile.dcc.citricliquid.model.unidades;
 
 import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.abstracto.Units;
-import cl.uchile.dcc.citricliquid.model.metodos.Combat;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class UnitsPlayer extends Units implements Combat {
+public class UnitsPlayer extends Units{
     Carts[] mano; //mano de cartas disponibles
     Panel ubi;
     //////////////////NORMA///////////////////
@@ -93,11 +92,10 @@ public class UnitsPlayer extends Units implements Combat {
 
     /**
      * regresa la cantidad de cartas que tiene un Player
-     * @return
      */
     public int cant_carts(){
         int i = 0;
-        for (Carts j : this.mano){
+        for (Carts ignored : this.mano){
             i++;
         }
         return i;
@@ -107,9 +105,9 @@ public class UnitsPlayer extends Units implements Combat {
      * muestra las cartas disponibles
      */
     public void view_carts(){
-        String text = ""; int i = 0;
+        StringBuilder text = new StringBuilder(); int i = 0;
         for (Carts j :this.mano){
-            text = text + " " + j + " " + i +"| \n";
+            text.append(" ").append(j).append(" ").append(i).append("| \n");
             i++;
         }
         System.out.print("Cartas disponibles: \n"
@@ -118,7 +116,6 @@ public class UnitsPlayer extends Units implements Combat {
 
     /**
      * elimina la carta establecida de la mano
-     * @param i
      */
     public void deleteCart(int i){
         Carts[] manoNew = new Carts[this.cant_carts()-1];
@@ -147,7 +144,6 @@ public class UnitsPlayer extends Units implements Combat {
 
     /**
      * recibe un parametro y se agrega a las starts del player (no permite bajar de 0)
-     * @param stars
      */
     public void incrementStars(int stars){
         this.setStars( this.getStars() + stars);

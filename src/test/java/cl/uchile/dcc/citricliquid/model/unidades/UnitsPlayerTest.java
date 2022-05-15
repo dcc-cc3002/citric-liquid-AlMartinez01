@@ -6,21 +6,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class UnitsPlayerTest {
 
     private UnitsPlayer player;
-    private String name = "name_pruebas";
     int hp = 6; int def = 2; int evd = 1; int atk = 3;
     int starts = 0; int wins = 0; int norma = 1;
-    private Carts carts;
-    private String name_carts = "name_cart";
 
     @BeforeEach
     public void setUp(){
-        carts = new Carts_ejm(name_carts,name_carts);
-        player = new UnitsPlayer(name,hp,atk,def,evd,new Carts[] {carts,carts},null,starts,wins,norma);
+        String name_carts = "name_cart";
+        Carts carts = new Carts_ejm(name_carts, name_carts);
+        String name = "name_pruebas";
+        player = new UnitsPlayer(name,hp,atk,def,evd,new Carts[] {carts, carts},null,starts,wins,norma);
     }
 
     @Test

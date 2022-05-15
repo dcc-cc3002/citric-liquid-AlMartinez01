@@ -3,8 +3,8 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
 
 public class PanelBonus extends Panel {
     public PanelBonus(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
@@ -14,7 +14,7 @@ public class PanelBonus extends Panel {
         return(u1.roll() * Math.min(u1.getLvlNorma(), 3));
     }
     @Override
-    public void activator(UnitsPlayer u1) {
+    public void activator(@NotNull UnitsPlayer u1) {
         u1.incrementStars(bonus(u1));
         super.activator(u1);
     }

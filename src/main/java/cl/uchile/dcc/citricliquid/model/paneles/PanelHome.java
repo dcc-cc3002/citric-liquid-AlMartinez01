@@ -34,7 +34,7 @@ public class PanelHome extends Panel {
     }
 
     @Override
-    public Panel avanzar(@NotNull UnitsPlayer u1, @NotNull int i) throws IOException {
+    public Panel avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {
         if (u1.equals(home)){
             System.out.print("deternerse (1) o seguir (0):");
             int read = System.in.read();
@@ -52,7 +52,6 @@ public class PanelHome extends Panel {
     @Override
     public void activator(@NotNull UnitsPlayer u1) {
         u1.setHpActual(u1.getHpActual() + 1);
-
         super.activator(u1);
     }
 }

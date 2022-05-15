@@ -1,15 +1,16 @@
 package cl.uchile.dcc.citricliquid.model.abstracto;
 
+import java.util.Objects;
 import java.util.Random;
 
 public abstract class Units {
     private final Random random;
-    private String id;//Para diferenciar a las unidades (funciona como nombre)
-    private int hpMax;
+    private final String id;//Para diferenciar a las unidades (funciona como nombre)
+    private final int hpMax;
     private int hpActual;
-    private int atk;
-    private int def;
-    private int evd;
+    private final int atk;
+    private final int def;
+    private final int evd;
 
 
 
@@ -25,14 +26,8 @@ public abstract class Units {
     public String getId() {
         return id;
     }
-    public void setId(String id) {
-        this.id = id;
-    }
     public int getHpMax() {
         return hpMax;
-    }
-    public void setHpMax(int hpMax) {
-        this.hpMax = hpMax;
     }
     public int getHpActual() {
         return hpActual;
@@ -43,20 +38,11 @@ public abstract class Units {
     public int getAtk() {
         return atk;
     }
-    public void setAtk(int atk) {
-        this.atk = atk;
-    }
     public int getDef() {
         return def;
     }
-    public void setDef(int def) {
-        this.def = def;
-    }
     public int getEvd() {
         return evd;
-    }
-    public void setEvd(int evd) {
-        this.evd = evd;
     }
 
     @Override
@@ -71,7 +57,7 @@ public abstract class Units {
         if (atk != units.atk) return false;
         if (def != units.def) return false;
         if (evd != units.evd) return false;
-        return id != null ? id.equals(units.id) : units.id == null;
+        return Objects.equals(id, units.id);
     }
 
     @Override
@@ -90,7 +76,6 @@ public abstract class Units {
 
     /**
      * entrega un lanzamiento de dado
-     * @return
      */
     public int roll() {
         return random.nextInt(6) + 1;
@@ -98,7 +83,6 @@ public abstract class Units {
 
     /**
      * determina si una unidad esta muerta o no.
-     * @return
      */
     public boolean dead(){
         return (this.getHpActual() <= 0);
@@ -106,12 +90,10 @@ public abstract class Units {
 
     /**
      * dependera del tipo de unidad el botin a entregar
-     * @return
      */
     public int loot(){return 0;}
     /**
      * funcion que devuelve el ataque del agresor
-     * @return
      */
     public int attack() {
         return this.roll() + this.getAtk();
@@ -119,7 +101,6 @@ public abstract class Units {
 
     /**
      * funcion que recibe un ataque y actua "defendiendose"
-     * @param damage
      */
     public void defense(int damage) {
         int i = damage - (this.roll() + this.getDef());
@@ -130,7 +111,6 @@ public abstract class Units {
 
     /**
      * funcion que recibe un ataque y trata de esquivar
-     * @param damage
      */
     public void dodge(int damage) {
         int i = this.roll() + this.getEvd();
