@@ -157,7 +157,13 @@ public class UnitsPlayer extends Units{
         return "UnitsPlayer{" + this.getId()+"}";
     }
 
+    /**
+     * Play hace la funcion de "avanzar" al jugador, a la vez que elimina la informacion de su ubicacion anterior
+     * (conlleva muchas cosas por lo que tendra test propio)
+     * @throws IOException
+     */
     public void play() throws IOException {
-        this.ubi = this.getUbi().avanzar(this,1/*roll()*/);
+        this.ubi.deletedPlayer(this);
+        this.setUbi(this.ubi.avanzar(this,roll()));
     }
 }

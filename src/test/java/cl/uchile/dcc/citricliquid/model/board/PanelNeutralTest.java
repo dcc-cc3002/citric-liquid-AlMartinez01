@@ -88,5 +88,32 @@ public class PanelNeutralTest {
         Panel obj3 = panelneu2.avanzar(suguri,1);
         assertEquals(obj2,obj3);
     }
+    @Test
+    public void unitPlayerTest(){
+        panelneu1.unitPlayer(suguri);
+        assertEquals(panelneu1,suguri.getUbi());
+        assertEquals(panelneu1.getUnits()[0],suguri);
+    }
+    @Test
+    public void deletedPlayerTest(){
+        panelneu1.agrePlayer(suguri);
+        panelneu1.deletedPlayer(suguri);
+        var expected = new Panel(null,null,null);
+
+        assertEquals(expected,panelneu1);
+
+        var suguri2 = new UnitsPlayer("nombre_creativo",BASE_HP,BASE_ATK,BASE_DEF,BASE_EVD,null,null,0,0,1);
+        expected.agrePlayer(suguri2);
+        panelneu1.agrePlayer(suguri2);
+        panelneu1.agrePlayer(suguri); //ahora hay 2 players en panelneu1 y el espected es como esperamos que vuelva
+        panelneu1.deletedPlayer(suguri);
+
+        assertEquals(expected,panelneu1);
+
+        //en panelneu1 solo esta suguri2, trataremos de eliminar suguri nuevamente
+        panelneu1.deletedPlayer(suguri);
+
+        assertEquals(expected,panelneu1); //en teoria panelneu1 no debio cambiar
+    }
 
 }

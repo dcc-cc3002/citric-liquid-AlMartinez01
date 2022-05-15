@@ -56,6 +56,7 @@ public class Panel {
      * @return boolean
      */
     public boolean unitExist(@NotNull Units u1){
+        if (this.units == null){return false;}
         for (Units i : this.units){
             if (u1.equals(i)){return true;}
         }
@@ -81,6 +82,11 @@ public class Panel {
         for (UnitsPlayer ignored : this.units){i++;}
         return i;
     }
+
+    /**
+     * agrega un player a la lista del panel
+     * @param u1
+     */
     public void agrePlayer(@NotNull UnitsPlayer u1){
         if (units == null){this.units = new UnitsPlayer[]{u1};}
         else {
@@ -96,12 +102,27 @@ public class Panel {
         }
     }
 
+    public void deletedPlayer(UnitsPlayer player){
+        if (!(this.unitExist(player))){return;}
+        int r = this.cantUnits()-1;
+        if (r == 0){this.units = null; return;}
+        UnitsPlayer[] players = new UnitsPlayer[this.cantUnits()-1];
+        for (int j = 0; j < this.unitUbi(player) ; j++){
+            players[j] = this.units[j];
+        }
+        for (int j = this.unitUbi(player) + 1 ; j  < this.cantUnits() ; j++){
+            players[j-1] = this.units[j];
+        }
+        this.units = players;
+    }
+
 
     /**
      * se agregan mutuamente
      */
     public void unitPlayer(@NotNull UnitsPlayer u1){
         this.agrePlayer(u1);
+        u1.setUbi(this);
     }
     /**
      * activa el panel
