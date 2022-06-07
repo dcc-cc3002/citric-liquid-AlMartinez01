@@ -13,13 +13,6 @@ public abstract class Carts {
         return name;
     }
 
-    public String getCharacters() {
-        return Characters;
-    }
-
-    public void activator(Units p1){
-
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -30,13 +23,6 @@ public abstract class Carts {
 
         if (!name.equals(carts.name)) return false;
         return Characters.equals(carts.Characters);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + Characters.hashCode();
-        return result;
     }
 
     @Override

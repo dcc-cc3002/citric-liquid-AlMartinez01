@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class UnitsPlayerTest {
+public class UnitsPlayerTest {
 
     private UnitsPlayer player;
     int hp = 6; int def = 2; int evd = 1; int atk = 3;

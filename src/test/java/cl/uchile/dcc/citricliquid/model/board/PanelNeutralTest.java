@@ -32,6 +32,7 @@ public class PanelNeutralTest {
     public void buildTest(){
         var expected = new Panel(null,null,null);
         assertEquals(expected,panelneu1);
+        assertEquals(panelneu2,panelneu3);
     }
     @Test
     public void cantNexts(){

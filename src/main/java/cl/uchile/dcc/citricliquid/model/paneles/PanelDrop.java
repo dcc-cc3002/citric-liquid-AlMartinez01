@@ -1,7 +1,6 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
 
-import cl.uchile.dcc.citricliquid.model.Player;
 import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;

@@ -60,16 +60,6 @@ public abstract class Units {
         return Objects.equals(id, units.id);
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + hpMax;
-        result = 31 * result + hpActual;
-        result = 31 * result + atk;
-        result = 31 * result + def;
-        result = 31 * result + evd;
-        return result;
-    }
     public void setSeed(final long seed) {
         random.setSeed(seed);
     }

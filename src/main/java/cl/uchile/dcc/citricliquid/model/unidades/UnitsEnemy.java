@@ -20,6 +20,7 @@ public class UnitsEnemy extends Units {
     public int getBag() {
         return bag;
     }
+
     public void setBag(int bag) {
         this.bag = bag;
     }
@@ -35,17 +36,5 @@ public class UnitsEnemy extends Units {
         if (boss != that.boss) return false;
         return bag == that.bag;
     }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (boss ? 1 : 0);
-        result = 31 * result + bag;
-        return result;
-    }
-
-    @Override
-    public int loot() {
-        return this.getBag();
-    }
 }
+
