@@ -35,14 +35,6 @@ public class Panel {
         return Objects.equals(carta, panel.carta);
     }
 
-    @Override
-    public int hashCode() {
-        int result = Arrays.hashCode(units);
-        result = 31 * result + Arrays.hashCode(nexts);
-        result = 31 * result + (carta != null ? carta.hashCode() : 0);
-        return result;
-    }
-
     public Panel[] getNexts() {
         return nexts;
     }
@@ -115,8 +107,6 @@ public class Panel {
         }
         this.units = players;
     }
-
-
     /**
      * se agregan mutuamente
      */

@@ -32,30 +32,42 @@ class UnitsPlayerTest {
     }
 
     @Test
-    void sets() {
+    void lootTest() {
+        player.setStars(100);
+        final var expected = 50;
+        Assertions.assertEquals(expected,player.loot());
+        Assertions.assertEquals(expected,player.getStars());
     }
 
     @Test
-    void getStars() {
+    void cant_cartsTest() {
+        var cart = new Carts_ejm(null,null);
+        player.setMano(new Carts[]{cart,cart,cart});
+        Assertions.assertEquals(3,player.cant_carts());
     }
 
     @Test
-    void setStars() {
+    void view_cartsTest() {
+        var cart = new Carts_ejm(null,null);
+        player.setMano(new Carts[]{cart,cart,cart});
+        player.view_carts();
+
+        /**
+         * Cartas disponibles:
+         *  Carts{name='null', Characters='null'} 0|
+         *  Carts{name='null', Characters='null'} 1|
+         *  Carts{name='null', Characters='null'} 2|
+         */
     }
 
     @Test
-    void getWins() {
-    }
-
-    @Test
-    void setWins() {
-    }
-
-    @Test
-    void getLvlNorma() {
-    }
-
-    @Test
-    void setLvlNorma() {
+    void deletedCartTest() {
+        var cart = new Carts_ejm(null,null);
+        var cart2 = new Carts_ejm("null",null);
+        player.setMano(new Carts[]{cart,cart,cart});
+        player.deleteCart(3);
+        Assertions.assertEquals(3,player.cant_carts());
+        player.deleteCart(2);
+        Assertions.assertEquals(2,player.cant_carts());
     }
 }

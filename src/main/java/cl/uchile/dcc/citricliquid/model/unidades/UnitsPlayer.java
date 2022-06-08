@@ -41,16 +41,16 @@ public class UnitsPlayer extends Units{
         return Arrays.equals(mano, that.mano);
     }
 
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + Arrays.hashCode(mano);
-        result = 31 * result + stars;
-        result = 31 * result + wins;
-        result = 31 * result + lvlNorma;
-        return result;
-    }
+
+
+
     /**#################SETTERS AND GETTERS#######################**/
+    public void setLvlNorma(int lvlNorma) {
+        this.lvlNorma = lvlNorma;
+    }
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
     public Carts[] getMano() {
         return mano;
     }
@@ -66,14 +66,8 @@ public class UnitsPlayer extends Units{
     public int getWins() {
         return wins;
     }
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
     public int getLvlNorma() {
         return lvlNorma;
-    }
-    public void setLvlNorma(int lvlNorma) {
-        this.lvlNorma = lvlNorma;
     }
     public Panel getUbi() {
         return ubi;
@@ -86,7 +80,7 @@ public class UnitsPlayer extends Units{
     @Override
     public int loot(){
         int i = this.getStars()/2;
-        this.setStars(-i);
+        this.setStars(stars-i);
         return i;
     }
 
@@ -118,6 +112,7 @@ public class UnitsPlayer extends Units{
      * elimina la carta establecida de la mano
      */
     public void deleteCart(int i){
+        if (i > this.cant_carts()-1){return;}
         Carts[] manoNew = new Carts[this.cant_carts()-1];
         Carts cart = this.getMano()[i];
         int t = 0; //contador//

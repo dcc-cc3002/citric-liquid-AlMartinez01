@@ -125,7 +125,19 @@ public class UnitsTest {
         assertEquals(notExpectSugur, sugur);
     }
 
-
-
-
+    @Test
+    void isBoss() {
+        assertFalse(wild.isBoss());
+        assertTrue(boss.isBoss());
+    }
+    @Test
+    void getBagTest(){
+        final var expected = new UnitsEnemy(name_wild, 3, -1, -1, 1, false, 0);
+        assertEquals(0,wild.getBag());
+    }
+    @Test
+    void setBagTest(){
+        wild.setBag(4);
+        assertEquals(4,wild.getBag());
+    }
 }
