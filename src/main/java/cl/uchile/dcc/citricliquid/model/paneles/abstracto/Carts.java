@@ -1,4 +1,4 @@
-package cl.uchile.dcc.citricliquid.model.abstracto;
+package cl.uchile.dcc.citricliquid.model.paneles.abstracto;
 
 public abstract class Carts {
     private final String name;

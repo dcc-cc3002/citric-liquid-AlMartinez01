@@ -1,4 +1,4 @@
-package cl.uchile.dcc.citricliquid.model.abstracto;
+package cl.uchile.dcc.citricliquid.model.paneles.abstracto;
 
 public class Carts_ejm extends Carts {
     public Carts_ejm(String name, String characters) {

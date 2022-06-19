@@ -1,4 +1,4 @@
-package cl.uchile.dcc.citricliquid.model.abstracto;
+package cl.uchile.dcc.citricliquid.model.paneles.abstracto;
 
 import java.util.Objects;
 import java.util.Random;
@@ -75,10 +75,6 @@ public abstract class Units {
      * determina si una unidad esta muerta o no.
      */
     /**
-     * dependera del tipo de unidad el botin a entregar
-     */
-    public int loot(){return 0;}
-    /**
      * funcion que devuelve el ataque del agresor
      */
     public int attack() {
@@ -91,36 +87,20 @@ public abstract class Units {
     public void defense(int damage) {
         int i = damage - (this.roll() + this.getDef());
         if (i < 1){i = 1;}
-        this.setHpActual(this.getHpActual()-i);
+        this.setHpActual(Math.max(0,this.getHpActual()-i));
         System.out.print("daño recibido: " + i + "\n");
     }
-
     /**
      * funcion que recibe un ataque y trata de esquivar
      */
     public void dodge(int damage) {
         int i = this.roll() + this.getEvd();
         if (i < damage){
-            this.setHpActual(this.getHpActual()-i);
+            this.setHpActual(Math.max(0,this.getHpActual()-damage));
             System.out.print("DODGE fallido, se recibio un daño de: " + damage + "\n");
         }
         else {
             System.out.print("DODGE" + "\n");
         }
     }// SE LE DIO AL BOSS Y WILD LA CAPACIDAD DE DODGEAR PERO NO LO HARA.
-    public void combat(Units enemy){
-           this.initio_combat();
-           enemy.initio_combat();
-    }
-
-    public void initio_combat(){
-        System.out.print("personaje no valido para inicio de combate\n");
-    }
-
-    @Override
-    public String toString() {
-        return "Units{" +
-                "id='" + id + '\'' +
-                '}';
-    }
 }

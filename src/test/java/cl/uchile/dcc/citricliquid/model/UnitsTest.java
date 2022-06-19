@@ -1,11 +1,14 @@
 package cl.uchile.dcc.citricliquid.model;
 
-import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
-import cl.uchile.dcc.citricliquid.model.abstracto.Carts_ejm;
+import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Carts;
+import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Carts_ejm;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +18,7 @@ public class UnitsTest {
     private final String name_wild = "chicken";
     private final String name_boss = "Store Manager";
     private UnitsPlayer sugur;
+    private UnitsPlayer sinCartSugur;
     private UnitsEnemy wild;
     private UnitsEnemy boss;
     private Carts_ejm cart;
@@ -27,6 +31,7 @@ public class UnitsTest {
         String name_cart2 = "cart2";
         cart2 = new Carts_ejm(name_cart2, name_cart2);
         sugur = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart, cart}, null, 2, 0, 1);
+        sinCartSugur = new UnitsPlayer(NamePla, 6, 2, 3, 4, null, null, 2, 0, 1);
         wild = new UnitsEnemy(name_wild, 3, -1, -1, 1, false, 0);
         boss = new UnitsEnemy(name_boss, 8, 3, 2, -1, true, 0);
 
@@ -82,6 +87,45 @@ public class UnitsTest {
         assertEquals(hp, sugur.getHpActual());
     }
 
+    @RepeatedTest(100)
+    public void dodgeTest(){
+        final long testSeed = new Random().nextLong();
+        sugur.setSeed(testSeed);
+        int dam = new Random().nextInt(1,8);
+        int simRoll = new Random(testSeed).nextInt(6) + 1 + sugur.getEvd();
+        int vida_original = sugur.getHpActual();
+        sugur.dodge(dam);
+
+        if (simRoll < dam){
+            assertEquals(Math.max(0,vida_original-dam),sugur.getHpActual());
+        }
+        else {assertEquals(vida_original,sugur.getHpActual());}
+    }
+    @RepeatedTest(100)
+    public void atack(){
+        final long testSeed = new Random().nextLong();
+        sugur.setSeed(testSeed);
+
+        int simRoll = new Random(testSeed).nextInt(6) + 1 + sugur.getAtk();
+        assertEquals(simRoll,sugur.attack());
+    }
+    @RepeatedTest(100)
+    public void defenseTest(){
+        final long testSeed = new Random().nextLong();
+        sugur.setSeed(testSeed);
+        int dam = new Random().nextInt(1,8);
+        int simRoll = new Random(testSeed).nextInt(6) + 1 + sugur.getDef();
+        int vida_original = sugur.getHpActual();
+        sugur.defense(dam);
+
+        if(dam-simRoll < 1) {
+            assertEquals(vida_original - 1, sugur.getHpActual());
+        }
+        else{
+            assertEquals(Math.max(0,vida_original-(dam-simRoll)),sugur.getHpActual());
+        }
+    }
+
     @Test
     public void cant_carts() {
         final var expectedSuguri = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart, cart}, null, 2, 0, 1);
@@ -93,6 +137,9 @@ public class UnitsTest {
     @Test
     public void select_carts() {
         sugur.initio_combat();
+        sinCartSugur.initio_combat();
+        final var Simunl = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{}, null, 2, 0, 1);
+        sinCartSugur.initio_combat();
     }
 
     @Test
@@ -123,6 +170,10 @@ public class UnitsTest {
 
         sugur.incrementStars(-30);
         assertEquals(notExpectSugur, sugur);
+
+        expectSugur = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart, cart}, null, 0, 0, 1);
+        sugur.incrementStars(-30);
+        assertEquals(expectSugur, sugur);
     }
 
     @Test

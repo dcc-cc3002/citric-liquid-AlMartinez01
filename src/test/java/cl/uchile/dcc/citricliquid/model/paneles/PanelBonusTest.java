@@ -1,7 +1,5 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
-import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
-import cl.uchile.dcc.citricliquid.model.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;

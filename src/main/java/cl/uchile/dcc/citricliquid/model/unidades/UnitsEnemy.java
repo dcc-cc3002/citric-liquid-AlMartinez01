@@ -1,8 +1,9 @@
 package cl.uchile.dcc.citricliquid.model.unidades;
 
-import cl.uchile.dcc.citricliquid.model.abstracto.Units;
+import cl.uchile.dcc.citricliquid.model.interfaces.Combat;
+import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Units;
 
-public class UnitsEnemy extends Units {
+public class UnitsEnemy extends Units implements Combat {
     boolean boss; //definira si este es un boss o no
     int bag; //cantidad de estrellas recolectadas
 

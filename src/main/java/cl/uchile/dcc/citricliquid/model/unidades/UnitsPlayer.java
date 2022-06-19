@@ -1,13 +1,14 @@
 package cl.uchile.dcc.citricliquid.model.unidades;
 
-import cl.uchile.dcc.citricliquid.model.abstracto.Carts;
-import cl.uchile.dcc.citricliquid.model.abstracto.Units;
+import cl.uchile.dcc.citricliquid.model.interfaces.Combat;
+import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Carts;
+import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class UnitsPlayer extends Units{
+public class UnitsPlayer extends Units implements Combat {
     Carts[] mano; //mano de cartas disponibles
     Panel ubi;
     //////////////////NORMA///////////////////
@@ -77,7 +78,6 @@ public class UnitsPlayer extends Units{
     }
 
     /**#################SETTERS AND GETTERS#######################**/
-    @Override
     public int loot(){
         int i = this.getStars()/2;
         this.setStars(stars-i);
@@ -124,9 +124,8 @@ public class UnitsPlayer extends Units{
         }
         this.setMano(manoNew);
     }
-
-    @Override
     public void initio_combat() {
+        if (this.mano == null){return;}
         System.out.print("seleccion de cartas jugador: " + this.getId() + " \n");
         boolean b = !(this.cant_carts() == 0);
         if (b){
@@ -145,11 +144,6 @@ public class UnitsPlayer extends Units{
         if (this.getStars()<0) {
             this.setStars(0); //Impedira que se coloque en estrellas negativas
         }
-    }
-
-    @Override
-    public String toString() {
-        return "UnitsPlayer{" + this.getId()+"}";
     }
 
     /**
