@@ -1,7 +1,6 @@
-package cl.uchile.dcc.citricliquid.model.controller;
+package cl.uchile.dcc.citricliquid.model.controller.SistemaCombate;
 
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
-
 
 public class Combat {
     Units unit1;
@@ -11,18 +10,16 @@ public class Combat {
         this.unit1 = unit1;
         this.unit2 = unit2;
     }
-    public class ClearConsoleScreen {
-        public static void main(String[] args){
-            System.out.print("Everything on the console will cleared");
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
-        }
-    }
 
     public void starter(){
         unit1.initio_combat();
         unit2.initio_combat();
-
+        try {
+            //Ponemos a "Dormir" el programa durante los ms que queremos
+            Thread.sleep(2*1000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         while (unit1.deadUnit() && unit2.deadUnit()){
             System.out.printf("\n"+unit1.getId() + " atacara!!!!\n");
             unit1.attack(unit2);
@@ -33,13 +30,15 @@ public class Combat {
                 System.out.printf("vida actual de j1: " + unit1.getHpActual() + " |vida actual de j2: " + unit2.getHpActual() + "\n");
             }
         }
+
+
         if (!(unit1.deadUnit())){
             System.out.printf(unit1.getId()+ "a caido!!\n");
-            unit2.addStars(unit1.loot());
+            unit2.victory(unit1.defeat());
         }
         else{
             System.out.printf(unit2.getId()+ "a caido!!\n");
-            unit1.addStars(unit2.loot());
+            unit1.victory(unit2.defeat());
         }
     }
 }

@@ -1,8 +1,8 @@
 package cl.uchile.dcc.citricliquid.model.unidades;
 
-import cl.uchile.dcc.citricliquid.model.interfaces.Attackable;
-import cl.uchile.dcc.citricliquid.model.interfaces.Attacker;
-import cl.uchile.dcc.citricliquid.model.interfaces.Initio_combat;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attackable;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attacker;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 
 import java.util.Random;
@@ -83,7 +83,7 @@ public class UnitsEnemy extends Units implements Initio_combat, Attacker, Attack
         }
         try {
             //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(5*1000);
+            Thread.sleep(2*1000);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -92,5 +92,17 @@ public class UnitsEnemy extends Units implements Initio_combat, Attacker, Attack
     @Override
     public void initio_combat() {
         System.out.printf(this.getId()+" esta preparado para la batalla");
+    }
+
+    @Override
+    public void victory(int[] recompense) {
+        this.setBag(getBag()+ recompense[0]);
+    }
+
+    @Override
+    public int[] defeat() {
+        int i = 1;
+        if (boss){ i = 3;}
+        return (new int[]{this.loot(), i});
     }
 }

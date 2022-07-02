@@ -1,8 +1,8 @@
 package cl.uchile.dcc.citricliquid.model.unidades.abstracto;
 
-import cl.uchile.dcc.citricliquid.model.interfaces.Attackable;
-import cl.uchile.dcc.citricliquid.model.interfaces.Attacker;
-import cl.uchile.dcc.citricliquid.model.interfaces.Initio_combat;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attackable;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attacker;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
 
 import java.util.Objects;
 import java.util.Random;

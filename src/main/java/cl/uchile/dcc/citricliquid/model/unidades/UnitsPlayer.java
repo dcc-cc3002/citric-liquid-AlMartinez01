@@ -1,8 +1,8 @@
 package cl.uchile.dcc.citricliquid.model.unidades;
 
-import cl.uchile.dcc.citricliquid.model.interfaces.Attackable;
-import cl.uchile.dcc.citricliquid.model.interfaces.Attacker;
-import cl.uchile.dcc.citricliquid.model.interfaces.Initio_combat;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attackable;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attacker;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
@@ -170,6 +170,10 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         }
     }
 
+    public void incrementedWins(int wins){
+        this.setWins(Math.max(this.getWins() + wins, 0));
+    }
+
     /**
      * Play hace la funcion de "avanzar" al jugador, a la vez que elimina la informacion de su ubicacion anterior
      * (conlleva muchas cosas por lo que tendra test propio)
@@ -202,5 +206,15 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         }
     }
 
+    @Override
+    public void victory(int[] recompense) {
+        this.incrementStars(recompense[0]);
+        this.incrementedWins(recompense[1]);
+        System.out.printf("se a conseguido: " + recompense);
+    }
 
+    @Override
+    public int[] defeat() {
+        return (new int[]{this.loot(), 2});
+    }
 }
