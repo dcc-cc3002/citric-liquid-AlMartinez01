@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citricliquid.model.interfaces;
 
-public interface Combat {
+public interface Initio_combat {
     default void initio_combat(){}
 }

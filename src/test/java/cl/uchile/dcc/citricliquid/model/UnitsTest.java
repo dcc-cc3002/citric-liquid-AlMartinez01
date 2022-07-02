@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citricliquid.model;
 
-import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Carts;
-import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Carts_ejm;
+import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
+import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts_ejm;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,7 +102,7 @@ public class UnitsTest {
         else {assertEquals(vida_original,sugur.getHpActual());}
     }
     @RepeatedTest(100)
-    public void atack(){
+    public void attack(){
         final long testSeed = new Random().nextLong();
         sugur.setSeed(testSeed);
 
@@ -190,5 +190,12 @@ public class UnitsTest {
     void setBagTest(){
         wild.setBag(4);
         assertEquals(4,wild.getBag());
+    }
+
+    @Test
+    void deadTest(){
+        assertTrue(sugur.deadUnit());
+        sugur.setHpActual(0);
+        assertFalse(sugur.deadUnit());
     }
 }

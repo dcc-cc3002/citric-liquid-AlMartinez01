@@ -1,4 +1,4 @@
-package cl.uchile.dcc.citricliquid.model.paneles.abstracto;
+package cl.uchile.dcc.citricliquid.model.unidades.abstracto;
 
 public abstract class Carts {
     private final String name;
@@ -31,5 +31,8 @@ public abstract class Carts {
                 "name='" + name + '\'' +
                 ", Characters='" + Characters + '\'' +
                 '}';
+    }
+
+    public void Active(Units units){
     }
 }

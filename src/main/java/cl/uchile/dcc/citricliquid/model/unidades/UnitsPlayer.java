@@ -1,14 +1,17 @@
 package cl.uchile.dcc.citricliquid.model.unidades;
 
-import cl.uchile.dcc.citricliquid.model.interfaces.Combat;
-import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Carts;
-import cl.uchile.dcc.citricliquid.model.paneles.abstracto.Units;
+import cl.uchile.dcc.citricliquid.model.interfaces.Attackable;
+import cl.uchile.dcc.citricliquid.model.interfaces.Attacker;
+import cl.uchile.dcc.citricliquid.model.interfaces.Initio_combat;
+import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
+import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 
-public class UnitsPlayer extends Units implements Combat {
+public class UnitsPlayer extends Units implements Initio_combat, Attackable, Attacker {
     Carts[] mano; //mano de cartas disponibles
     Panel ubi;
     //////////////////NORMA///////////////////
@@ -78,10 +81,19 @@ public class UnitsPlayer extends Units implements Combat {
     }
 
     /**#################SETTERS AND GETTERS#######################**/
+    @Override
     public int loot(){
         int i = this.getStars()/2;
         this.setStars(stars-i);
         return i;
+    }
+
+    @Override
+    public void addStars(int stars) {
+        System.out.printf(this.getId() +": Bueno, creo que estas 'stars' son para mi\n");
+        setStars(Math.max(this.getStars() + stars,0));
+        System.out.printf(this.getId()+" a cogido "+stars + " 'stars'");
+
     }
 
     /**
@@ -129,7 +141,19 @@ public class UnitsPlayer extends Units implements Combat {
         System.out.print("seleccion de cartas jugador: " + this.getId() + " \n");
         boolean b = !(this.cant_carts() == 0);
         if (b){
+            Scanner entrada = new Scanner(System.in);
             this.view_carts();
+            System.out.println("posee " +this.cant_carts() + " cartas, elija segun el numero \n");
+            int i = entrada.nextInt();
+            if ((0 <= i) && (i < this.cant_carts())){
+                Carts cartaSelecciona = this.getMano()[i];
+                System.out.print("Selecciono la carta " + cartaSelecciona.toString() + "\n");
+                cartaSelecciona.Active(this);
+                this.deleteCart(i);
+            }
+            else{
+                System.out.print("No se selecciono carta\n");
+            }
         }
         else {
             System.out.print("Sin cartas disponibles\n");
@@ -155,4 +179,28 @@ public class UnitsPlayer extends Units implements Combat {
         this.ubi.deletedPlayer(this);
         this.setUbi(this.ubi.avanzar(this,roll()));
     }
+
+    @Override
+    public void attack(Attackable target) {
+        target.receiveDamagePlayer(this.attack());
+    }
+
+    @Override
+    public void receiveDamagePlayer(int damage) {
+        Scanner entrada = new Scanner(System.in);
+        int i = -1;
+
+        System.out.println("Defender(0) o esquivar(1)?   ");
+        i = entrada.nextInt();
+
+
+        if (i == 0){
+            this.defense(damage);
+        }
+        else{
+            this.dodge(damage);
+        }
+    }
+
+
 }

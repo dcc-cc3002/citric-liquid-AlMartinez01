@@ -1,9 +1,13 @@
-package cl.uchile.dcc.citricliquid.model.paneles.abstracto;
+package cl.uchile.dcc.citricliquid.model.unidades.abstracto;
+
+import cl.uchile.dcc.citricliquid.model.interfaces.Attackable;
+import cl.uchile.dcc.citricliquid.model.interfaces.Attacker;
+import cl.uchile.dcc.citricliquid.model.interfaces.Initio_combat;
 
 import java.util.Objects;
 import java.util.Random;
 
-public abstract class Units {
+public abstract class Units implements Initio_combat, Attacker, Attackable {
     private final Random random;
     private final String id;//Para diferenciar a las unidades (funciona como nombre)
     private final int hpMax;
@@ -64,6 +68,10 @@ public abstract class Units {
         random.setSeed(seed);
     }
 
+    public void addStars(int stars){
+
+    }
+
     /**
      * entrega un lanzamiento de dado
      */
@@ -78,7 +86,13 @@ public abstract class Units {
      * funcion que devuelve el ataque del agresor
      */
     public int attack() {
-        return this.roll() + this.getAtk();
+        int dado = this.roll() + this.getAtk();
+        System.out.printf("salio: " +dado +"\n");
+        return dado;
+    }
+
+    public int  loot(){
+        return 0;
     }
 
     /**
@@ -102,5 +116,9 @@ public abstract class Units {
         else {
             System.out.print("DODGE" + "\n");
         }
-    }// SE LE DIO AL BOSS Y WILD LA CAPACIDAD DE DODGEAR PERO NO LO HARA.
+    }
+
+    public boolean deadUnit(){
+        return !(this.getHpActual() == 0);
+    }
 }
