@@ -1,26 +1,24 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
 
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observable;
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observer;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
-public class Panelboss extends PanelEncounter {
-
-    private UnitsEnemy boss_default;
+public class Panelboss extends PanelEncounter implements Observer {
     private UnitsEnemy boss_actual;
+    private boolean boss = false;
 
     public Panelboss(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsEnemy enemy_default, UnitsEnemy boss_default) {
         super(units, nexts, carta, enemy_default);
-        this.boss_default = boss_actual = boss_default;
-    }
-    public void deletedBoss(){
-        this.boss_default = boss_actual = null;
+        this.boss_actual = boss_default;
     }
     public void agregarBoss(@NotNull UnitsEnemy boss){
         if (boss.isBoss()){
-            this.boss_default = boss_actual = boss;
+            this.boss_actual = boss;
         }
     }
 
@@ -32,9 +30,6 @@ public class Panelboss extends PanelEncounter {
         this.boss_actual = boss_actual;
     }
 
-    public void respawn_boss(){
-        this.boss_actual = this.boss_default;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -44,8 +39,15 @@ public class Panelboss extends PanelEncounter {
 
         Panelboss panelboss = (Panelboss) o;
 
-        if (boss_default != null ? !boss_default.equals(panelboss.boss_default) : panelboss.boss_default != null)
-            return false;
         return boss_actual != null ? boss_actual.equals(panelboss.boss_actual) : panelboss.boss_actual == null;
+    }
+
+    @Override
+    public void update() {
+        this.boss = true;
+    }
+
+    public boolean getBoss() {
+        return boss;
     }
 }

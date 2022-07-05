@@ -1,4 +1,4 @@
-package cl.uchile.dcc.citricliquid.model;
+package cl.uchile.dcc.citricliquid.model.unidades;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;

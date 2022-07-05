@@ -181,7 +181,9 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
      */
     public void play() throws IOException {
         this.ubi.deletedPlayer(this);
-        this.setUbi(this.ubi.avanzar(this,roll()));
+        int i = this.roll();
+        System.out.println("Se avanzara: "+i+" cacillas");
+        this.setUbi(this.ubi.avanzar(this,i));
     }
 
     @Override

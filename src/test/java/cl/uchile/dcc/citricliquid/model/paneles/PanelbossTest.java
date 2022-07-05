@@ -34,24 +34,6 @@ class PanelbossTest {
     }
 
     @Test
-    void agregarBossTest() {
-        panelboss.deletedBoss();
-        assertNotEquals(Store_Manager,panelboss.getBoss_actual());
-        panelboss.agregarBoss(chicken);
-        assertNotEquals(chicken,panelboss.getBoss_actual());
-        panelboss.agregarBoss(Store_Manager);
-        assertEquals(Store_Manager,panelboss.getBoss_actual());
-    }
-
-    @Test
-    void respawnTest() {
-        panelboss.setBoss_actual(null);
-        assertNotEquals(Store_Manager,panelboss.getBoss_actual());
-        panelboss.respawn_boss();
-        assertEquals(Store_Manager,panelboss.getBoss_actual());
-    }
-
-    @Test
     void equalTest() {
         final var expected = new Panelboss(null,null,null,chicken,Store_Manager);
         assertTrue(panelboss.equals(expected));

@@ -1,4 +1,4 @@
-package cl.uchile.dcc.citricliquid.model;
+package cl.uchile.dcc.citricliquid.model.unidades;
 
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts_ejm;
@@ -135,14 +135,6 @@ public class UnitsTest {
     }
 
     @Test
-    public void select_carts() {
-        sugur.initio_combat();
-        sinCartSugur.initio_combat();
-        final var Simunl = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{}, null, 2, 0, 1);
-        sinCartSugur.initio_combat();
-    }
-
-    @Test
     public void deleteCartTest() {
         final var expectedSuguri = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart, cart}, null, 2, 0, 1);
         sugur.deleteCart(1);
@@ -197,5 +189,35 @@ public class UnitsTest {
         assertTrue(sugur.deadUnit());
         sugur.setHpActual(0);
         assertFalse(sugur.deadUnit());
+    }
+
+    @Test
+    void  defeatTest(){
+        wild.setBag(10);
+        int[] lootWildexpected = new int[]{wild.getBag(),1};
+        int[] lootWild = wild.defeat();
+        assertEquals(lootWildexpected[0],lootWild[0]);
+        assertEquals(lootWildexpected[1],lootWild[1]);
+
+        boss.setBag(10);
+        int[] lootBossexpected = new int[]{boss.getBag(),3};
+        int[] lootBoss = boss.defeat();
+        assertEquals(lootBossexpected[0],lootBoss[0]);
+        assertEquals(lootBossexpected[1],lootBoss[1]);
+
+        sugur.setStars(50);
+        int[] lootplayerexpected = new int[]{sugur.getStars()/2,2};
+        int[] lootplayer = sugur.defeat();
+        assertEquals(lootplayerexpected[0],lootplayer[0]);
+        assertEquals(lootplayerexpected[1],lootplayer[1]);
+    }
+
+    @Test
+    void victoryTest(){
+        int[] recompensa = new int[] {4,2};
+        sugur.setStars(0);
+        sugur.victory(recompensa);
+        assertEquals(4,sugur.getStars());
+        assertEquals(2,sugur.getWins());
     }
 }

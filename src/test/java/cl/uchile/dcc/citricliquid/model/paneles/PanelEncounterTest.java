@@ -35,26 +35,9 @@ class PanelEncounterTest {
         assertFalse(panelEncounter.equals(notexpected));
     }
 
-    @Test
-    void agregarwildTest() {
-        panelEncounter.setEnemy_default(null);
-        panelEncounter.agregarwild(Store_Manager);
-        assertEquals(null,panelEncounter.getEnemy_default());
-        final var expected = new UnitsEnemy("chicken", 3, -1, -1, +1,false,0);
-        panelEncounter.agregarwild(chicken);
-        assertEquals(expected,panelEncounter.getEnemy_actual());
-    }
 
     @Test
     void bossActualTest() {
-        final var expected = new UnitsEnemy("chicken", 3, -1, -1, +1,false,0);
-        assertEquals(expected,panelEncounter.getEnemy_actual());
-    }
-
-    @Test
-    void respawn_wild() {
-        panelEncounter.setEnemy_actual(null);
-        panelEncounter.respawn_wild();
         final var expected = new UnitsEnemy("chicken", 3, -1, -1, +1,false,0);
         assertEquals(expected,panelEncounter.getEnemy_actual());
     }

@@ -1,5 +1,6 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
+import cl.uchile.dcc.citricliquid.model.controller.GameController;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
@@ -13,7 +14,6 @@ public class Panel {
     private UnitsPlayer[] units;//Unidades en el panel
     private Panel[] nexts;//Los Paneles con los que esta unido o se puede continuar
     private Carts carta;//Carta en el panel
-
 
     public Panel(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
         this.units = units;
