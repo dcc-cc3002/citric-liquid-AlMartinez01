@@ -1,14 +1,13 @@
-package cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers;
+package cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome;
 
-import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
+import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;
 
 import java.io.IOException;
 
-public interface StatesPlayer {
-
+public interface StatesPanelHome {
     void rollDice() throws IOException;
 
-    void option0();
+    void option0() throws IOException;
 
     void option1();
 
@@ -22,5 +21,5 @@ public interface StatesPlayer {
     void option8();
     void option9();
 
-    void setUnitPlayers(UnitsPlayer unitPlayers);
+    void addPanelHome(PanelHome panelHome);
 }

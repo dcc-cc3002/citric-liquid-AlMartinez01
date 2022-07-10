@@ -3,13 +3,13 @@ package cl.uchile.dcc.citricliquid.model.unidades;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attackable;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attacker;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.*;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class UnitsPlayer extends Units implements Initio_combat, Attackable, Attacker {
     Carts[] mano; //mano de cartas disponibles
@@ -20,6 +20,24 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
     int lvlNorma;
     //////////////////FIN NORMA///////////////
 
+    private StatesPlayer statesPlayer;
+
+    /////////////////CONTROLLER////////////
+
+    public void rollDice() throws IOException{statesPlayer.rollDice();}
+    public void option0(){statesPlayer.option0();}
+    public void option1(){statesPlayer.option1();}
+    public void option2(){statesPlayer.option2();}
+    public void option3(){statesPlayer.option3();}
+    public void option4(){statesPlayer.option4();}
+    public void option5(){statesPlayer.option5();}
+    public void option6(){statesPlayer.option6();}
+    public void option7(){statesPlayer.option7();}
+    public void option8(){statesPlayer.option8();}
+    public void option9(){statesPlayer.option9();}
+
+    ///////////FIN CONTROLLER///////////////
+
 
     public UnitsPlayer(String id, int hpMax, int atk, int def, int evd, Carts[] mano, Panel ubi, int stars, int wins, int lvlNorma) {
         super(id, hpMax, atk, def, evd);
@@ -28,6 +46,15 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         this.stars = stars;
         this.wins = wins;
         this.lvlNorma = lvlNorma;
+        setStatesPlayer(new Standby_mode_Player() );
+    }
+
+    public void setStatesPlayer(StatesPlayer statesPlayer) {
+        this.statesPlayer = statesPlayer;
+        statesPlayer.setUnitPlayers(this);
+    }
+    public StatesPlayer getStatesPlayer() {
+        return statesPlayer;
     }
 
     @Override
@@ -119,45 +146,70 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         System.out.print("Cartas disponibles: \n"
                         + text);
     }
+    /**
+     * agrega una carta a la mano del jugador
+     */
+    public void add_cart(Carts carts){
+        if (this.mano == null || this.cant_carts() == 0){
+            this.mano = new Carts[] {carts}; return;
+        }
+        int counter = this.cant_carts();
+        Carts[] newMano = new Carts[counter+1];
+        int i = 0;
+        while (counter > i) {
+            newMano[i] = this.mano[i];
+            i++;
+        }
+        newMano[counter] = carts;
+        this.mano = newMano;
+
+
+    }
+
+
 
     /**
      * elimina la carta establecida de la mano
      */
     public void deleteCart(int i){
         if (i > this.cant_carts()-1){return;}
-        Carts[] manoNew = new Carts[this.cant_carts()-1];
-        Carts cart = this.getMano()[i];
+        int count = this.cant_carts();
+        Carts[] manoNew = new Carts[count-1];
         int t = 0; //contador//
-        for (Carts j : this.mano){
-            if (!(cart.equals(j))){
-                manoNew[t] = j;
-                t++;
-            }
+        while (t < i){
+            manoNew[t] = this.mano[t];
+            t++;
+        }
+        t ++;
+        while (t < count) {
+            manoNew[t - 1] = this.mano[t];
+            t++;
         }
         this.setMano(manoNew);
     }
+
+    public boolean selectCart(int i){
+        if (i >= this.cant_carts() || i<0){
+            System.out.print("no se selcciono carta, reintentar\n");
+            return false;
+        }
+        else{
+            Carts carts = this.getMano()[i];
+            System.out.printf("Se selecciono la carta "+ carts.toString()+"\n");
+            carts.Active(this);
+            this.deleteCart(i);
+            return true;
+        }
+    }
+
     public void initio_combat() {
-        if (this.mano == null){return;}
+        if (this.mano == null || this.cant_carts() == 0){
+            System.out.print("No hay cartas disponibles");
+            return;
+        }
         System.out.print("seleccion de cartas jugador: " + this.getId() + " \n");
-        boolean b = !(this.cant_carts() == 0);
-        if (b){
-            Scanner entrada = new Scanner(System.in);
-            this.view_carts();
-            System.out.println("posee " +this.cant_carts() + " cartas, elija segun el numero \n");
-            int i = entrada.nextInt();
-            if ((0 <= i) && (i < this.cant_carts())){
-                Carts cartaSelecciona = this.getMano()[i];
-                System.out.print("Selecciono la carta " + cartaSelecciona.toString() + "\n");
-                cartaSelecciona.Active(this);
-                this.deleteCart(i);
-            }
-            else{
-                System.out.print("No se selecciono carta\n");
-            }
-        }
-        else {
-            System.out.print("Sin cartas disponibles\n");
-        }
+        this.setStatesPlayer(new Selection_cart_mode_player());
+
     }
 
     /**
@@ -177,13 +229,13 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
     /**
      * Play hace la funcion de "avanzar" al jugador, a la vez que elimina la informacion de su ubicacion anterior
      * (conlleva muchas cosas por lo que tendra test propio)
-     * @throws IOException
+     *  IOException
      */
     public void play() throws IOException {
         this.ubi.deletedPlayer(this);
         int i = this.roll();
         System.out.println("Se avanzara: "+i+" cacillas");
-        this.setUbi(this.ubi.avanzar(this,i));
+        this.ubi.avanzar(this,i);
     }
 
     @Override
@@ -193,30 +245,35 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
 
     @Override
     public void receiveDamagePlayer(int damage) {
-        Scanner entrada = new Scanner(System.in);
-        int i = -1;
-
-        System.out.println("Defender(0) o esquivar(1)?   ");
-        i = entrada.nextInt();
-
-
-        if (i == 0){
-            this.defense(damage);
-        }
-        else{
-            this.dodge(damage);
-        }
+        this.statesPlayer = new Receive_damage_mode_player(damage,this);
     }
 
     @Override
     public void victory(int[] recompense) {
         this.incrementStars(recompense[0]);
         this.incrementedWins(recompense[1]);
-        System.out.printf("se a conseguido: " + recompense);
+        System.out.printf("se a conseguido: " + recompense[0]);
     }
 
     @Override
     public int[] defeat() {
         return (new int[]{this.loot(), 2});
+    }
+
+    public void initTurn() {
+        this.statesPlayer = new Play_mode_player();
+        statesPlayer.setUnitPlayers(this);
+    }
+
+    @Override
+    public String toString() {
+        return "UnitsPlayer{" +
+                "mano=" + Arrays.toString(mano) +
+                ", ubi=" + ubi +
+                ", stars=" + stars +
+                ", wins=" + wins +
+                ", lvlNorma=" + lvlNorma +
+                ", statesPlayer=" + statesPlayer +
+                '}';
     }
 }

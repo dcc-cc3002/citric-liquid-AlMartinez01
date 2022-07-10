@@ -51,7 +51,7 @@ public class ElectionReceiveDamageTest {
         int vida_original = sugur.getHpActual();
 
         sugur.receiveDamagePlayer(dam);
-        sugur.option1();
+        sugur. option1();
 
         if (simRoll < dam){
             assertEquals(Math.max(0,vida_original-dam),sugur.getHpActual());

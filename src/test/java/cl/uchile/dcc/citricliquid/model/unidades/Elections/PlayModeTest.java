@@ -1,7 +1,8 @@
-package cl.uchile.dcc.citricliquid.model.board.Elections;
+package cl.uchile.dcc.citricliquid.model.unidades.Elections;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Play_mode_player;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -60,9 +61,20 @@ public class PlayModeTest {
     void playPlayer_In_PlayMode() throws IOException {
         player.initTurn();
 
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
         final long testSeed = new Random().nextLong();
         player.setSeed(testSeed);
         int i = new Random(testSeed).nextInt(6) + 1;
+
+        player.option2();
+        player.option3();
+        player.option4();
+        player.option5();
+        player.option6();
+        player.option7();
+        player.option8();
+        player.option9();//NO DEBERIA HACER NADA
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
 
         player.rollDice();
 
@@ -120,5 +132,17 @@ public class PlayModeTest {
             assertFalse(panel4.unitExist(player));
             assertFalse(panel5.unitExist(player));
         }
+        assertEquals(Standby_mode_Player.class,player.getStatesPlayer().getClass());
+        player.rollDice();
+        player.option0();
+        player.option1();
+        player.option2();
+        player.option3();
+        player.option4();
+        player.option5();
+        player.option6();
+        player.option7();
+        player.option8();
+        player.option9();
     }
 }

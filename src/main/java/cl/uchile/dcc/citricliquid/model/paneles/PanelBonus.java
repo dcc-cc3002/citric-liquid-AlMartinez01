@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class PanelBonus extends Panel {
-    public PanelBonus(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
+    public PanelBonus(UnitsPlayer[] units, Panel nexts, Carts carta) {
         super(units, nexts, carta);
     }
     private int bonus(UnitsPlayer u1){

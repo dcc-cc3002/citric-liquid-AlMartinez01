@@ -11,11 +11,13 @@ class PanelbossTest {
     Panelboss panelboss2;
     UnitsEnemy chicken;
     UnitsEnemy Store_Manager;
+    UnitsEnemy Store_Manager2;
 
     @BeforeEach
     void setUp() {
         chicken = new UnitsEnemy("chicken", 3, -1, -1, +1,false,0);
         Store_Manager = new UnitsEnemy("Store Manager", 8,+3, +2, -1, true,0);
+        Store_Manager2 = new UnitsEnemy("Store Manager2", 8,+3, +2, -1, true,0);
         panelboss = new Panelboss(null,null,null,chicken,Store_Manager);
         panelboss2 =new Panelboss(null,null,null,null,null);
 
@@ -39,4 +41,10 @@ class PanelbossTest {
         assertTrue(panelboss.equals(expected));
         assertFalse(panelboss2.equals(expected));
     }
+    @Test
+    void agregarBoss(){
+        panelboss.setBoss_actual(Store_Manager2);
+        assertEquals(Store_Manager2,panelboss.getBoss_actual());
+    }
+
 }

@@ -12,10 +12,10 @@ import java.util.Objects;
 
 public class Panel {
     private UnitsPlayer[] units;//Unidades en el panel
-    private Panel[] nexts;//Los Paneles con los que esta unido o se puede continuar
+    private Panel nexts;//Los Paneles con los que esta unido o se puede continuar
     private Carts carta;//Carta en el panel
 
-    public Panel(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
+    public Panel(UnitsPlayer[] units, Panel nexts, Carts carta) {
         this.units = units;
         this.nexts = nexts;
         this.carta = carta;
@@ -25,17 +25,11 @@ public class Panel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Panel panel = (Panel) o;
-
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(units, panel.units)) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(nexts, panel.nexts)) return false;
-        return Objects.equals(carta, panel.carta);
+        return Arrays.equals(units, panel.units) && Objects.equals(nexts, panel.nexts) && Objects.equals(carta, panel.carta);
     }
 
-    public Panel[] getNexts() {
+    public Panel getNexts() {
         return nexts;
     }
 
@@ -66,7 +60,7 @@ public class Panel {
             if (u1.equals(u)){return i;}
             i++;
         }
-        return -1;
+        return i;
     }
     public int cantUnits(){
         if (units == null){return 0;}
@@ -99,12 +93,9 @@ public class Panel {
         int r = this.cantUnits()-1;
         if (r == 0){this.units = null; return;}
         UnitsPlayer[] players = new UnitsPlayer[this.cantUnits()-1];
-        for (int j = 0; j < this.unitUbi(player) ; j++){
-            players[j] = this.units[j];
-        }
-        for (int j = this.unitUbi(player) + 1 ; j  < this.cantUnits() ; j++){
-            players[j-1] = this.units[j];
-        }
+        if (this.unitUbi(player) >= 0) System.arraycopy(this.units, 0, players, 0, this.unitUbi(player));
+        if (this.cantUnits() - (this.unitUbi(player) + 1) >= 0)
+            System.arraycopy(this.units, this.unitUbi(player) + 1, players, this.unitUbi(player) + 1 - 1, this.cantUnits() - (this.unitUbi(player) + 1));
         this.units = players;
     }
     /**
@@ -118,58 +109,26 @@ public class Panel {
      * activa el panel
      */
     public void activator(@NotNull UnitsPlayer u1){
-        this.agrePlayer(u1);
+        this.unitPlayer(u1);
     }
 
-    public int cant_next(){
-        if (this.nexts == null){return 0;}
-        int j = 0;
-        for (Panel ignored : this.nexts){
-            j++;
+    public void avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {
+        if (nexts == null || i == 0){this.activator(u1);}
+        else{
+            this.nexts.avanzar(u1,i-1);
         }
-        return j;
-    }
-    public void printAvanzar(){
-        int i = 0;
-        System.out.print("Tiene las siguiente opciones: \n");
-        for (Panel j : this.nexts){
-            System.out.print(j + " " + i + "| \n");
-        }
-    }
-    public Panel avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {
-        if (nexts == null){return this;}
-        if (i == 0){
-            this.activator(u1);
-            return this;
-        }
-        if (this.cant_next() != 1){
-            printAvanzar();
-            int read = System.in.read();
-            return (this.nexts[read]).avanzar(u1,i-1);
-        }
-        return this.nexts[0].avanzar(u1,i-1);
     }
 
     @Override
     public String toString() {
         return "Panel{" +
                 "units=" + Arrays.toString(units) +
-                ", nexts=" + Arrays.toString(nexts) +
+                ", next=" + nexts +
+                ", carta=" + carta +
                 '}';
     }
 
     public void addNextPanel(final Panel panel) {
-        if (nexts == null) {nexts = new Panel[]{panel};}
-        else{
-            Panel[] newPanel = new Panel[this.cant_next()+1];
-            int j = 0;
-            for (Panel panel1 : nexts){
-                newPanel[j] = panel1;
-                j++;
-            }
-            newPanel[j] = panel;
-            this.nexts = newPanel;
-
-        }
+        nexts = panel;
     }
 }

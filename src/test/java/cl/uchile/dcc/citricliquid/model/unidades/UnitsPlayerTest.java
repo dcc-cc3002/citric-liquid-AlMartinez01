@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 class UnitsPlayerTest {
 
     private UnitsPlayer player;
@@ -22,28 +25,28 @@ class UnitsPlayerTest {
 
     @Test
     void gets() {
-        Assertions.assertEquals(hp,player.getHpMax());
-        Assertions.assertEquals(def,player.getDef());
-        Assertions.assertEquals(evd,player.getEvd());
-        Assertions.assertEquals(atk,player.getAtk());
-        Assertions.assertEquals(starts,player.getStars());
-        Assertions.assertEquals(wins,player.getWins());
-        Assertions.assertEquals(norma,player.getLvlNorma());
+        assertEquals(hp,player.getHpMax());
+        assertEquals(def,player.getDef());
+        assertEquals(evd,player.getEvd());
+        assertEquals(atk,player.getAtk());
+        assertEquals(starts,player.getStars());
+        assertEquals(wins,player.getWins());
+        assertEquals(norma,player.getLvlNorma());
     }
 
     @Test
     void lootTest() {
         player.setStars(100);
         final var expected = 50;
-        Assertions.assertEquals(expected,player.loot());
-        Assertions.assertEquals(expected,player.getStars());
+        assertEquals(expected,player.loot());
+        assertEquals(expected,player.getStars());
     }
 
     @Test
     void cant_cartsTest() {
         var cart = new Carts_ejm(null,null);
         player.setMano(new Carts[]{cart,cart,cart});
-        Assertions.assertEquals(3,player.cant_carts());
+        assertEquals(3,player.cant_carts());
     }
 
     @Test
@@ -63,11 +66,27 @@ class UnitsPlayerTest {
     @Test
     void deletedCartTest() {
         var cart = new Carts_ejm(null,null);
-        var cart2 = new Carts_ejm("null",null);
-        player.setMano(new Carts[]{cart,cart,cart});
+        var cart2 = new Carts_ejm("maradona",null);
+        player.setMano(new Carts[]{cart,cart2,cart});
         player.deleteCart(3);
-        Assertions.assertEquals(3,player.cant_carts());
+        assertEquals(3,player.cant_carts());
         player.deleteCart(2);
-        Assertions.assertEquals(2,player.cant_carts());
+        assertEquals(2,player.cant_carts());
+        assertEquals(cart2,player.getMano()[1]);
+        assertEquals(cart,player.getMano()[0]);
+    }
+    @Test
+    void addCartTest(){
+        var cart = new Carts_ejm(null,null);
+        var cart2 = new Carts_ejm("maradona",null);
+        player.setMano(null);
+        player.add_cart(cart);
+        assertEquals(1,player.cant_carts());
+        assertEquals(cart,player.getMano()[0]);
+        assertNotEquals(cart2,player.getMano()[0]);
+        player.add_cart(cart2);
+        assertEquals(2,player.cant_carts());
+        assertEquals(cart,player.getMano()[0]);
+        assertEquals(cart2,player.getMano()[1]);
     }
 }

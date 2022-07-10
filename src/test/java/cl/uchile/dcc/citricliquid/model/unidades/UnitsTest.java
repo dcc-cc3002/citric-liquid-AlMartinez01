@@ -2,8 +2,6 @@ package cl.uchile.dcc.citricliquid.model.unidades;
 
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts_ejm;
-import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
-import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,6 @@ public class UnitsTest {
     private final String name_wild = "chicken";
     private final String name_boss = "Store Manager";
     private UnitsPlayer sugur;
-    private UnitsPlayer sinCartSugur;
     private UnitsEnemy wild;
     private UnitsEnemy boss;
     private Carts_ejm cart;
@@ -31,7 +28,6 @@ public class UnitsTest {
         String name_cart2 = "cart2";
         cart2 = new Carts_ejm(name_cart2, name_cart2);
         sugur = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart, cart}, null, 2, 0, 1);
-        sinCartSugur = new UnitsPlayer(NamePla, 6, 2, 3, 4, null, null, 2, 0, 1);
         wild = new UnitsEnemy(name_wild, 3, -1, -1, 1, false, 0);
         boss = new UnitsEnemy(name_boss, 8, 3, 2, -1, true, 0);
 
@@ -149,7 +145,8 @@ public class UnitsTest {
         sugur = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart, cart2}, null, 2, 0, 1);
         sugur.deleteCart(0);
         final var expectedMano2 = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart2}, null, 2, 0, 1);
-        assertEquals(expectedMano2, sugur);
+        System.out.printf(sugur.toString());
+        assertTrue(expectedMano2.equals(sugur));
     }
 
     @Test
@@ -165,7 +162,7 @@ public class UnitsTest {
 
         expectSugur = new UnitsPlayer(NamePla, 6, 2, 3, 4, new Carts[]{cart, cart}, null, 0, 0, 1);
         sugur.incrementStars(-30);
-        assertEquals(expectSugur, sugur);
+        assertTrue(expectSugur.equals(sugur));
     }
 
     @Test
@@ -219,5 +216,13 @@ public class UnitsTest {
         sugur.victory(recompensa);
         assertEquals(4,sugur.getStars());
         assertEquals(2,sugur.getWins());
+    }
+
+    @Test
+    public void selectCartTest(){
+        assertFalse(sugur.selectCart(2));
+        assertEquals(2,sugur.cant_carts());
+        assertTrue(sugur.selectCart(1));
+        assertEquals(1,sugur.cant_carts());
     }
 }

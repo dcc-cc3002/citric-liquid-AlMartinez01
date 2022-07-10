@@ -42,6 +42,12 @@ class PanelEncounterTest {
         assertEquals(expected,panelEncounter.getEnemy_actual());
     }
 
+    @Test
+    void setEnemy_ActualTest(){
+        panelEncounter.setEnemy_actual(roboBall);
+        assertEquals(roboBall,panelEncounter.getEnemy_actual());
+    }
+
 
 
 }

@@ -8,18 +8,15 @@ import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class Panelboss extends PanelEncounter implements Observer {
     private UnitsEnemy boss_actual;
     private boolean boss = false;
 
-    public Panelboss(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsEnemy enemy_default, UnitsEnemy boss_default) {
+    public Panelboss(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsEnemy enemy_default, UnitsEnemy boss_default) {
         super(units, nexts, carta, enemy_default);
         this.boss_actual = boss_default;
-    }
-    public void agregarBoss(@NotNull UnitsEnemy boss){
-        if (boss.isBoss()){
-            this.boss_actual = boss;
-        }
     }
 
     public UnitsEnemy getBoss_actual() {
@@ -39,7 +36,7 @@ public class Panelboss extends PanelEncounter implements Observer {
 
         Panelboss panelboss = (Panelboss) o;
 
-        return boss_actual != null ? boss_actual.equals(panelboss.boss_actual) : panelboss.boss_actual == null;
+        return Objects.equals(boss_actual, panelboss.boss_actual);
     }
 
     @Override

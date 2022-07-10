@@ -91,6 +91,7 @@ public class GameController implements Observable, Observer {
 
     @Override
     public void notifier() {
+        if (obs_panel == null){return;}
         for(Observer o: obs_panel){
             o.update();
         }

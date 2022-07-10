@@ -1,4 +1,4 @@
-package cl.uchile.dcc.citricliquid.model.board;
+package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
@@ -32,16 +32,6 @@ public class PanelNeutralTest {
     public void buildTest() {
         var expected = new Panel(null, null, null);
         assertEquals(expected, panelneu1);
-    }
-
-    @Test
-    public void cantNexts() {
-        assertEquals(0, panelneu1.cant_next());
-        panelneu1.addNextPanel(panelneu2);
-        assertEquals(1, panelneu1.cant_next());
-        assertEquals(panelneu2, panelneu1.getNexts()[0]);
-        panelneu1.addNextPanel(panelneu3);
-        assertEquals(2, panelneu1.cant_next());
     }
 
     @Test
@@ -85,12 +75,8 @@ public class PanelNeutralTest {
         panelneu1.addNextPanel(panelneu2);
         panelneu2.addNextPanel(panelneu3);
         panelneu1.unitPlayer(suguri);
-        Panel obj = panelneu1.avanzar(suguri, 1);
+        panelneu1.avanzar(suguri, 1);
         assertEquals(suguri, panelneu2.getUnits()[0]);
-        assertEquals(panelneu2, obj);
-        Panel obj2 = panelneu1.avanzar(suguri, 2);
-        Panel obj3 = panelneu2.avanzar(suguri, 1);
-        assertEquals(obj2, obj3);
     }
 
     @Test
@@ -130,6 +116,12 @@ public class PanelNeutralTest {
         expected.agrePlayer(suguri4);
         assertEquals(expected, panelneu1);
     }
+    @Test
+    public void getNexts(){
+        panelneu1.addNextPanel(panelneu2);
+        assertEquals(panelneu2,panelneu1.getNexts());
+    }
+
     
 }
 

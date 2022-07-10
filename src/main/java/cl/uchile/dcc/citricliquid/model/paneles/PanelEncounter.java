@@ -11,7 +11,7 @@ import java.util.Objects;
 public class PanelEncounter extends Panel {
     private UnitsEnemy enemy_actual;
 
-    public PanelEncounter(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsEnemy enemy_default) {
+    public PanelEncounter(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsEnemy enemy_default) {
         super(units, nexts, carta);
         this.enemy_actual = enemy_default;
     }
@@ -35,8 +35,4 @@ public class PanelEncounter extends Panel {
         return Objects.equals(enemy_actual, that.enemy_actual);
     }
 
-    @Override
-    public int hashCode() {
-        return enemy_actual != null ? enemy_actual.hashCode() : 0;
-    }
 }
