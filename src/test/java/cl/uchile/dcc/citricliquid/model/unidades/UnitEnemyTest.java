@@ -48,17 +48,18 @@ public class UnitEnemyTest {
     @RepeatedTest(100)
     public void receiveDamageTest(){
         final long testSeed = new Random().nextLong();
+        Random random = new Random(testSeed);
         enemy.setSeed(testSeed);
         int hp_last = enemy.getHpActual();
         int damage = new Random().nextInt(1,5);
-        int rollEnemyExpected = new Random(testSeed).nextInt(2) ;
+        int rollEnemyExpected = random.nextInt(2) ;
         enemy.receiveDamagePlayer(damage);
         if (rollEnemyExpected == 1){
-            int i = Math.max(damage - (new Random(testSeed).nextInt(6)+1  + enemy.getDef()),1);
+            int i = Math.max(damage - (random.nextInt(6)+1  + enemy.getDef()),1);
             assertEquals(Math.max(0,hp_last-i),enemy.getHpActual());
         }
         else{
-            int i = new Random(testSeed).nextInt(6)+1  + enemy.getEvd();
+            int i = random.nextInt(6)+1  + enemy.getEvd();
             if (damage > i){
                 assertEquals(Math.max(0,hp_last-damage),enemy.getHpActual());
             }

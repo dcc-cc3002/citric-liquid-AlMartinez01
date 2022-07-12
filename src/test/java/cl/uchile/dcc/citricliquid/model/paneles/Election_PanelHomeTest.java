@@ -159,7 +159,7 @@ public class Election_PanelHomeTest {
             panelHome.rollDice();
         }
     }
-    @Test
+    @RepeatedTest(100)
     void moveNotSuguriTest() throws IOException {
         assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());
         final long testSeed = new Random().nextLong();
@@ -168,6 +168,42 @@ public class Election_PanelHomeTest {
         notSuguri.play();
         if (i>1){
             assertNotEquals(Select_player_PanelHome.class,panelHome.getStatesPanelHome().getClass());
+            if (i == 3){
+                assertTrue(panel3.unitExist(notSuguri));
+                assertEquals(panel3,notSuguri.getUbi());
+                assertFalse(panel1.unitExist(notSuguri));
+                assertFalse(panel2.unitExist(notSuguri));
+                assertFalse(panel4.unitExist(notSuguri));
+                assertFalse(panel5.unitExist(notSuguri));
+                assertFalse(panel6.unitExist(notSuguri));
+            }
+            else if (i == 4){
+                assertTrue(panel4.unitExist(notSuguri));
+                assertEquals(panel4,notSuguri.getUbi());
+                assertFalse(panel1.unitExist(notSuguri));
+                assertFalse(panel2.unitExist(notSuguri));
+                assertFalse(panel3.unitExist(notSuguri));
+                assertFalse(panel5.unitExist(notSuguri));
+                assertFalse(panel6.unitExist(notSuguri));
+            }
+            else if (i == 5){
+                assertTrue(panel5.unitExist(notSuguri));
+                assertEquals(panel5,notSuguri.getUbi());
+                assertFalse(panel1.unitExist(notSuguri));
+                assertFalse(panel2.unitExist(notSuguri));
+                assertFalse(panel3.unitExist(notSuguri));
+                assertFalse(panel4.unitExist(notSuguri));
+                assertFalse(panel6.unitExist(notSuguri));
+            }
+            else if (i == 6){
+                assertTrue(panel6.unitExist(notSuguri));
+                assertEquals(panel6,notSuguri.getUbi());
+                assertFalse(panel1.unitExist(notSuguri));
+                assertFalse(panel2.unitExist(notSuguri));
+                assertFalse(panel3.unitExist(notSuguri));
+                assertFalse(panel4.unitExist(notSuguri));
+                assertFalse(panel5.unitExist(notSuguri));
+            }
         }
     }
 }

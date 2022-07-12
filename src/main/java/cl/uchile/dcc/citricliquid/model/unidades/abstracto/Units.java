@@ -94,7 +94,6 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
         System.out.printf("salio: " +dado +"\n");
         return dado;
     }
-
     public int  loot(){
         return 0;
     }

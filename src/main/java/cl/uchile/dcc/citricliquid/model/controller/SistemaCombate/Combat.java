@@ -1,18 +1,34 @@
 package cl.uchile.dcc.citricliquid.model.controller.SistemaCombate;
 
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.StatesCombat.AutomaticState;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.StatesCombat.OptionsCombat;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.StatesCombat.SelectionDecisionPlayer;
+import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
+import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 
 public class Combat {
 
 
-    Units unit1;
-    Units unit2;
+    public Units unit1;
+    public Units unit2;
+    private OptionsCombat state;
 
-    public Combat(Units unit1, Units unit2) {
+    public Combat(UnitsPlayer unit1, UnitsEnemy unit2) {
         this.unit1 = unit1;
         this.unit2 = unit2;
+        this.state = new AutomaticState();
+        state.setCombat(this);
     }
-
+    //*********GETTERS AND SETTERS
+    public OptionsCombat getState() {
+        return state;
+    }
+    public void setState(OptionsCombat state) {
+        this.state = state;
+        state.setCombat(this);
+    }
+    //*********GETTERS AND SETTERS
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -24,34 +40,22 @@ public class Combat {
         return unit2 != null ? unit2.equals(combat.unit2) : combat.unit2 == null;
     }
 
-    public void starter(){
-        unit1.initio_combat();
-        unit2.initio_combat();
-        try {
-            //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(2*1000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        while (unit1.deadUnit() && unit2.deadUnit()){
-            System.out.printf("\n"+unit1.getId() + " atacara!!!!\n");
-            unit1.attack(unit2);
-            System.out.printf("vida actual de j1: " + unit1.getHpActual() +" |vida actual de j2: "  + unit2.getHpActual()+"\n");
-            if (unit2.deadUnit()) {
-                System.out.printf("\n" + unit2.getId() + " atacara!!!!\n");
-                unit2.attack(unit1);
-                System.out.printf("vida actual de j1: " + unit1.getHpActual() + " |vida actual de j2: " + unit2.getHpActual() + "\n");
-            }
-        }
+    public void starter(UnitsPlayer p1,UnitsEnemy E1){
+        p1.attack(E1); //ACCION AUTOMATICA
+
+        E1.attack(p1); //Con esto el player entrara en eleccion de accion
+        init_attack(p1);
+    }
+    public void init_attack(UnitsPlayer u1){
+        this.state = new SelectionDecisionPlayer(this,u1);
+    }
+    public void option0(){
+        state.option0();
+    }
+    public void option1(){
+        state.option1();
+    }
 
 
-        if (!(unit1.deadUnit())){
-            System.out.printf(unit1.getId()+ "a caido!!\n");
-            unit2.victory(unit1.defeat());
-        }
-        else{
-            System.out.printf(unit2.getId()+ "a caido!!\n");
-            unit1.victory(unit2.defeat());
-        }
-    }//FUNCION NO TESTEABLE//
+
 }

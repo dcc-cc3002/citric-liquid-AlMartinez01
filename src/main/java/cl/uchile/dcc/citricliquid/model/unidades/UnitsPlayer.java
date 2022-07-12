@@ -7,6 +7,7 @@ import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.*;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -49,7 +50,7 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         setStatesPlayer(new Standby_mode_Player() );
     }
 
-    public void setStatesPlayer(StatesPlayer statesPlayer) {
+    public void setStatesPlayer(@NotNull StatesPlayer statesPlayer) {
         this.statesPlayer = statesPlayer;
         statesPlayer.setUnitPlayers(this);
     }
@@ -239,7 +240,7 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
     }
 
     @Override
-    public void attack(Attackable target) {
+    public void attack(@NotNull Attackable target) {
         target.receiveDamagePlayer(this.attack());
     }
 
@@ -249,7 +250,7 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
     }
 
     @Override
-    public void victory(int[] recompense) {
+    public void victory(int @NotNull [] recompense) {
         this.incrementStars(recompense[0]);
         this.incrementedWins(recompense[1]);
         System.out.printf("se a conseguido: " + recompense[0]);

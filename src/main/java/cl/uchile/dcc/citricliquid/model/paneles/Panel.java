@@ -119,15 +119,6 @@ public class Panel {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Panel{" +
-                "units=" + Arrays.toString(units) +
-                ", next=" + nexts +
-                ", carta=" + carta +
-                '}';
-    }
-
     public void addNextPanel(final Panel panel) {
         nexts = panel;
     }

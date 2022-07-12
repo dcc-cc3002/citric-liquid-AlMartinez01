@@ -4,7 +4,10 @@ import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts_ejm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -88,5 +91,40 @@ class UnitsPlayerTest {
         assertEquals(2,player.cant_carts());
         assertEquals(cart,player.getMano()[0]);
         assertEquals(cart2,player.getMano()[1]);
+    }
+
+    @Test
+    void addStartsTest() {
+        int starts = new Random().nextInt(5,10);
+        player.addStars(starts);
+        assertEquals(starts,player.getStars());
+    }
+
+    @RepeatedTest(100)
+    void attackTest() {
+        var enemy = new UnitsEnemy("chicken", 7, -1, -1, 1, false, 0);
+        final long ran = new Random().nextLong();
+        final Random random = new Random(ran);
+        player.setSeed(ran);
+        enemy.setSeed(ran);
+
+        int damageExpected = new Random(ran).nextInt(6)+1+player.getAtk();
+        int val = random.nextInt(2);
+        int hp_last = enemy.getHpActual();
+
+        player.attack(enemy);
+        if (val == 1){
+            int i = Math.max(damageExpected - (random.nextInt(6)+1  + enemy.getDef()),1);
+            assertEquals(Math.max(0,hp_last-i),enemy.getHpActual());
+        }
+        else {
+            int i = random.nextInt(6)+1  + enemy.getEvd();
+            if (damageExpected > i){
+                assertEquals(Math.max(0,hp_last-damageExpected),enemy.getHpActual());
+            }
+            else {
+                assertEquals(hp_last,enemy.getHpActual());
+            }
+        }
     }
 }

@@ -1,6 +1,10 @@
 package cl.uchile.dcc.citricliquid.model.Game;
 
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Combat;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.StatesCombat.AutomaticState;
+import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.StatesCombat.SelectionDecisionPlayer;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
@@ -24,11 +28,30 @@ public class CombatTest {
         carts = new Carts_ejm(name_carts, name_carts);
         unitsPlayer = new UnitsPlayer("suguri",hp,atk,def,evd,new Carts[] {carts, carts},null,starts,wins,norma);
         unitsEnemy = new UnitsEnemy("chicken", 3, -1, -1, 1, false, 0);
-        combat = new Combat(unitsEnemy,unitsPlayer);
+        combat = new Combat(unitsPlayer,unitsEnemy);
     }
     @Test
     void constructorTest(){
-        var expectedCombat = new Combat(unitsEnemy,unitsPlayer);
+        var expectedCombat = new Combat(unitsPlayer,unitsEnemy);
         assertEquals(expectedCombat,combat);
+        assertEquals(AutomaticState.class,combat.getState().getClass());
+        assertEquals(combat,combat.getState().getCombat());
+    }
+
+    @Test
+    void init_attack1() {
+        combat.init_attack(unitsPlayer);
+        assertEquals(SelectionDecisionPlayer.class,combat.getState().getClass());
+        assertEquals(combat,combat.getState().getCombat());
+    }
+    @Test
+    void staterTest(){
+        combat.starter(unitsPlayer,unitsEnemy);
+        assertEquals(SelectionDecisionPlayer.class,combat.getState().getClass());
+        assertEquals(combat,combat.getState().getCombat());
+        assertEquals(Receive_damage_mode_player.class,unitsPlayer.getStatesPlayer().getClass());
+        combat.option0();
+        assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+        assertEquals(AutomaticState.class,combat.getState().getClass());
     }
 }
