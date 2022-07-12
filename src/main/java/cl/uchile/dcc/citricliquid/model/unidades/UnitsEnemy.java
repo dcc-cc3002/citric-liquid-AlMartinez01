@@ -4,6 +4,7 @@ import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attackable;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attacker;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -54,38 +55,22 @@ public class UnitsEnemy extends Units implements Initio_combat, Attacker, Attack
     }
 
     @Override
-    public void attack(Attackable target) {
+    public void attack(@NotNull Attackable target) {
         target.receiveDamagePlayer(this.attack());
     }
 
     @Override
     public void receiveDamagePlayer(int damage) {
 
-        if (this.getHpActual() + this.getEvd() <= this.getHpMax()/3){
-            System.out.println("Esta esquivando como loco!!\n");
-            this.dodge(damage);
-        }
-        else if (this.getHpActual() + this.getDef() >= 3*this.getHpMax()/4){
-            System.out.println("el enemigo muestra su rudeza recibiendo el daño\n");
+        int i = this.getRandom().nextInt(2);
+
+        if (i == 1) {
+            System.out.print("El ah decidido bloquear el ataque!!");
             this.defense(damage);
         }
-        else {
-            int i = new Random().nextInt(2);
-
-            if (i == 1) {
-                System.out.print("El ah decidido bloquear el ataque!!");
-                this.defense(damage);
-            }
-            else{
-                System.out.println("El ah esquivado!!");
-                this.dodge(damage);
-            }
-        }
-        try {
-            //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(2*1000);
-        } catch (Exception e) {
-            System.out.println(e);
+        else{
+            System.out.println("El ah esquivado!!");
+            this.dodge(damage);
         }
     }
 

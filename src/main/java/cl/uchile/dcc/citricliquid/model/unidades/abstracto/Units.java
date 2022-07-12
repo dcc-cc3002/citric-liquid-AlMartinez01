@@ -49,6 +49,10 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
         return evd;
     }
 
+    public Random getRandom() {
+        return random;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,8 +103,7 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
      * funcion que recibe un ataque y actua "defendiendose"
      */
     public void defense(int damage) {
-        int i = damage - (this.roll() + this.getDef());
-        if (i < 1){i = 1;}
+        int i = Math.max(damage - (this.roll() + this.getDef()),1);
         this.setHpActual(Math.max(0,this.getHpActual()-i));
         System.out.print("daño recibido: " + i + "\n");
     }
