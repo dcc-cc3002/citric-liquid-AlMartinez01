@@ -9,7 +9,6 @@ public class Play_mode_player implements StatesPlayer {
     @Override
     public void rollDice() throws IOException {
         player.play();
-        player.setStatesPlayer(new Standby_mode_Player());
     }
 
     @Override

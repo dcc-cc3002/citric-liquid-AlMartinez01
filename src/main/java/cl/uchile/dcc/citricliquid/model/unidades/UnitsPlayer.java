@@ -3,6 +3,8 @@ package cl.uchile.dcc.citricliquid.model.unidades;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attackable;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attacker;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.*;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
@@ -12,9 +14,13 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class UnitsPlayer extends Units implements Initio_combat, Attackable, Attacker {
+public class UnitsPlayer extends Units implements Initio_combat, Attackable, Attacker, ObservableEvent {
     Carts[] mano; //mano de cartas disponibles
     Panel ubi;
+
+
+
+    private ObserverEvent observerEvent;
     //////////////////NORMA///////////////////
     int stars;
     int wins;
@@ -77,6 +83,9 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
 
 
     /**#################SETTERS AND GETTERS#######################**/
+    public ObserverEvent getObserverEvent() {
+        return observerEvent;
+    }
     public void setLvlNorma(int lvlNorma) {
         this.lvlNorma = lvlNorma;
     }
@@ -258,7 +267,9 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
 
     @Override
     public int[] defeat() {
-        return (new int[]{this.loot(), 2});
+        int lot = this.loot();
+        System.out.println(this.getId() +" a perdido: " + lot + " estrellas\n");
+        return (new int[]{lot, 2});
     }
 
     public void initTurn() {
@@ -276,5 +287,16 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
                 ", lvlNorma=" + lvlNorma +
                 ", statesPlayer=" + statesPlayer +
                 '}';
+    }
+
+    @Override
+    public void attachEvent(ObserverEvent observer) {
+        this.observerEvent = observer;
+    }
+
+    @Override
+    public void notifierEvent() {
+        if (observerEvent == null){return;}
+        this.observerEvent.updateEvent();
     }
 }

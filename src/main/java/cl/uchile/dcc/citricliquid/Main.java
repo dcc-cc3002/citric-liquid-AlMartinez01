@@ -2,7 +2,6 @@ package cl.uchile.dcc.citricliquid;
 
 import cl.uchile.dcc.citricliquid.model.controller.CreatePlayers;
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
-import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Combat;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.paneles.PanelBonus;
 import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;

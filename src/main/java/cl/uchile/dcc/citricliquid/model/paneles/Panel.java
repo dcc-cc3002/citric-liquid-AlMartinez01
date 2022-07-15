@@ -1,6 +1,7 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
@@ -110,6 +111,7 @@ public class Panel {
      */
     public void activator(@NotNull UnitsPlayer u1){
         this.unitPlayer(u1);
+        u1.setStatesPlayer(new Standby_mode_Player());
     }
 
     public void avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {

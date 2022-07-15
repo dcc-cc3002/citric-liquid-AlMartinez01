@@ -20,6 +20,7 @@ public class PanelDrop extends Panel {
     }
     @Override
     public void activator(final @NotNull UnitsPlayer player) {
+        this.unitPlayer(player);
         player.incrementStars(-drop(player));
         super.activator(player);
     }

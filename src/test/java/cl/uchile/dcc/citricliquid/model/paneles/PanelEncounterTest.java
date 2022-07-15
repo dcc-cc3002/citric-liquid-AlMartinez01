@@ -1,6 +1,9 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
+import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +15,21 @@ class PanelEncounterTest {
     UnitsEnemy roboBall;
     UnitsEnemy Store_Manager;
 
+    UnitsPlayer unitsPlayer;
+    private final static String PLAYER_NAME = "player";
+    private final static int BASE_HP = 4;
+    private final static int BASE_ATK = 1;
+    private final static int BASE_DEF = -1;
+    private final static int BASE_EVD = 2;
+
     @BeforeEach
     void setUp() {
+
         chicken = new UnitsEnemy("chicken", 3, -1, -1, +1,false,0);
         roboBall = new UnitsEnemy("Robo Ball", 3, -1, +1, -1,false,0);
         Store_Manager = new UnitsEnemy("Store Manager", 8,+3, +2, -1, true,0);
         panelEncounter = new PanelEncounter(null,null,null,chicken);
+        unitsPlayer = new UnitsPlayer(PLAYER_NAME,BASE_HP,BASE_ATK,BASE_DEF,BASE_EVD,null,null,0,0,1);
     }
 
     @Test
@@ -48,6 +60,15 @@ class PanelEncounterTest {
         assertEquals(roboBall,panelEncounter.getEnemy_actual());
     }
 
+    @Test
+    void ActivatorTest() {
+        panelEncounter.activator(unitsPlayer);
 
+        assertTrue(panelEncounter.unitExist(unitsPlayer));
+        if (chicken.deadUnit()){return;}
+        assertEquals(Receive_damage_mode_player.class,unitsPlayer.getStatesPlayer().getClass());
 
+        unitsPlayer.option0();
+        assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+    }
 }

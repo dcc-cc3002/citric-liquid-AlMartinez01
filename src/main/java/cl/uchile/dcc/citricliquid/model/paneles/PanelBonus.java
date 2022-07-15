@@ -16,6 +16,7 @@ public class PanelBonus extends Panel {
     }
     @Override
     public void activator(@NotNull UnitsPlayer u1) {
+        this.unitPlayer(u1);
         u1.incrementStars(bonus(u1));
 
         super.activator(u1);

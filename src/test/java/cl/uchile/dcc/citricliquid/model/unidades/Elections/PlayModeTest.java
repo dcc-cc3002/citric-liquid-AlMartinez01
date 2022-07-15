@@ -145,4 +145,30 @@ public class PlayModeTest {
         player.option8();
         player.option9();
     }
+
+    @Test
+    void opcionesNulasTest(){
+        player.setStatesPlayer(new Play_mode_player());
+        player.option0();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option1();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option2();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option3();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option4();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option5();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option6();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option7();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option8();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+        player.option9();
+        assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
+    }
+
 }

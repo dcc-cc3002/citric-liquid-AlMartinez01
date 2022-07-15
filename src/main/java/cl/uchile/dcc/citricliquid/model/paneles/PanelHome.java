@@ -96,6 +96,7 @@ public class PanelHome extends Panel implements Observable {
 
     @Override
     public void activator(@NotNull UnitsPlayer u1) {
+        this.unitPlayer(u1);
         super.activator(u1);
         int i = u1.getLvlNorma();
         this.normaCheck(u1);

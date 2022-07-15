@@ -24,52 +24,54 @@ public class Receive_damage_mode_player implements StatesPlayer{
     public void option0() {
         player.defense(dam);
         player.setStatesPlayer(new Standby_mode_Player());
+        player.notifierEvent();
     }
 
     @Override
     public void option1() {
         player.dodge(dam);
         player.setStatesPlayer(new Standby_mode_Player());
+        player.notifierEvent();
     }
 
     @Override
     public void option2() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override
     public void option3() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override
     public void option4() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override
     public void option5() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override
     public void option6() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override
     public void option7() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override
     public void option8() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override
     public void option9() {
-        System.out.printf("Valor erroneo, desea defender(0) o esquivar(1)?");
+        System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
 
     @Override

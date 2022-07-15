@@ -1,12 +1,16 @@
 package cl.uchile.dcc.citricliquid.model.board.Elections;
 
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Select_player_PanelHome;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts_ejm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -59,5 +63,26 @@ public class ElectionReceiveDamageTest {
         else {assertEquals(vida_original,sugur.getHpActual());}
     }
 
-
+    @Test
+    void opcionesNulasTest() throws IOException {
+        sugur.receiveDamagePlayer(10);
+        sugur.rollDice();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option2();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option3();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option4();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option5();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option6();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option7();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option8();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.option9();
+        assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+    }
 }

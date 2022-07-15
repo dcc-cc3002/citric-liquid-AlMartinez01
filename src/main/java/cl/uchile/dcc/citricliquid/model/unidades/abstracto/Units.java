@@ -73,7 +73,6 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
     }
 
     public void addStars(int stars){
-
     }
 
     /**
@@ -121,6 +120,6 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
     }
 
     public boolean deadUnit(){
-        return !(this.getHpActual() == 0);
+        return (this.getHpActual() == 0);
     }
 }

@@ -183,9 +183,9 @@ public class UnitsTest {
 
     @Test
     void deadTest(){
-        assertTrue(sugur.deadUnit());
-        sugur.setHpActual(0);
         assertFalse(sugur.deadUnit());
+        sugur.setHpActual(0);
+        assertTrue(sugur.deadUnit());
     }
 
     @Test
