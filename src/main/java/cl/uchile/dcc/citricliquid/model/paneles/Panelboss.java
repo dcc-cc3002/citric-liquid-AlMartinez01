@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class Panelboss extends PanelEncounter implements Observer, ObserverEvent {
+public class Panelboss extends PanelEncounter implements Observer {
     private UnitsEnemy boss_actual;
     private boolean boss = false;
 

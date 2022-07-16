@@ -12,9 +12,6 @@ import java.util.Objects;
 
 public class PanelEncounter extends Panel implements ObserverEvent, ObservableEvent {
     private UnitsEnemy enemy_actual;
-
-    ObserverEvent observerEvent;
-
     public PanelEncounter(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsEnemy enemy_default) {
         super(units, nexts, carta);
         this.enemy_actual = enemy_default;
@@ -51,16 +48,5 @@ public class PanelEncounter extends Panel implements ObserverEvent, ObservableEv
     public void updateEvent() { //RECIBE CUANDO EL COMBATE TERMINA
         super.activator(this.getUnits()[this.cantUnits()-1]);
         notifierEvent();
-    }
-
-    @Override
-    public void attachEvent(ObserverEvent observer) {
-        this.observerEvent = observer;
-    }
-
-    @Override
-    public void notifierEvent() { //NOTIFICA QUE EL TURNO A TERMINADO
-        if (observerEvent == null) return;
-        observerEvent.updateEvent();
     }
 }

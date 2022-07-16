@@ -1,41 +1,36 @@
 package cl.uchile.dcc.citricliquid.model.controller;
 
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observable;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observer;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public class GameController implements Observable, Observer {
+public class GameController implements Observable, Observer, ObserverEvent {
     public UnitsPlayer[] players;
     public Panel[] tablero;
     public int ronda = 1; //Almacenamos la información de la ronda en la que se esta
     public int norma_maxima = 1; // Almacena la norma mas alta de la partida (sera un termino global)
+    public int countPlayers = 0; //Comienza a contar de 0
+    public int turnPlayer = 0;
 
     public Observer[] obs_panel;
-
-    CreatePlayers createPlayers;
 
 
     public GameController() {
     }
 
-    public void createPlayers() {
-        this.createPlayers = new CreatePlayers(1);
-        players = createPlayers.desordenar();
-    }
 
     public void addPlayer(UnitsPlayer unitsPlayer){
         if (this.players == null){
             this.players = new UnitsPlayer[]{unitsPlayer};
             return;
         }
-        int contador = 0;
-        for (UnitsPlayer ignored : players){
-            contador++;
-        }
+        int contador = countPlayers+1;
         UnitsPlayer[] newPlayers = new UnitsPlayer[contador +1];
         int i = 0;
         while (i < contador){
@@ -44,29 +39,31 @@ public class GameController implements Observable, Observer {
         }
         newPlayers[contador] = unitsPlayer;
         this.players = newPlayers;
+        this.countPlayers++;
     }
-    public void addTablero(Panel[] tablero){
+    public void addTablero(Panel @NotNull [] tablero){
         this.tablero = tablero;
+        for (Panel panel: tablero){
+            panel.attachEvent(this);
+        }
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         GameController that = (GameController) o;
-
-        if (ronda != that.ronda) return false;
-        if (norma_maxima != that.norma_maxima) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(players, that.players)) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(tablero, that.tablero)) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(obs_panel, that.obs_panel)) return false;
-        return Objects.equals(createPlayers, that.createPlayers);
+        return ronda == that.ronda && norma_maxima == that.norma_maxima && Arrays.equals(players, that.players) && Arrays.equals(tablero, that.tablero) && Arrays.equals(obs_panel, that.obs_panel);
     }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(ronda, norma_maxima);
+        result = 31 * result + Arrays.hashCode(players);
+        result = 31 * result + Arrays.hashCode(tablero);
+        result = 31 * result + Arrays.hashCode(obs_panel);
+        return result;
+    }
 
     @Override
     public void attach(Observer observer) {
@@ -107,5 +104,18 @@ public class GameController implements Observable, Observer {
         if ((i != this.norma_maxima) && (this.norma_maxima==3)){
             notifier();
         }
+    }
+
+    public void init_turn(){
+        players[turnPlayer].initTurn();
+        turnPlayer++;
+        if (turnPlayer > countPlayers){
+            turnPlayer=0;
+        }
+    }
+
+    @Override
+    public void updateEvent() {
+        init_turn();
     }
 }

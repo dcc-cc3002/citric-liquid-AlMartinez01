@@ -274,6 +274,7 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
 
     public void initTurn() {
         this.statesPlayer = new Play_mode_player();
+        System.out.println("lanzar dado");
         statesPlayer.setUnitPlayers(this);
     }
 

@@ -1,6 +1,8 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
@@ -11,11 +13,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Panel {
+public class Panel implements ObservableEvent{
     private UnitsPlayer[] units;//Unidades en el panel
     private Panel nexts;//Los Paneles con los que esta unido o se puede continuar
     private Carts carta;//Carta en el panel
 
+    ObserverEvent observerEvent;
     public Panel(UnitsPlayer[] units, Panel nexts, Carts carta) {
         this.units = units;
         this.nexts = nexts;
@@ -112,6 +115,7 @@ public class Panel {
     public void activator(@NotNull UnitsPlayer u1){
         this.unitPlayer(u1);
         u1.setStatesPlayer(new Standby_mode_Player());
+        notifierEvent();
     }
 
     public void avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {
@@ -123,5 +127,16 @@ public class Panel {
 
     public void addNextPanel(final Panel panel) {
         nexts = panel;
+    }
+
+    @Override
+    public void attachEvent(ObserverEvent observer) {
+        this.observerEvent = observer;
+    }
+
+    @Override
+    public void notifierEvent() {
+        if (this.observerEvent == null){return;}
+        this.observerEvent.updateEvent();
     }
 }

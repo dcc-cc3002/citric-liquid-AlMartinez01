@@ -8,7 +8,6 @@ public class Standby_mode_Player implements StatesPlayer {
     UnitsPlayer unitsPlayer;
     @Override
     public void rollDice() throws IOException {
-
     }
 
     @Override
