@@ -1,41 +1,44 @@
-package cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome;
+package cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.StatesPanel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
+import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public class Select_player_PanelHome implements StatesPanel {
-    public Panel panelHome;
-    public UnitsPlayer player;
-
+public class Select_player_Panel implements StatesPanel {
+    public Panel panel;
+    UnitsPlayer player;
     int count;
-    public Select_player_PanelHome(Panel panelHome, @NotNull UnitsPlayer player, int count) {
-        this.panelHome = panelHome;
+    public Select_player_Panel(@NotNull Panel panel, @NotNull UnitsPlayer player, int count) {
+        this.panel = panel;
         this.player = player;
         this.count = count;
-        System.out.printf("jugador: " + player.getId() + " desea quedarse en en panelHome? (si[1] / no[0])");
+        System.out.println("deseas pelear contra:\n");
+        int i = 0;
+        for (UnitsPlayer players: panel.getUnits()) {
+            System.out.println(players.getId() + " (" + i + ")\n");
+            i++;
+        }
     }
 
 
 
     @Override
     public void rollDice() throws IOException {
-        panelHome.option0();
     }
 
     @Override
     public void option0() throws IOException {
-        panelHome.getNexts().avanzar(player,count-1);
-        panelHome.setStatesPanel(new Standly_mode_panel());
+
     }
 
     @Override
     public void option1() {
-        panelHome.activator(player);
-        panelHome.setStatesPanel(new Standly_mode_panel());
+
     }
 
     @Override
@@ -80,6 +83,7 @@ public class Select_player_PanelHome implements StatesPanel {
 
     @Override
     public void addPanel(Panel panel) {
-        this.panelHome = panel;
+        this.panel = panel;
     }
+
 }

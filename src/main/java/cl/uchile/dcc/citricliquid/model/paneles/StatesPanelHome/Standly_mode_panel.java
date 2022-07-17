@@ -1,14 +1,19 @@
 package cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome;
 
+import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;
-import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
-import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StatesPlayer;
-import javafx.scene.layout.Pane;
+import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public class Standly_mode_panelHome implements StatesPanelHome {
-    PanelHome panelHome;
+public class Standly_mode_panel implements StatesPanel {
+    Panel panel;
+
+    public Standly_mode_panel(){
+
+    }
+
     @Override
     public void rollDice() throws IOException {
 
@@ -65,7 +70,6 @@ public class Standly_mode_panelHome implements StatesPanelHome {
     }
 
     @Override
-    public void addPanelHome(PanelHome panelHome) {
-        this.panelHome = panelHome;
-    }
+    public void addPanel(Panel panelHome) {
+        this.panel = panelHome;    }
 }

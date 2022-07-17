@@ -2,11 +2,10 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Select_player_PanelHome;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panelHome;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Random;
@@ -58,7 +57,7 @@ public class Election_PanelHomeTest {
     }
     @RepeatedTest(100)
     void moveTestOption0() throws IOException {
-        assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());
+        assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());
         final long testSeed = new Random().nextLong();
         suguri.setSeed(testSeed);
         int i = new Random(testSeed).nextInt(6) + 1;
@@ -67,7 +66,7 @@ public class Election_PanelHomeTest {
         if (i > 1){
             assertEquals(Select_player_PanelHome.class,panelHome.getStatesPanelHome().getClass());/// SE ACTIVO EL PANEL
             panelHome.rollDice();
-            assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());/// SE ACTIVO EL PANEL
+            assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());/// SE ACTIVO EL PANEL
             if (i == 3){
                 assertTrue(panel3.unitExist(suguri));
                 assertEquals(panel3,suguri.getUbi());
@@ -106,7 +105,7 @@ public class Election_PanelHomeTest {
             }
         }
         else{
-            assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());
+            assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());
             panelHome.option0();
             panelHome.option1();
             panelHome.option2();
@@ -122,7 +121,7 @@ public class Election_PanelHomeTest {
     }
     @RepeatedTest(100)
     void moveTestOption1() throws IOException {
-        assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());
+        assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());
         final long testSeed = new Random().nextLong();
         suguri.setSeed(testSeed);
         int i = new Random(testSeed).nextInt(6) + 1;
@@ -141,11 +140,11 @@ public class Election_PanelHomeTest {
 
             assertEquals(Select_player_PanelHome.class,panelHome.getStatesPanelHome().getClass());/// SE ACTIVO EL PANEL
             panelHome.option1();
-            assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());/// SE ACTIVO EL PANEL
+            assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());/// SE ACTIVO EL PANEL
             assertTrue(panelHome.unitExist(suguri));
         }
         else{
-            assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());
+            assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());
             panelHome.option0();
             panelHome.option1();
             panelHome.option2();
@@ -161,7 +160,7 @@ public class Election_PanelHomeTest {
     }
     @RepeatedTest(100)
     void moveNotSuguriTest() throws IOException {
-        assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());
+        assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());
         final long testSeed = new Random().nextLong();
         notSuguri.setSeed(testSeed);
         int i = new Random(testSeed).nextInt(6) + 1;

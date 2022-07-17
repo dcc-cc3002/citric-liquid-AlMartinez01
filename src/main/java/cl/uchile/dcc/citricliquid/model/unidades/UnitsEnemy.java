@@ -90,4 +90,5 @@ public class UnitsEnemy extends Units implements Initio_combat, Attacker, Attack
         if (boss){ i = 3;}
         return (new int[]{this.loot(), i});
     }
+
 }

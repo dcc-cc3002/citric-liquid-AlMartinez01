@@ -30,6 +30,12 @@ public class CombatPlayers implements ObservableEvent, ObserverEvent{
         attachEvent(null);
     }
 
+    public CombatPlayers(){
+        this.unit1 = null;
+        this.unit2 = null;
+        attachEvent(null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,6 +66,12 @@ public class CombatPlayers implements ObservableEvent, ObserverEvent{
         unit1.attachEvent(null);
         unit2.attachEvent(null);
     }
+    public void setCombat(UnitsPlayer player1,UnitsPlayer player2, ObserverEvent observer){
+        this.unit1 = player1;
+        this.unit2 = player2;
+        attachEvent(observer);
+        System.out.println("iniciara el combate entre: "+unit1.getId()+" vs!! "+unit2.getId()+"\n");
+    }
 
 
     @Override
@@ -69,6 +81,7 @@ public class CombatPlayers implements ObservableEvent, ObserverEvent{
 
     @Override
     public void notifierEvent() {
+        System.out.println("Combate terminado");
         if (this.observerEvent == null){return;}
         this.observerEvent.updateEvent();
     }

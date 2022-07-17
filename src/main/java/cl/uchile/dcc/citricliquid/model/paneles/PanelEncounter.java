@@ -3,18 +3,27 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatEnemy;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class PanelEncounter extends Panel implements ObserverEvent, ObservableEvent {
+    Random random;
+
+    public void setSeed(long number) {
+        random = new Random(number);
+    }
+
     private UnitsEnemy enemy_actual;
     public PanelEncounter(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsEnemy enemy_default) {
         super(units, nexts, carta);
         this.enemy_actual = enemy_default;
+        random = new Random();
     }
 
     public UnitsEnemy getEnemy_actual() {
@@ -38,15 +47,26 @@ public class PanelEncounter extends Panel implements ObserverEvent, ObservableEv
 
     @Override
     public void activator(@NotNull UnitsPlayer u1) {
+        if (enemy_actual == null){restoredWild();}
+        if (enemy_actual.deadUnit()){restoredWild();}
         this.unitPlayer(u1);
-
-        CombatEnemy combat = new CombatEnemy(u1,enemy_actual,this);
+        CombatEnemy combat;
+        combat = new CombatEnemy();
+        combat.setCombat(u1,enemy_actual,this);
         combat.starter();
     }
 
+    public void restoredWild(){
+        int i = random.nextInt(3);
+        switch (i){
+            case 0 -> enemy_actual = new UnitsEnemy("Chicken",3,-1,-1,1,false,0);
+            case 1 -> enemy_actual = new UnitsEnemy("Robo Ball",3,-1,1,-1,false,0);
+            case 2 -> enemy_actual = new UnitsEnemy("Seagull",3,1,-1,-1,false,0);
+        }
+    }
     @Override
     public void updateEvent() { //RECIBE CUANDO EL COMBATE TERMINA
-        super.activator(this.getUnits()[this.cantUnits()-1]);
-        notifierEvent();
+        if (observerEvent == null)return;
+        observerEvent.updateEvent();
     }
 }

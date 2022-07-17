@@ -5,7 +5,10 @@ import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -70,5 +73,22 @@ class PanelEncounterTest {
 
         unitsPlayer.option0();
         assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+    }
+
+    @RepeatedTest(100)
+    void restoreWild() {
+        long entero = new Random().nextLong();
+        Random random = new Random(entero);
+        int i = random.nextInt(3);
+        UnitsEnemy expectedEnemy = null;
+        switch (i){
+            case 0 -> expectedEnemy = new UnitsEnemy("Chicken",3,-1,-1,1,false,0);
+            case 1 -> expectedEnemy = new UnitsEnemy("Robo Ball",3,-1,1,-1,false,0);
+            case 2 -> expectedEnemy = new UnitsEnemy("Seagull",3,1,-1,-1,false,0);
+        }
+        panelEncounter.setSeed(entero);
+        panelEncounter.setEnemy_actual(null);
+        panelEncounter.restoredWild();
+        assertEquals(expectedEnemy,panelEncounter.getEnemy_actual());
     }
 }

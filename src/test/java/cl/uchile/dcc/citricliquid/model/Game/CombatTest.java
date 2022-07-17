@@ -33,17 +33,18 @@ public class CombatTest {
         unitsEnemy = new UnitsEnemy("chicken", 100, -1, -1, 1, false, 0);
         unitsPlayer2 = new UnitsPlayer("suguri2", hp, atk, def, evd, new Carts[]{carts, carts}, null, starts, wins, norma);unitsPlayer2 = new UnitsPlayer("suguri2", hp, atk, def, evd, new Carts[]{carts, carts}, null, starts, wins, norma);
         unitsPlayer3 = new UnitsPlayer("suguri3", hp, atk, def, evd, new Carts[]{carts, carts}, null, starts, wins, norma);
-        combat = new CombatEnemy(unitsPlayer,unitsEnemy);
-        combat2 = new CombatPlayers(unitsPlayer2,unitsPlayer3);
+        combat = new CombatEnemy();
+        combat2 = new CombatPlayers();
     }
     @Test
     void constructorTest(){
-        var expectedCombat = new CombatEnemy(unitsPlayer,unitsEnemy);
+        var expectedCombat = new CombatEnemy();
         assertEquals(expectedCombat,combat);
     }
 
     @Test
     void init_attack1() {
+        combat.setCombat(unitsPlayer,unitsEnemy,null);
         combat.starter();
         assertEquals(Receive_damage_mode_player.class,unitsPlayer.getStatesPlayer().getClass());
         assertEquals(combat,unitsPlayer.getObserverEvent());
@@ -51,13 +52,17 @@ public class CombatTest {
     @Test
     void staterTest(){
         //COMBATE ENTRE UN JUGADOR Y UNA COMPUTADORA
+        combat.setCombat(unitsPlayer,unitsEnemy,null);
         combat.starter();
+
         unitsPlayer.option0();
         assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
         assertNull(unitsPlayer.getObserverEvent());
 
         //COMBATE ENTRE JUGADORES
+        combat2.setCombat(unitsPlayer2,unitsPlayer3,null);
         combat2.starter();
+
         assertEquals(Receive_damage_mode_player.class,unitsPlayer3.getStatesPlayer().getClass());
         assertEquals(Standby_mode_Player.class,unitsPlayer2.getStatesPlayer().getClass());
         assertEquals(combat2,unitsPlayer3.getObserverEvent());

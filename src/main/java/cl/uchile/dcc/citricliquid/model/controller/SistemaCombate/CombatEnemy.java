@@ -20,12 +20,19 @@ public class CombatEnemy implements ObservableEvent, ObserverEvent{
         this.unit1 = unit1;
         this.unit2 = unit2;
         attachEvent(observerEvent);
+        ;
     }
 
     public CombatEnemy(UnitsPlayer unit1, UnitsEnemy unit2) {
         System.out.println("iniciara el combate entre: "+unit1.getId()+" vs!! "+unit2.getId()+"\n");
         this.unit1 = unit1;
         this.unit2 = unit2;
+        attachEvent(null);
+    }
+
+    public CombatEnemy(){
+        this.unit1 = null;
+        this.unit2 = null;
         attachEvent(null);
     }
 
@@ -46,16 +53,17 @@ public class CombatEnemy implements ObservableEvent, ObserverEvent{
     }
 
     public void finished(){
-        if (unit1.deadUnit()){
+        if (!unit1.deadUnit()) {
+            if (unit2.deadUnit()){
+                System.out.println("\n" +unit2.getId() + " a caido\n");
+                unit1.victory(unit2.defeat());
+            }
+            else{
+                System.out.println("\n conflicto terminado sin muertes\n");
+            }
+        } else {
             System.out.println("\n" +  unit1.getId() + " a caido\n");
             unit2.victory(unit1.defeat());
-        }
-        else if (unit2.deadUnit()){
-            System.out.println("\n" +unit2.getId() + " a caido\n");
-            unit1.victory(unit2.defeat());
-        }
-        else{
-            System.out.println("\n conflicto terminado sin muertes\n");
         }
         notifierEvent(); //EL EVENTO EN ESTE CASO SERIA TERMINAR EL COMBATE
     }
@@ -64,6 +72,13 @@ public class CombatEnemy implements ObservableEvent, ObserverEvent{
     @Override
     public void attachEvent(ObserverEvent observer) {
         this.observerEvent = observer;
+    }
+
+    public void setCombat(UnitsPlayer player,UnitsEnemy enemy, ObserverEvent observer){
+        this.unit1 = player;
+        this.unit2 = enemy;
+        attachEvent(observer);
+        System.out.println("iniciara el combate entre: "+unit1.getId()+" vs!! "+unit2.getId()+"\n");
     }
 
     @Override
@@ -75,7 +90,6 @@ public class CombatEnemy implements ObservableEvent, ObserverEvent{
     @Override
     public void updateEvent() {
         this.finished();
-        this.notifierEvent();
         unit1.attachEvent(null);
     }
 }

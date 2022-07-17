@@ -22,6 +22,7 @@ public class Receive_damage_mode_player implements StatesPlayer{
 
     @Override
     public void option0() {
+        System.out.println("a defendido");
         player.defense(dam);
         player.setStatesPlayer(new Standby_mode_Player());
         player.notifierEvent();
@@ -29,6 +30,7 @@ public class Receive_damage_mode_player implements StatesPlayer{
 
     @Override
     public void option1() {
+        System.out.println("a esquivado");
         player.dodge(dam);
         player.setStatesPlayer(new Standby_mode_Player());
         player.notifierEvent();
@@ -76,7 +78,7 @@ public class Receive_damage_mode_player implements StatesPlayer{
 
     @Override
     public void setUnitPlayers(UnitsPlayer unitPlayers) {
-
+        this.player = unitPlayers;
     }
 
 }

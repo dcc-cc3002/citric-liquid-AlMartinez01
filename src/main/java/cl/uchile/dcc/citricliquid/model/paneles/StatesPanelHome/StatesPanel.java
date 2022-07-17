@@ -1,10 +1,10 @@
 package cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome;
 
-import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;
+import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 
 import java.io.IOException;
 
-public interface StatesPanelHome {
+public interface StatesPanel {
     void rollDice() throws IOException;
 
     void option0() throws IOException;
@@ -20,6 +20,5 @@ public interface StatesPanelHome {
     void option7();
     void option8();
     void option9();
-
-    void addPanelHome(PanelHome panelHome);
+    void addPanel(Panel panel);
 }

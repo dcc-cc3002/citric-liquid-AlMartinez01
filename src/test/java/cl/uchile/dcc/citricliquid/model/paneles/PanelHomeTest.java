@@ -2,7 +2,7 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Select_player_PanelHome;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panelHome;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,14 +21,11 @@ public class PanelHomeTest {
         suguri = new UnitsPlayer("suguri",hp,atk,def,evd,null,null,starts,wins,norma);
         panelHome = new PanelHome(null,null,null,suguri);
         gameController = new GameController();
-        gameController.addPlayer(suguri);
-        gameController.addTablero(new Panel[]{panelHome});
-        panelHome.attach(gameController);
     }
     @Test
     void setStatesPanelHomeTest(){
-        assertEquals(Standly_mode_panelHome.class,panelHome.getStatesPanelHome().getClass());
-        panelHome.setStatesPanelHome(new Select_player_PanelHome(panelHome,suguri,0));
+        assertEquals(Standly_mode_panel.class,panelHome.getStatesPanelHome().getClass());
+        panelHome.setStatesPanel(new Select_player_PanelHome(panelHome,suguri,0));
         assertEquals(Select_player_PanelHome.class,panelHome.getStatesPanelHome().getClass());
     }
 
@@ -51,7 +48,6 @@ public class PanelHomeTest {
     void activatorTest() {
         suguri.setHpActual(3);
         suguri.setStars(10);
-        assertEquals(panelHome,gameController.tablero[0]);
         panelHome.activator(suguri);
         assertTrue(panelHome.unitExist(suguri));
         assertEquals(panelHome,suguri.getUbi());

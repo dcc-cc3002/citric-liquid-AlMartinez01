@@ -78,8 +78,7 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
     /**
      * entrega un lanzamiento de dado
      */
-    public int roll() {
-        return random.nextInt(6) + 1;
+    public int roll() {return random.nextInt(6) + 1;
     }
 
     /**
@@ -121,5 +120,18 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
 
     public boolean deadUnit(){
         return (this.getHpActual() == 0);
+    }
+
+    @Override
+    public String toString() {
+        return "Units{" +
+                "random=" + random +
+                ", id='" + id + '\'' +
+                ", hpMax=" + hpMax +
+                ", hpActual=" + hpActual +
+                ", atk=" + atk +
+                ", def=" + def +
+                ", evd=" + evd +
+                '}';
     }
 }

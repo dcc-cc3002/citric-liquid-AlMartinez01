@@ -2,6 +2,8 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 
 
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatEnemy;
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.BossEvent.Informer;
+import cl.uchile.dcc.citricliquid.model.controller.Transferencia.BossEvent.Solicitor;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observable;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observer;
@@ -13,21 +15,33 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class Panelboss extends PanelEncounter implements Observer {
+public class Panelboss extends PanelEncounter implements Observer, Solicitor {
     private UnitsEnemy boss_actual;
     private boolean boss = false;
+
+    Informer informer;
 
     public Panelboss(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsEnemy enemy_default, UnitsEnemy boss_default) {
         super(units, nexts, carta, enemy_default);
         this.boss_actual = boss_default;
+        this.informer = null;
+    }
+
+    public void setInformer(Informer informer) {
+        this.informer = informer;
     }
 
     public UnitsEnemy getBoss_actual() {
-        return boss_actual;
+        if (informer == null)return boss_actual;
+        return solicitar(informer);
     }
 
     public boolean isBoss() {
         return boss;
+    }
+
+    public Informer getInformer() {
+        return informer;
     }
 
     public void setBoss(boolean boss) {
@@ -61,10 +75,14 @@ public class Panelboss extends PanelEncounter implements Observer {
 
     @Override
     public void activator(@NotNull UnitsPlayer u1) {
-        if (boss && !boss_actual.deadUnit()){
+        if (informer==null && boss){
             this.unitPlayer(u1);
-            u1.setStatesPlayer(new Standby_mode_Player());
-            CombatEnemy combatEnemy = new CombatEnemy(u1,boss_actual,this);
+            CombatEnemy combatEnemy = new CombatEnemy(u1,getBoss_actual(),this);
+            combatEnemy.starter();
+        }
+        else if (boss && !getBoss_actual().deadUnit()){
+            this.unitPlayer(u1);
+            CombatEnemy combatEnemy = new CombatEnemy(u1,solicitar(informer),this);
             combatEnemy.starter();
         }
         else {
@@ -74,6 +92,13 @@ public class Panelboss extends PanelEncounter implements Observer {
 
     @Override
     public void updateEvent() {
+        if (observerEvent == null)return;
+        observerEvent.updateEvent();
+    }
 
+    @Override
+    public UnitsEnemy solicitar(Informer informer) {
+        if (informer == null)return  boss_actual;
+        return informer.send();
     }
 }

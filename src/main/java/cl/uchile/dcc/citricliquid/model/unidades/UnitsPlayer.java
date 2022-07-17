@@ -17,9 +17,6 @@ import java.util.Arrays;
 public class UnitsPlayer extends Units implements Initio_combat, Attackable, Attacker, ObservableEvent {
     Carts[] mano; //mano de cartas disponibles
     Panel ubi;
-
-
-
     private ObserverEvent observerEvent;
     //////////////////NORMA///////////////////
     int stars;
@@ -245,7 +242,7 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         this.ubi.deletedPlayer(this);
         int i = this.roll();
         System.out.println("Se avanzara: "+i+" cacillas");
-        this.ubi.avanzar(this,i);
+        this.ubi.getNexts().avanzar(this,i-1);
     }
 
     @Override
@@ -274,7 +271,7 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
 
     public void initTurn() {
         this.statesPlayer = new Play_mode_player();
-        System.out.println("lanzar dado");
+        System.out.println("lanzar dado: "+this.getId());
         statesPlayer.setUnitPlayers(this);
     }
 

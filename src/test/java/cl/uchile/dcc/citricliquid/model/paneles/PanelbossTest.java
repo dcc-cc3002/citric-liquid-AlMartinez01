@@ -61,11 +61,14 @@ class PanelbossTest {
     void activatorTestWithBoss(){
         panelboss.setBoss(true);
         panelboss.activator(unitsPlayer);
-        if (Store_Manager.deadUnit()){assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());return;}
+        if (panelboss.getBoss_actual().deadUnit()){
+            assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+            return;}
         assertEquals(Receive_damage_mode_player.class,unitsPlayer.getStatesPlayer().getClass());
 
         unitsPlayer.option0();
         assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+        assertEquals(panelboss,unitsPlayer.getUbi());
     }
 
     @RepeatedTest(100)

@@ -12,7 +12,6 @@ public class PanelDrawn extends Panel {
 
     @Override
     public void activator(@NotNull UnitsPlayer u1) {
-        this.unitPlayer(u1);
         super.activator(u1);
     }
 }

@@ -3,6 +3,9 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.StatesPanel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers.Select_player_Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
@@ -17,12 +20,18 @@ public class Panel implements ObservableEvent{
     private UnitsPlayer[] units;//Unidades en el panel
     private Panel nexts;//Los Paneles con los que esta unido o se puede continuar
     private Carts carta;//Carta en el panel
+    public StatesPanel statesPanel;
 
     ObserverEvent observerEvent;
     public Panel(UnitsPlayer[] units, Panel nexts, Carts carta) {
         this.units = units;
         this.nexts = nexts;
         this.carta = carta;
+        this.statesPanel = new Standly_mode_panel();
+    }
+
+    public ObserverEvent getObserverEvent() {
+        return observerEvent;
     }
 
     @Override
@@ -121,7 +130,10 @@ public class Panel implements ObservableEvent{
     public void avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {
         if (nexts == null || i == 0){this.activator(u1);}
         else{
-            this.nexts.avanzar(u1,i-1);
+            if (cantUnits() == 0)this.nexts.avanzar(u1,i-1);
+            else {
+                setStatesPanel(new Select_player_Panel(this,u1,i));
+            }
         }
     }
 
@@ -139,4 +151,23 @@ public class Panel implements ObservableEvent{
         if (this.observerEvent == null){return;}
         this.observerEvent.updateEvent();
     }
+    public void setStatesPanel(@NotNull StatesPanel statesPanel) {
+        this.statesPanel = statesPanel;
+        statesPanel.addPanel(this);
+    }
+
+    ////////////////CONTROLLER//////////////////
+    public void rollDice() throws IOException{statesPanel.rollDice();}
+    public void option0() throws IOException {statesPanel.option0();}
+    public void option1(){statesPanel.option1();}
+    public void option2(){statesPanel.option2();}
+    public void option3(){statesPanel.option3();}
+    public void option4(){statesPanel.option4();}
+    public void option5(){statesPanel.option5();}
+    public void option6(){statesPanel.option6();}
+    public void option7(){statesPanel.option7();}
+    public void option8(){statesPanel.option8();}
+    public void option9(){statesPanel.option9();}
+
+    ////////////////CONTROLLER//////////////////
 }

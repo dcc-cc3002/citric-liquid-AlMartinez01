@@ -1,6 +1,7 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers.Select_player_Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ public class PanelNeutralTest {
     private final static int BASE_DEF = -1;
     private final static int BASE_EVD = 2;
     private UnitsPlayer suguri;
+    private UnitsPlayer suguri2;
     private Panel panelneu1;
     private Panel panelneu2;
     private Panel panelneu3;
@@ -26,6 +28,7 @@ public class PanelNeutralTest {
         panelneu1 = new Panel(null, null, null);
         panelneu2 = new Panel(null, null, null);
         panelneu3 = new Panel(null, null, null);
+        suguri2 = new UnitsPlayer("suguri2", BASE_HP, BASE_ATK, BASE_DEF, BASE_EVD, null, null, 0, 0, 1);
     }
 
     @Test
@@ -74,7 +77,6 @@ public class PanelNeutralTest {
     public void avanzarTest() throws IOException {
         panelneu1.addNextPanel(panelneu2);
         panelneu2.addNextPanel(panelneu3);
-        panelneu1.unitPlayer(suguri);
         panelneu1.avanzar(suguri, 1);
         assertEquals(suguri, panelneu2.getUnits()[0]);
     }
@@ -122,6 +124,18 @@ public class PanelNeutralTest {
         assertEquals(panelneu2,panelneu1.getNexts());
     }
 
-    
+    @Test
+    void avanzaWithPlayers() throws IOException {
+        panelneu1.addNextPanel(panelneu2);
+        panelneu2.addNextPanel(panelneu3);
+
+        panelneu1.unitPlayer(suguri);
+        panelneu2.unitPlayer(suguri2);
+
+        suguri.play();
+
+        assertEquals(Select_player_Panel.class,panelneu2.statesPanel.getClass());
+
+    }
 }
 
