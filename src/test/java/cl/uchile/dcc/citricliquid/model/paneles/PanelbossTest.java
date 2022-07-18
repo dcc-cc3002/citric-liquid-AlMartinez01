@@ -1,5 +1,6 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.KO_StatePlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
@@ -67,18 +68,27 @@ class PanelbossTest {
         assertEquals(Receive_damage_mode_player.class,unitsPlayer.getStatesPlayer().getClass());
 
         unitsPlayer.option0();
-        assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+        if (unitsPlayer.getHpActual()==0){
+            assertEquals(KO_StatePlayer.class,unitsPlayer.getStatesPlayer().getClass());
+        }
+        else {
+            assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+        }
         assertEquals(panelboss,unitsPlayer.getUbi());
     }
 
     @RepeatedTest(100)
     void activatorTestWithoutBoss(){
         panelboss.activator(unitsPlayer);
+        unitsPlayer.setHpActual(20);
         if (chicken.deadUnit()){assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());return;}
         assertEquals(Receive_damage_mode_player.class,unitsPlayer.getStatesPlayer().getClass());
 
         unitsPlayer.option0();
         assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+
+        assertTrue(panelboss.unitExist(unitsPlayer));
+
     }
 
 }

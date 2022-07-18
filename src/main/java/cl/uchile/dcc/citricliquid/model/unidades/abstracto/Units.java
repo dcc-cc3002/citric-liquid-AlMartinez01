@@ -78,7 +78,10 @@ public abstract class Units implements Initio_combat, Attacker, Attackable {
     /**
      * entrega un lanzamiento de dado
      */
-    public int roll() {return random.nextInt(6) + 1;
+    public int roll() {
+        int roll = random.nextInt(6) + 1;
+        System.out.printf(this.getId() +" a sacado "+ roll + " En el lanzamiento \n");
+        return roll;
     }
 
     /**

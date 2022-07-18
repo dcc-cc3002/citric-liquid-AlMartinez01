@@ -21,6 +21,6 @@ public interface StatesPlayer {
     void option7();
     void option8();
     void option9();
-
+    void activeState();
     void setUnitPlayers(UnitsPlayer unitPlayers);
 }

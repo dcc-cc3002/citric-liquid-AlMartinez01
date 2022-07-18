@@ -1,5 +1,9 @@
 package cl.uchile.dcc.citricliquid.model.unidades;
 
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.KO_StatePlayer;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.KO_StatePlayerRoll;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Play_mode_player;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts_ejm;
 import org.junit.jupiter.api.Assertions;
@@ -7,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -126,5 +131,41 @@ class UnitsPlayerTest {
                 assertEquals(hp_last,enemy.getHpActual());
             }
         }
+    }
+
+    @RepeatedTest(100)
+    void DeadTest() throws IOException {
+        long r = new Random().nextLong();
+        player.setSeed(r);
+        Random random = new Random(r);
+
+        player.setHpActual(0);
+        player.defeat();
+        assertEquals(KO_StatePlayer.class,player.getStatesPlayer().getClass());
+        player.option0();
+        player.option1();
+        player.option2();
+        player.option3();
+        player.option4();
+        player.option5();
+        player.option6();
+        player.option7();
+        player.option8();
+        player.option9();
+
+        player.initTurn();//Supongamos que le toca
+        assertEquals(KO_StatePlayerRoll.class,player.getStatesPlayer().getClass());
+
+        player.rollDice();
+        int expected = random.nextInt(6)+1;
+        if (expected == 6){
+            assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());//El jugador puede jugar de inmediato
+            assertEquals(player.getHpMax(),player.getHpActual());
+            return;
+        }
+        assertEquals(KO_StatePlayer.class,player.getStatesPlayer().getClass());
+
+
+
     }
 }

@@ -3,6 +3,8 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatEnemy;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers.Standly_Combat;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
@@ -12,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Random;
 
-public class PanelEncounter extends Panel implements ObserverEvent, ObservableEvent {
+public class PanelEncounter extends Panel {
     Random random;
 
     public void setSeed(long number) {
@@ -64,9 +66,5 @@ public class PanelEncounter extends Panel implements ObserverEvent, ObservableEv
             case 2 -> enemy_actual = new UnitsEnemy("Seagull",3,1,-1,-1,false,0);
         }
     }
-    @Override
-    public void updateEvent() { //RECIBE CUANDO EL COMBATE TERMINA
-        if (observerEvent == null)return;
-        observerEvent.updateEvent();
-    }
+
 }

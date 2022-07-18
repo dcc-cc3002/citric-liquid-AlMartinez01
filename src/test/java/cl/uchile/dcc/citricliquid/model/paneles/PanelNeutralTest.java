@@ -1,12 +1,17 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers.Select_player_Panel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -124,8 +129,13 @@ public class PanelNeutralTest {
         assertEquals(panelneu2,panelneu1.getNexts());
     }
 
-    @Test
+    @RepeatedTest(100)
     void avanzaWithPlayers() throws IOException {
+        final long seed = new Random().nextLong();
+        suguri.setSeed(seed);
+        suguri.setHpActual(10);
+        suguri2.setHpActual(10);
+        if ((new Random(seed).nextInt(6)+1) == 1) return;
         panelneu1.addNextPanel(panelneu2);
         panelneu2.addNextPanel(panelneu3);
 
@@ -136,6 +146,19 @@ public class PanelNeutralTest {
 
         assertEquals(Select_player_Panel.class,panelneu2.statesPanel.getClass());
 
+        panelneu2.option0();
+        assertEquals(Standly_mode_panel.class,panelneu2.statesPanel.getClass());
+        assertEquals(Receive_damage_mode_player.class,suguri2.getStatesPlayer().getClass());
+
+        suguri2.option0();
+        assertEquals(Receive_damage_mode_player.class,suguri.getStatesPlayer().getClass());
+
+        suguri.option0();
+
+        assertEquals(Standby_mode_Player.class,suguri.getStatesPlayer().getClass());
+        assertEquals(Standby_mode_Player.class,suguri2.getStatesPlayer().getClass());
+
+        assertEquals(panelneu2,suguri.getUbi()); //Suguri deberia estar en este panel
     }
 }
 

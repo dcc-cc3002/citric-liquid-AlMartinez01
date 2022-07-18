@@ -3,9 +3,7 @@ package cl.uchile.dcc.citricliquid.model.Game;
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
 import cl.uchile.dcc.citricliquid.model.paneles.*;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Select_player_PanelHome;
-import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Play_mode_player;
-import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
-import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.*;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
@@ -142,9 +140,6 @@ public class GameControllerTest {
         assertEquals(Standby_mode_Player.class,p1.getStatesPlayer().getClass());
         assertEquals(Play_mode_player.class,p2.getStatesPlayer().getClass());
 
-        p2.rollDice();
-        assertEquals(Play_mode_player.class,p1.getStatesPlayer().getClass());
-        assertEquals(Standby_mode_Player.class,p2.getStatesPlayer().getClass());
     }
 
     @Test
@@ -255,5 +250,73 @@ public class GameControllerTest {
         assertEquals(Receive_damage_mode_player.class,p1.getStatesPlayer().getClass()); //ASEGURAMOS QUE SE INICIO CORRECTAMENTE ESTO
         p1.option0();//CON ESTO EL COMBATE TERMINA
         assertEquals(Play_mode_player.class,p1.getStatesPlayer().getClass());//COMO ES EL UNICO JUGADOR VOLVERA AL MODO DE PLAY MODE
+    }
+
+    @RepeatedTest(100)
+    void TurnWithPlayerDead() throws IOException {
+        long r = new Random().nextLong();
+        p1.setSeed(r);
+
+        panel1.unitPlayer(p1);
+        panel1.unitPlayer(p2);
+        panel1.addNextPanel(panel2);
+        panel2.addNextPanel(panel3);
+        panel3.addNextPanel(panel4);
+        panel4.addNextPanel(panel5);
+        panel5.addNextPanel(panel6);
+        panel6.addNextPanel(panel7);
+        panel7.addNextPanel(panel8);
+        panel8.addNextPanel(panel9);
+        panel9.addNextPanel(panel1);
+        tablero = new Panel[]{panel1,panel2,panel3,panel4,panel5,panel6,panel7,panel8,panel9};
+        gameController.addTablero(tablero);
+        gameController.addPlayer(p1);
+        gameController.addPlayer(p2);
+        p1.setHpActual(0);
+        p1.defeat();
+
+        gameController.init_turn();
+        assertEquals(KO_StatePlayerRoll.class,p1.getStatesPlayer().getClass());
+        p1.rollDice();
+
+        if (new Random(r).nextInt(6)+1 == 6){
+            //Se cumple la condicion para revivir
+            assertEquals(Play_mode_player.class,p1.getStatesPlayer().getClass());
+            p1.rollDice();
+            assertEquals(Standby_mode_Player.class,p1.getStatesPlayer().getClass());
+        }
+        else {
+            assertEquals(KO_StatePlayer.class,p1.getStatesPlayer().getClass());//El jugador no saldra de su modo
+        }
+        assertEquals(Play_mode_player.class,p2.getStatesPlayer().getClass());//El siguiente jugador deberia poder jugar
+    }
+
+    @RepeatedTest(100)
+    void ko_StateTestMultiTurns() throws IOException {
+        long r = new Random().nextLong();
+        Random random = new Random(r);
+        p1.setSeed(r);
+
+        panel1.unitPlayer(p1);
+        panel1.unitPlayer(p2);
+        panel1.addNextPanel(panel2);
+
+        tablero = new Panel[]{panel1,panel2};
+        gameController.addTablero(tablero);
+        gameController.addPlayer(p1);
+        p1.setHpActual(0);
+        p1.defeat();
+
+        gameController.init_turn();
+        assertEquals(KO_StatePlayerRoll.class,p1.getStatesPlayer().getClass());
+
+        int i = 6;
+        while (i > random.nextInt(6)+1){
+            p1.rollDice();
+            assertEquals(KO_StatePlayerRoll.class,p1.getStatesPlayer().getClass());
+            i--;
+        }
+        p1.rollDice();
+        assertEquals(Play_mode_player.class,p1.getStatesPlayer().getClass());
     }
 }

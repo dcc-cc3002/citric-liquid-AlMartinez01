@@ -41,6 +41,11 @@ public class Standby_mode_Player implements StatesPlayer {
     public void option9() {    }
 
     @Override
+    public void activeState() {
+
+    }
+
+    @Override
     public void setUnitPlayers(UnitsPlayer unitPlayers) {
         this.unitsPlayer = unitPlayers;
     }

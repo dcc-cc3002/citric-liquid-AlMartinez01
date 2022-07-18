@@ -90,11 +90,6 @@ public class Panelboss extends PanelEncounter implements Observer, Solicitor {
         }
     }
 
-    @Override
-    public void updateEvent() {
-        if (observerEvent == null)return;
-        observerEvent.updateEvent();
-    }
 
     @Override
     public UnitsEnemy solicitar(Informer informer) {

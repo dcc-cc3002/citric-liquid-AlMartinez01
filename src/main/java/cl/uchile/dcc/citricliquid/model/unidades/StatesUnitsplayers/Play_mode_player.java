@@ -48,6 +48,11 @@ public class Play_mode_player implements StatesPlayer {
     public void option9() {    }
 
     @Override
+    public void activeState() {
+
+    }
+
+    @Override
     public void setUnitPlayers(UnitsPlayer unitPlayers) {
         this.player = unitPlayers;
     }

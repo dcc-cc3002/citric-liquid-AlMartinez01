@@ -264,12 +264,17 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
 
     @Override
     public int[] defeat() {
+        this.setStatesPlayer(new KO_StatePlayer());
         int lot = this.loot();
         System.out.println(this.getId() +" a perdido: " + lot + " estrellas\n");
         return (new int[]{lot, 2});
     }
 
     public void initTurn() {
+        if(statesPlayer.getClass() == KO_StatePlayer.class){
+            this.statesPlayer.activeState();
+            return;
+        }
         this.statesPlayer = new Play_mode_player();
         System.out.println("lanzar dado: "+this.getId());
         statesPlayer.setUnitPlayers(this);

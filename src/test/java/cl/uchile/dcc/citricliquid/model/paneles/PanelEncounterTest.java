@@ -73,6 +73,8 @@ class PanelEncounterTest {
 
         unitsPlayer.option0();
         assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
+
+        assertTrue(panelEncounter.unitExist(unitsPlayer));
     }
 
     @RepeatedTest(100)

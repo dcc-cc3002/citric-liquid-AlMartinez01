@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Panel implements ObservableEvent{
+public class  Panel implements ObservableEvent, ObserverEvent{
     private UnitsPlayer[] units;//Unidades en el panel
     private Panel nexts;//Los Paneles con los que esta unido o se puede continuar
     private Carts carta;//Carta en el panel
@@ -168,6 +168,12 @@ public class Panel implements ObservableEvent{
     public void option7(){statesPanel.option7();}
     public void option8(){statesPanel.option8();}
     public void option9(){statesPanel.option9();}
+
+    @Override
+    public void updateEvent() { //RECIBE CUANDO EL COMBATE TERMINA
+        if (observerEvent == null)return;
+        observerEvent.updateEvent();
+    }
 
     ////////////////CONTROLLER//////////////////
 }

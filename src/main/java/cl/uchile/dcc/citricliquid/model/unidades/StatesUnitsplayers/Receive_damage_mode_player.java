@@ -77,6 +77,11 @@ public class Receive_damage_mode_player implements StatesPlayer{
     }
 
     @Override
+    public void activeState() {
+
+    }
+
+    @Override
     public void setUnitPlayers(UnitsPlayer unitPlayers) {
         this.player = unitPlayers;
     }

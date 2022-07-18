@@ -143,14 +143,15 @@ public class GameController implements Observable, Observer, ObserverEvent, Info
             return;
         }
         players[turnPlayer].initTurn();
-        turnPlayer++;
-        if (turnPlayer > countPlayers){
-            turnPlayer=0;
-        }
     }
 
     @Override
     public void updateEvent() {
+        turnPlayer++;
+        if (turnPlayer > countPlayers){
+            turnPlayer=0;
+            ronda++;
+        }
         init_turn();
     }
 

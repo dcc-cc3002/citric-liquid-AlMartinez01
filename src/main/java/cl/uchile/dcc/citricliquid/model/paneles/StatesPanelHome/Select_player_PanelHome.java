@@ -12,8 +12,8 @@ public class Select_player_PanelHome implements StatesPanel {
     public UnitsPlayer player;
 
     int count;
-    public Select_player_PanelHome(Panel panelHome, @NotNull UnitsPlayer player, int count) {
-        this.panelHome = panelHome;
+    public Select_player_PanelHome(Panel panel, @NotNull UnitsPlayer player, int count) {
+        this.panelHome = panel;
         this.player = player;
         this.count = count;
         System.out.printf("jugador: " + player.getId() + " desea quedarse en en panelHome? (si[1] / no[0])");
