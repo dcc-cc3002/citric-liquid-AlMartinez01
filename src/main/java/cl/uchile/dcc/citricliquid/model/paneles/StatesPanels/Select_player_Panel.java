@@ -1,10 +1,8 @@
-package cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers;
+package cl.uchile.dcc.citricliquid.model.paneles.StatesPanels;
 
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatPlayers;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.StatesPanel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +25,7 @@ public class Select_player_Panel implements StatesPanel {
     }
     @Override
     public void rollDice() throws IOException {
-        this.panel.getNexts().avanzar(player,count-1);
+        if (panel.cantNexts() == 1) this.panel.getNexts()[0].avanzar(player,count-1);
     }
 
     @Override

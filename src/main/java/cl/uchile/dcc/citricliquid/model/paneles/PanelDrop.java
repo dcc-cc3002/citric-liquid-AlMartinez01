@@ -6,7 +6,7 @@ import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class PanelDrop extends Panel {
-    public PanelDrop(UnitsPlayer[] units, Panel nexts, Carts carta) {
+    public PanelDrop(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
         super(units, nexts, carta);
     }
 

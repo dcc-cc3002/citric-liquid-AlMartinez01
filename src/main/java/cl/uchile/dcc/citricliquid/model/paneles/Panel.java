@@ -1,11 +1,11 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
-import cl.uchile.dcc.citricliquid.model.controller.GameController;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.StatesPanel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers.Select_player_Panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.SelectNextPanel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Standly_mode_panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Select_player_Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
@@ -18,15 +18,21 @@ import java.util.Objects;
 
 public class  Panel implements ObservableEvent, ObserverEvent{
     private UnitsPlayer[] units;//Unidades en el panel
-    private Panel nexts;//Los Paneles con los que esta unido o se puede continuar
+    private Panel[] nexts;//Los Paneles con los que esta unido o se puede continuar
     private Carts carta;//Carta en el panel
     public StatesPanel statesPanel;
 
     ObserverEvent observerEvent;
-    public Panel(UnitsPlayer[] units, Panel nexts, Carts carta) {
+    public Panel(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
         this.units = units;
         this.nexts = nexts;
         this.carta = carta;
+        this.statesPanel = new Standly_mode_panel();
+    }
+    public Panel(){
+        this.units = null;
+        this.nexts = null;
+        this.carta = null;
         this.statesPanel = new Standly_mode_panel();
     }
 
@@ -34,15 +40,26 @@ public class  Panel implements ObservableEvent, ObserverEvent{
         return observerEvent;
     }
 
+    public int cantNexts(){
+        if (nexts == null)return 0;
+        if (Arrays.equals(nexts, new Panel[]{})) {
+            return 0;
+        }
+        int i = 0;
+        for (Panel ignored : nexts){
+            i++;
+        }
+        return i;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Panel panel = (Panel) o;
-        return Arrays.equals(units, panel.units) && Objects.equals(nexts, panel.nexts) && Objects.equals(carta, panel.carta);
+        return Arrays.equals(units, panel.units) && Arrays.equals(nexts, panel.nexts) && Objects.equals(carta, panel.carta);
     }
 
-    public Panel getNexts() {
+    public Panel[] getNexts() {
         return nexts;
     }
 
@@ -84,7 +101,6 @@ public class  Panel implements ObservableEvent, ObserverEvent{
 
     /**
      * agrega un player a la lista del panel
-     * @param u1
      */
     public void agrePlayer(@NotNull UnitsPlayer u1){
         if (units == null){this.units = new UnitsPlayer[]{u1};}
@@ -128,17 +144,31 @@ public class  Panel implements ObservableEvent, ObserverEvent{
     }
 
     public void avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {
+        if (this.cantUnits() > 0){
+            setStatesPanel(new Select_player_Panel(this,u1,i));
+            return;
+        }
         if (nexts == null || i == 0){this.activator(u1);}
         else{
-            if (cantUnits() == 0)this.nexts.avanzar(u1,i-1);
-            else {
-                setStatesPanel(new Select_player_Panel(this,u1,i));
-            }
+            if (cantNexts() == 0) {activator(u1);return;}
+            if (cantNexts() == 1 ) this.nexts[0].avanzar(u1,i-1);
+            else setStatesPanel(new SelectNextPanel(this,i,u1));
         }
     }
 
     public void addNextPanel(final Panel panel) {
-        nexts = panel;
+        if (nexts == null){
+            nexts = new Panel[]{panel};
+            return;
+        }
+        Panel[] newNext = new Panel[cantNexts()+1];
+        int i = 0;
+        for (Panel panel1: nexts){
+            newNext[i] = panel1;
+            i++;
+        }
+        newNext[cantNexts()] = panel;
+        nexts = newNext;
     }
 
     @Override
@@ -159,15 +189,15 @@ public class  Panel implements ObservableEvent, ObserverEvent{
     ////////////////CONTROLLER//////////////////
     public void rollDice() throws IOException{statesPanel.rollDice();}
     public void option0() throws IOException {statesPanel.option0();}
-    public void option1(){statesPanel.option1();}
-    public void option2(){statesPanel.option2();}
-    public void option3(){statesPanel.option3();}
-    public void option4(){statesPanel.option4();}
-    public void option5(){statesPanel.option5();}
-    public void option6(){statesPanel.option6();}
-    public void option7(){statesPanel.option7();}
-    public void option8(){statesPanel.option8();}
-    public void option9(){statesPanel.option9();}
+    public void option1() throws IOException {statesPanel.option1();}
+    public void option2() throws IOException {statesPanel.option2();}
+    public void option3() throws IOException {statesPanel.option3();}
+    public void option4() throws IOException {statesPanel.option4();}
+    public void option5() throws IOException {statesPanel.option5();}
+    public void option6() throws IOException {statesPanel.option6();}
+    public void option7() throws IOException {statesPanel.option7();}
+    public void option8() throws IOException {statesPanel.option8();}
+    public void option9() throws IOException {statesPanel.option9();}
 
     @Override
     public void updateEvent() { //RECIBE CUANDO EL COMBATE TERMINA
@@ -176,4 +206,15 @@ public class  Panel implements ObservableEvent, ObserverEvent{
     }
 
     ////////////////CONTROLLER//////////////////
+
+    @Override
+    public String toString() {
+        String unitstext;
+        if (units == null) {unitstext = "no hay jugadores";}
+        else {unitstext = Arrays.toString(units);}
+
+        return "Panel{" +
+                "units=" + unitstext +
+                '}';
+    }
 }

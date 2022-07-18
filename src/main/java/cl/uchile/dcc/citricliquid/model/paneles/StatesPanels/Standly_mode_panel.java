@@ -1,18 +1,23 @@
-package cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers;
+package cl.uchile.dcc.citricliquid.model.paneles.StatesPanels;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.StatesPanel;
 
 import java.io.IOException;
 
-public class Standly_Combat implements StatesPanel {
+public class Standly_mode_panel implements StatesPanel {
+    Panel panel;
+
+    public Standly_mode_panel(){
+
+    }
+
     @Override
     public void rollDice() throws IOException {
 
     }
 
     @Override
-    public void option0() throws IOException {
+    public void option0() {
 
     }
 
@@ -62,7 +67,6 @@ public class Standly_Combat implements StatesPanel {
     }
 
     @Override
-    public void addPanel(Panel panel) {
-
-    }
+    public void addPanel(Panel panelHome) {
+        this.panel = panelHome;    }
 }

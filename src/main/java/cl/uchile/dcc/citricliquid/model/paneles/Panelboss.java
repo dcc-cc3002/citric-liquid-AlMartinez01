@@ -21,7 +21,7 @@ public class Panelboss extends PanelEncounter implements Observer, Solicitor {
 
     Informer informer;
 
-    public Panelboss(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsEnemy enemy_default, UnitsEnemy boss_default) {
+    public Panelboss(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsEnemy enemy_default, UnitsEnemy boss_default) {
         super(units, nexts, carta, enemy_default);
         this.boss_actual = boss_default;
         this.informer = null;

@@ -5,6 +5,8 @@ import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Attacker;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.SelectNextPanel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Select_player_Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.*;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
@@ -50,6 +52,16 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         this.stars = stars;
         this.wins = wins;
         this.lvlNorma = lvlNorma;
+        setStatesPlayer(new Standby_mode_Player() );
+    }
+
+    public UnitsPlayer(String id, int hpMax, int atk, int def, int evd){
+        super(id, hpMax, atk, def, evd);
+        this.mano = null;
+        this.ubi = null;
+        this.stars = 0;
+        this.wins = 0;
+        this.lvlNorma = 1;
         setStatesPlayer(new Standby_mode_Player() );
     }
 
@@ -239,10 +251,22 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
      *  IOException
      */
     public void play() throws IOException {
-        this.ubi.deletedPlayer(this);
+
         int i = this.roll();
         System.out.println("Se avanzara: "+i+" cacillas");
-        this.ubi.getNexts().avanzar(this,i-1);
+        if (ubi.cantNexts() == 0){
+            this.ubi.deletedPlayer(this);
+            ubi.activator(this);
+            return;
+        }
+        if (ubi.cantNexts() == 1){
+            this.ubi.deletedPlayer(this);
+            this.ubi.getNexts()[0].avanzar(this,i-1);
+        }
+        else{
+            this.getUbi().setStatesPanel(new SelectNextPanel(this.getUbi(),i,this));
+            this.ubi.deletedPlayer(this);
+        }
     }
 
     @Override

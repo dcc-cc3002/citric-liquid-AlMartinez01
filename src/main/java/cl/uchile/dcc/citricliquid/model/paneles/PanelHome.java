@@ -3,8 +3,8 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observable;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observer;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Select_player_PanelHome;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.StatesPanel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanelHome.Select_player_PanelHome;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanel;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ public class PanelHome extends Panel implements Observable {
 
 
 
-    public PanelHome(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsPlayer home) {
+    public PanelHome(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsPlayer home) {
         super(units, nexts, carta);
         this.home = home;
     }

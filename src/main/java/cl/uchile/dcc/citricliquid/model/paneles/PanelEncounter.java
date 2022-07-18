@@ -1,11 +1,6 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatEnemy;
-import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
-import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers.Standly_Combat;
-import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
@@ -22,7 +17,7 @@ public class PanelEncounter extends Panel {
     }
 
     private UnitsEnemy enemy_actual;
-    public PanelEncounter(UnitsPlayer[] units, Panel nexts, Carts carta, UnitsEnemy enemy_default) {
+    public PanelEncounter(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsEnemy enemy_default) {
         super(units, nexts, carta);
         this.enemy_actual = enemy_default;
         random = new Random();

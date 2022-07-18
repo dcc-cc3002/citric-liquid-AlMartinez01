@@ -2,7 +2,7 @@ package cl.uchile.dcc.citricliquid.model.Game;
 
 import cl.uchile.dcc.citricliquid.model.controller.GameController;
 import cl.uchile.dcc.citricliquid.model.paneles.*;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Select_player_PanelHome;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanelHome.Select_player_PanelHome;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.*;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;

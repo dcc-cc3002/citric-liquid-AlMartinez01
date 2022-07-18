@@ -1,8 +1,7 @@
 package cl.uchile.dcc.citricliquid.model.paneles;
 
-import cl.uchile.dcc.citricliquid.model.paneles.Panel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome.Standly_mode_panel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesWithPlayers.Select_player_Panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Standly_mode_panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Select_player_Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
@@ -126,7 +125,15 @@ public class PanelNeutralTest {
     @Test
     public void getNexts(){
         panelneu1.addNextPanel(panelneu2);
-        assertEquals(panelneu2,panelneu1.getNexts());
+        assertEquals(panelneu2,panelneu1.getNexts()[0]);
+        panelneu1.addNextPanel(panelneu3);
+        var panelneu4 = new Panel();
+        assertEquals(panelneu3,panelneu1.getNexts()[1]);
+        assertEquals(panelneu2,panelneu1.getNexts()[0]);
+        panelneu1.addNextPanel(panelneu4);
+        assertEquals(panelneu4,panelneu1.getNexts()[2]);
+        assertEquals(panelneu3,panelneu1.getNexts()[1]);
+        assertEquals(panelneu2,panelneu1.getNexts()[0]);
     }
 
     @RepeatedTest(100)

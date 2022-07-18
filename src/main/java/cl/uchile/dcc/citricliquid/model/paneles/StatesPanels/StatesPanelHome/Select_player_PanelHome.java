@@ -1,7 +1,8 @@
-package cl.uchile.dcc.citricliquid.model.paneles.StatesPanelHome;
+package cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanelHome;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
-import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Standly_mode_panel;
+import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +29,7 @@ public class Select_player_PanelHome implements StatesPanel {
 
     @Override
     public void option0() throws IOException {
-        panelHome.getNexts().avanzar(player,count-1);
+        if (panelHome.cantNexts() == 1) panelHome.getNexts()[0].avanzar(player,count-1);
         panelHome.setStatesPanel(new Standly_mode_panel());
     }
 

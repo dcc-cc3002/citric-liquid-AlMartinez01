@@ -25,7 +25,6 @@ public class GameController implements Observable, Observer, ObserverEvent, Info
     public boolean winner = false;
     public Observer[] obs_panel;
     public UnitsEnemy bossGame;
-
     int[] boss0=new int[]{8,3,2,-1};
     int[] boss1=new int[]{7,2,3,-2};
     int[] boss2=new int[]{10,2,1,-3};
@@ -48,6 +47,7 @@ public class GameController implements Observable, Observer, ObserverEvent, Info
             case 2 -> bossGame = new UnitsEnemy("Flying Castle",boss2[0],boss2[1],boss2[2],boss2[3],true,0);
         }
     }
+
 
 
     public void addPlayer(UnitsPlayer unitsPlayer){
