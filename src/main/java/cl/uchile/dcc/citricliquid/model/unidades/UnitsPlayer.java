@@ -264,8 +264,9 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
             this.ubi.getNexts()[0].avanzar(this,i-1);
         }
         else{
-            this.getUbi().setStatesPanel(new SelectNextPanel(this.getUbi(),i,this));
             this.ubi.deletedPlayer(this);
+            this.getUbi().setStatesPanel(new SelectNextPanel(this.getUbi(),i,this));
+
         }
     }
 

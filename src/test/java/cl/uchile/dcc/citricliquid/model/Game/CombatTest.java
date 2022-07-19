@@ -2,6 +2,7 @@ package cl.uchile.dcc.citricliquid.model.Game;
 
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatEnemy;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatPlayers;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.KO_StatePlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
@@ -9,7 +10,10 @@ import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts_ejm;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -75,5 +79,29 @@ public class CombatTest {
         assertEquals(Standby_mode_Player.class,unitsPlayer2.getStatesPlayer().getClass());
 
         //assertNull(unitsPlayer2.getObserverEvent());
+    }
+
+    @RepeatedTest(100)
+    void combatToDeath() {
+        unitsPlayer.setHpActual(3);
+        unitsEnemy.setHpActual(3);
+        combat.setCombat(unitsPlayer,unitsEnemy,null);
+        combat.starter();
+
+        if (unitsEnemy.deadUnit()){return;}
+
+        assertEquals(Receive_damage_mode_player.class,unitsPlayer.getStatesPlayer().getClass());
+
+        int i = new Random().nextInt(2);
+
+        switch (i){
+            case 0 -> unitsPlayer.option0();
+            case 1 -> unitsPlayer.option1();
+        }
+
+        if (unitsPlayer.deadUnit()){
+            assertEquals(KO_StatePlayer.class,unitsPlayer.getStatesPlayer().getClass());
+        }
+
     }
 }

@@ -9,6 +9,9 @@ public class PanelDrawn extends Panel {
     public PanelDrawn(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
         super(units, nexts, carta);
     }
+    public PanelDrawn() {
+        super();
+    }
 
     @Override
     public void activator(@NotNull UnitsPlayer u1) {

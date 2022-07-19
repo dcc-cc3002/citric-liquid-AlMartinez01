@@ -72,6 +72,7 @@ public class SelectionCartsModeTest {
 
 
         player.initio_combat();
+        player.getStatesPlayer().activeState();
         player.option9();
         player.initio_combat();
         player.option8();

@@ -142,6 +142,7 @@ class UnitsPlayerTest {
         player.setHpActual(0);
         player.defeat();
         assertEquals(KO_StatePlayer.class,player.getStatesPlayer().getClass());
+        player.rollDice();
         player.option0();
         player.option1();
         player.option2();
@@ -155,6 +156,18 @@ class UnitsPlayerTest {
 
         player.initTurn();//Supongamos que le toca
         assertEquals(KO_StatePlayerRoll.class,player.getStatesPlayer().getClass());
+
+        player.option0();
+        player.option1();
+        player.option2();
+        player.option3();
+        player.option4();
+        player.option5();
+        player.option6();
+        player.option7();
+        player.option8();
+        player.option9();
+        player.getStatesPlayer().activeState();
 
         player.rollDice();
         int expected = random.nextInt(6)+1;

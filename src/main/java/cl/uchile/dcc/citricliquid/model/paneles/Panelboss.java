@@ -26,6 +26,11 @@ public class Panelboss extends PanelEncounter implements Observer, Solicitor {
         this.boss_actual = boss_default;
         this.informer = null;
     }
+    public Panelboss(){
+        super();
+        this.boss_actual = null;
+        this.informer = null;
+    }
 
     public void setInformer(Informer informer) {
         this.informer = informer;
@@ -38,10 +43,6 @@ public class Panelboss extends PanelEncounter implements Observer, Solicitor {
 
     public boolean isBoss() {
         return boss;
-    }
-
-    public Informer getInformer() {
-        return informer;
     }
 
     public void setBoss(boolean boss) {
@@ -63,16 +64,13 @@ public class Panelboss extends PanelEncounter implements Observer, Solicitor {
 
         return Objects.equals(boss_actual, panelboss.boss_actual);
     }
-
     @Override
     public void update() {
         this.boss = true;
     }
-
     public boolean getBoss() {
         return boss;
     }
-
     @Override
     public void activator(@NotNull UnitsPlayer u1) {
         if (informer==null && boss){

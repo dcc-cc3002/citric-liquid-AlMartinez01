@@ -10,15 +10,24 @@ import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class PanelHome extends Panel implements Observable {
-    UnitsPlayer home;
-    Observer observer;
+    private UnitsPlayer home;
+    private Observer observer;
 
 
 
     public PanelHome(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsPlayer home) {
         super(units, nexts, carta);
+        this.home = home;
+    }
+    public PanelHome(){
+        super();
+        this.home = null;
+    }
+
+    public void setHome(UnitsPlayer home) {
         this.home = home;
     }
 
@@ -53,7 +62,6 @@ public class PanelHome extends Panel implements Observable {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,9 +70,9 @@ public class PanelHome extends Panel implements Observable {
 
         PanelHome panelHome = (PanelHome) o;
 
-        return home.equals(panelHome.home);
+        if (!Objects.equals(home, panelHome.home)) return false;
+        return Objects.equals(observer, panelHome.observer);
     }
-
 
     @Override
     public void avanzar(@NotNull UnitsPlayer u1, int i) throws IOException {

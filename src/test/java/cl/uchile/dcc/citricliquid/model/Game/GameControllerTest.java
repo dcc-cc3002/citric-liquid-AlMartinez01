@@ -319,4 +319,34 @@ public class GameControllerTest {
         p1.rollDice();
         assertEquals(Play_mode_player.class,p1.getStatesPlayer().getClass());
     }
+
+    @Test
+    void createPanel() {
+        var panelExpected = new Panel();
+        var panelExpected1 = new PanelHome();
+        var panelExpected2 = new Panelboss();
+        var panelExpected3 = new PanelBonus();
+        var panelExpected4 = new PanelEncounter();
+        var panelExpected5 = new PanelDrawn();
+        var panelExpected6 = new PanelDrop();
+
+        assertEquals(panelExpected,gameController.createPanel());
+        assertEquals(panelExpected1,gameController.createPanelHome());
+        assertEquals(panelExpected2,gameController.createPanelBoss());
+        assertEquals(panelExpected3,gameController.createPanelBonus());
+        assertEquals(panelExpected4,gameController.createPanelEncounter());
+        assertEquals(panelExpected5,gameController.createPanelDrawn());
+        assertEquals(panelExpected6,gameController.createPanelDrop());
+
+        panelExpected1.setHome(p1);
+
+        var panel = gameController.createPanelHome();
+        gameController.setPlayerPanelHome(p1,panel);
+        assertEquals(panelExpected1,panel);
+    }
+
+    @Test
+    void getRonda() {
+        assertEquals(1,gameController.getRonda());
+    }
 }

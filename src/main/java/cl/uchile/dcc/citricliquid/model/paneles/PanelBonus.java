@@ -11,6 +11,9 @@ public class PanelBonus extends Panel {
     public PanelBonus(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
         super(units, nexts, carta);
     }
+    public PanelBonus(){
+        super();
+    }
     private int bonus(UnitsPlayer u1){
         return(u1.roll() * Math.min(u1.getLvlNorma(), 3));
     }

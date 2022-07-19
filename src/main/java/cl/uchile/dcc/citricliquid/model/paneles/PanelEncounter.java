@@ -17,9 +17,15 @@ public class PanelEncounter extends Panel {
     }
 
     private UnitsEnemy enemy_actual;
+
     public PanelEncounter(UnitsPlayer[] units, Panel[] nexts, Carts carta, UnitsEnemy enemy_default) {
         super(units, nexts, carta);
         this.enemy_actual = enemy_default;
+        random = new Random();
+    }
+    public PanelEncounter(){
+        super();
+        this.enemy_actual = null;
         random = new Random();
     }
 

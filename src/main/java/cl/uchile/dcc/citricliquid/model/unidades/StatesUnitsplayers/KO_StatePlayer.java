@@ -8,7 +8,6 @@ public class KO_StatePlayer implements StatesPlayer {
     UnitsPlayer player;
     int r;
     public KO_StatePlayer() {
-
         this.r = 6;
     }
     public KO_StatePlayer(UnitsPlayer player, int coolDown) {

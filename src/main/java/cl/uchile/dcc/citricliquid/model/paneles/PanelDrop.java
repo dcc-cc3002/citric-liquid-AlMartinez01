@@ -9,6 +9,9 @@ public class PanelDrop extends Panel {
     public PanelDrop(UnitsPlayer[] units, Panel[] nexts, Carts carta) {
         super(units, nexts, carta);
     }
+    public PanelDrop(){
+        super();
+    }
 
     /**
      * la cantidad de estrellas que quita

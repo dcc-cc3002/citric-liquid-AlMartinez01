@@ -23,12 +23,6 @@ public class CombatPlayers implements ObservableEvent, ObserverEvent{
         attachEvent(observerEvent);
     }
 
-    public CombatPlayers(UnitsPlayer unit1, UnitsPlayer unit2) {
-        System.out.println("iniciara el combate entre: "+unit1.getId()+" vs!! "+unit2.getId()+"\n");
-        this.unit1 = unit1;
-        this.unit2 = unit2;
-        attachEvent(null);
-    }
 
     public CombatPlayers(){
         this.unit1 = null;

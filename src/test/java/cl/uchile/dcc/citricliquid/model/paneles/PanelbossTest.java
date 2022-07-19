@@ -88,7 +88,12 @@ class PanelbossTest {
         assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());
 
         assertTrue(panelboss.unitExist(unitsPlayer));
-
     }
 
+    @Test
+    void getBoss() {
+        assertFalse(panelboss.isBoss());
+        panelboss.setBoss(true);
+        assertTrue(panelboss.isBoss());
+    }
 }

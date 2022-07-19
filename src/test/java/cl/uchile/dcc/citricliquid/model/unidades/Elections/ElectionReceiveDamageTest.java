@@ -82,5 +82,6 @@ public class ElectionReceiveDamageTest {
         assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
         sugur.option9();
         assertEquals(Receive_damage_mode_player.class,sugur.getStatesPlayer().getClass());
+        sugur.getStatesPlayer().activeState();
     }
 }

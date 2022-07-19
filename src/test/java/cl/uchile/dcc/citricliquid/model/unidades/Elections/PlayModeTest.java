@@ -74,6 +74,7 @@ public class PlayModeTest {
         player.option7();
         player.option8();
         player.option9();//NO DEBERIA HACER NADA
+        player.getStatesPlayer().activeState();
         assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());
 
         player.rollDice();
@@ -144,6 +145,7 @@ public class PlayModeTest {
         player.option7();
         player.option8();
         player.option9();
+        player.getStatesPlayer().activeState();
     }
 
     @Test

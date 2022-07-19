@@ -4,9 +4,7 @@ import cl.uchile.dcc.citricliquid.model.controller.Transferencia.BossEvent.Infor
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observable;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.Observer;
-import cl.uchile.dcc.citricliquid.model.paneles.Panel;
-import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;
-import cl.uchile.dcc.citricliquid.model.paneles.Panelboss;
+import cl.uchile.dcc.citricliquid.model.paneles.*;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsEnemy;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -144,7 +142,6 @@ public class GameController implements Observable, Observer, ObserverEvent, Info
         }
         players[turnPlayer].initTurn();
     }
-
     @Override
     public void updateEvent() {
         turnPlayer++;
@@ -159,4 +156,33 @@ public class GameController implements Observable, Observer, ObserverEvent, Info
     public UnitsEnemy send() {
         return bossGame;
     }
+
+    public Panel createPanel(){
+        return new Panel();
+    }
+    public Panelboss createPanelBoss(){
+        return new Panelboss();
+    }
+    public PanelBonus createPanelBonus(){
+        return new PanelBonus();
+    }
+    public PanelEncounter createPanelEncounter(){
+        return new PanelEncounter();
+    }
+    public PanelDrop createPanelDrop(){
+        return new PanelDrop();
+    }
+    public PanelDrawn createPanelDrawn(){
+        return new PanelDrawn();
+    }
+    public PanelHome createPanelHome(){
+        return new PanelHome();
+    }
+    public void setPlayerPanelHome(UnitsPlayer unitsPlayer, @NotNull PanelHome panelHome){
+        panelHome.setHome(unitsPlayer);
+    }
+    public int getRonda(){
+        return this.ronda;
+    }
+
 }

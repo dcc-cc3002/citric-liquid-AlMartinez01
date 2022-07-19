@@ -23,13 +23,6 @@ public class CombatEnemy implements ObservableEvent, ObserverEvent{
         ;
     }
 
-    public CombatEnemy(UnitsPlayer unit1, UnitsEnemy unit2) {
-        System.out.println("iniciara el combate entre: "+unit1.getId()+" vs!! "+unit2.getId()+"\n");
-        this.unit1 = unit1;
-        this.unit2 = unit2;
-        attachEvent(null);
-    }
-
     public CombatEnemy(){
         this.unit1 = null;
         this.unit2 = null;

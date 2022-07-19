@@ -47,6 +47,8 @@ public class ElectionNextPanel {
 
     @RepeatedTest(100)
     void firstMultiNext() throws IOException {
+        long i = 13;
+        suguri.setSeed(i);
         panel1.addNextPanel(panel2);
         panel1.addNextPanel(panel3);
         panel1.addNextPanel(panel4);
@@ -54,7 +56,10 @@ public class ElectionNextPanel {
         panel2.addNextPanel(panel5);
         panel4.addNextPanel(panel5);
         panel5.addNextPanel(panel6);
-        panel6.addNextPanel(panel1);
+        panel6.addNextPanel(panel7);
+        panel7.addNextPanel(panel8);
+        panel8.addNextPanel(panel9);
+        panel9.addNextPanel(panel1);
 
         panel1.unitPlayer(suguri);
 
@@ -65,8 +70,12 @@ public class ElectionNextPanel {
         assertEquals(Standly_mode_panel.class,panel1.statesPanel.getClass());
     }
 
-    @Test
+    @RepeatedTest(100)
     void secondMultiNext() throws IOException {
+        long i = new Random().nextLong();
+        suguri.setSeed(i);
+        if (new Random(i).nextInt(6)+1 == 1)return; //caso que no sirve
+
         panel1.addNextPanel(panel2);
         panel2.addNextPanel(panel3);
         panel2.addNextPanel(panel4);

@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PanelHomeTest {
     PanelHome panelHome;
+    PanelHome panelHome2;
     UnitsPlayer suguri;
     int hp = 6; int def = 2; int evd = 1; int atk = 3;
     int starts = 0; int wins = 0; int norma = 1;
@@ -20,6 +21,7 @@ public class PanelHomeTest {
     void setUp() {
         suguri = new UnitsPlayer("suguri",hp,atk,def,evd,null,null,starts,wins,norma);
         panelHome = new PanelHome(null,null,null,suguri);
+        panelHome2 = new PanelHome();
         gameController = new GameController();
     }
     @Test
@@ -56,8 +58,8 @@ public class PanelHomeTest {
 
         int[] winsreques = new int[]{2,5,9,14};
         int[] startReques =new int[]{30,70,120,200};
-        int r= winsreques[0];
-        int t= startReques[0];
+        int r;
+        int t;
         int i = 0;
         while( i <= 3){
             r = winsreques[i];
@@ -68,5 +70,12 @@ public class PanelHomeTest {
             assertEquals(i+3,suguri.getLvlNorma());
             i++;
         }
+    }
+
+    @Test
+    void setHome() {
+        panelHome2.setHome(suguri);
+        var expectedPanelHome2 = new PanelHome(null,null,null,suguri);
+        assertEquals(expectedPanelHome2,panelHome2);
     }
 }
