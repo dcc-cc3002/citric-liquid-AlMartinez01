@@ -6,7 +6,6 @@ import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.Initio_combat;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObservableEvent;
 import cl.uchile.dcc.citricliquid.model.controller.Transferencia.FinishedEvent.ObserverEvent;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.SelectNextPanel;
-import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Select_player_Panel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.*;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
@@ -17,34 +16,32 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class UnitsPlayer extends Units implements Initio_combat, Attackable, Attacker, ObservableEvent {
-    Carts[] mano; //mano de cartas disponibles
-    Panel ubi;
+    private Carts[] mano; //mano de cartas disponibles
+    private Panel ubi;
     private ObserverEvent observerEvent;
     //////////////////NORMA///////////////////
-    int stars;
-    int wins;
-    int lvlNorma;
+    private int stars;
+    private int wins;
+    private int lvlNorma;
+    private boolean prefNorma; //si es true, se subiera por "wins", si es false por "estrellas" (en lvl 1 es false)
     //////////////////FIN NORMA///////////////
-
     private StatesPlayer statesPlayer;
 
-    /////////////////CONTROLLER////////////
-
-    public void rollDice() throws IOException{statesPlayer.rollDice();}
-    public void option0(){statesPlayer.option0();}
-    public void option1(){statesPlayer.option1();}
-    public void option2(){statesPlayer.option2();}
-    public void option3(){statesPlayer.option3();}
-    public void option4(){statesPlayer.option4();}
-    public void option5(){statesPlayer.option5();}
-    public void option6(){statesPlayer.option6();}
-    public void option7(){statesPlayer.option7();}
-    public void option8(){statesPlayer.option8();}
-    public void option9(){statesPlayer.option9();}
-
+   /** CONTROLLER */
+   public void rollDice() throws IOException{statesPlayer.rollDice();}
+    public void option0() throws IOException {statesPlayer.option0();}
+    public void option1() throws IOException {statesPlayer.option1();}
+    public void option2() throws IOException {statesPlayer.option2();}
+    public void option3()throws IOException{statesPlayer.option3();}
+    public void option4()throws IOException{statesPlayer.option4();}
+    public void option5()throws IOException{statesPlayer.option5();}
+    public void option6()throws IOException{statesPlayer.option6();}
+    public void option7()throws IOException{statesPlayer.option7();}
+    public void option8()throws IOException{statesPlayer.option8();}
+    public void option9()throws IOException{statesPlayer.option9();}
     ///////////FIN CONTROLLER///////////////
 
-
+    /** CONSTRUCTOR */
     public UnitsPlayer(String id, int hpMax, int atk, int def, int evd, Carts[] mano, Panel ubi, int stars, int wins, int lvlNorma) {
         super(id, hpMax, atk, def, evd);
         this.mano = mano;
@@ -53,8 +50,8 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         this.wins = wins;
         this.lvlNorma = lvlNorma;
         setStatesPlayer(new Standby_mode_Player() );
+        this.prefNorma = false;
     }
-
     public UnitsPlayer(String id, int hpMax, int atk, int def, int evd){
         super(id, hpMax, atk, def, evd);
         this.mano = null;
@@ -63,8 +60,10 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         this.wins = 0;
         this.lvlNorma = 1;
         setStatesPlayer(new Standby_mode_Player() );
+        this.prefNorma = false;
     }
 
+    /** ESTATES */
     public void setStatesPlayer(@NotNull StatesPlayer statesPlayer) {
         this.statesPlayer = statesPlayer;
         statesPlayer.setUnitPlayers(this);
@@ -87,8 +86,6 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         return Arrays.equals(mano, that.mano);
     }
-
-
 
 
     /**#################SETTERS AND GETTERS#######################**/
@@ -125,7 +122,12 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
     public void setUbi(Panel ubi) {
         this.ubi = ubi;
     }
-
+    public void setPrefNorma(boolean prefNorma) {
+        this.prefNorma = prefNorma;
+    }
+    public boolean getPrefNorma() {
+        return prefNorma;
+    }
     /**#################SETTERS AND GETTERS#######################**/
     @Override
     public int loot(){
@@ -133,7 +135,6 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         this.setStars(stars-i);
         return i;
     }
-
     @Override
     public void addStars(int stars) {
         System.out.printf(this.getId() +": Bueno, creo que estas 'stars' son para mi\n");
@@ -141,7 +142,6 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         System.out.printf(this.getId()+" a cogido "+stars + " 'stars'");
 
     }
-
     /**
      * regresa la cantidad de cartas que tiene un Player
      */
@@ -184,8 +184,6 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
 
 
     }
-
-
 
     /**
      * elimina la carta establecida de la mano
@@ -240,11 +238,9 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
             this.setStars(0); //Impedira que se coloque en estrellas negativas
         }
     }
-
     public void incrementedWins(int wins){
         this.setWins(Math.max(this.getWins() + wins, 0));
     }
-
     /**
      * Play hace la funcion de "avanzar" al jugador, a la vez que elimina la informacion de su ubicacion anterior
      * (conlleva muchas cosas por lo que tendra test propio)
@@ -264,12 +260,9 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
             this.ubi.getNexts()[0].avanzar(this,i-1);
         }
         else{
-            this.ubi.deletedPlayer(this);
             this.getUbi().setStatesPanel(new SelectNextPanel(this.getUbi(),i,this));
-
         }
     }
-
     @Override
     public void attack(@NotNull Attackable target) {
         target.receiveDamagePlayer(this.attack());
@@ -294,7 +287,6 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         System.out.println(this.getId() +" a perdido: " + lot + " estrellas\n");
         return (new int[]{lot, 2});
     }
-
     public void initTurn() {
         if(statesPlayer.getClass() == KO_StatePlayer.class){
             this.statesPlayer.activeState();
@@ -304,24 +296,20 @@ public class UnitsPlayer extends Units implements Initio_combat, Attackable, Att
         System.out.println("lanzar dado: "+this.getId());
         statesPlayer.setUnitPlayers(this);
     }
-
     @Override
     public String toString() {
         return "UnitsPlayer{" +
-                "mano=" + Arrays.toString(mano) +
-                ", ubi=" + ubi +
+                "name= " + getId() +
                 ", stars=" + stars +
                 ", wins=" + wins +
                 ", lvlNorma=" + lvlNorma +
-                ", statesPlayer=" + statesPlayer +
+                ", statesPlayer=" + statesPlayer.getClass() +
                 '}';
     }
-
     @Override
     public void attachEvent(ObserverEvent observer) {
         this.observerEvent = observer;
     }
-
     @Override
     public void notifierEvent() {
         if (observerEvent == null){return;}

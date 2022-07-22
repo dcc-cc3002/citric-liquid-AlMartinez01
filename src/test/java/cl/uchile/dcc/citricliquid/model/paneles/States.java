@@ -3,6 +3,8 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Select_player_Panel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Standly_mode_panel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Receive_damage_mode_player;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StandbyPanel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -89,6 +91,7 @@ public class States {
         player.play();
 
         assertEquals(Select_player_Panel.class,panel2.statesPanel.getClass());
+        assertEquals(StandbyPanel.class,player.getStatesPlayer().getClass());
 
         int i = new Random().nextInt(10);
         switch (i){
@@ -104,5 +107,6 @@ public class States {
             case 9 -> panel2.option9();
         }
         assertEquals(Standly_mode_panel.class,panel2.statesPanel.getClass());
+        assertEquals(Standby_mode_Player.class,player.getStatesPlayer().getClass());
     }
 }

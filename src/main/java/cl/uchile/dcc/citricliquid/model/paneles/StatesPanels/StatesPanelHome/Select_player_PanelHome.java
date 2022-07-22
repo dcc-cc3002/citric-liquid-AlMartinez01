@@ -3,6 +3,8 @@ package cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanelHome;
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Standly_mode_panel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StandbyPanel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +19,9 @@ public class Select_player_PanelHome implements StatesPanel {
         this.panelHome = panel;
         this.player = player;
         this.count = count;
-        System.out.printf("jugador: " + player.getId() + " desea quedarse en en panelHome? (si[1] / no[0])");
+        player.setStatesPlayer(new StandbyPanel());
+        player.setUbi(panel);
+        System.out.printf("jugador: " + player.getId() + " desea quedarse en en panelHome? (si[1] / no[0])\n");
     }
 
 
@@ -25,16 +29,19 @@ public class Select_player_PanelHome implements StatesPanel {
     @Override
     public void rollDice() throws IOException {
         panelHome.option0();
+
     }
 
     @Override
     public void option0() throws IOException {
         if (panelHome.cantNexts() == 1) panelHome.getNexts()[0].avanzar(player,count-1);
+        player.setStatesPlayer(new Standby_mode_Player());
         panelHome.setStatesPanel(new Standly_mode_panel());
     }
 
     @Override
     public void option1() {
+        player.setStatesPlayer(new Standby_mode_Player());
         panelHome.activator(player);
         panelHome.setStatesPanel(new Standly_mode_panel());
     }

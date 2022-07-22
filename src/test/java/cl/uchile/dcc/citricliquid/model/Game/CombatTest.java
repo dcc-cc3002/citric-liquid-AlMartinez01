@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,7 +55,7 @@ public class CombatTest {
         assertEquals(combat,unitsPlayer.getObserverEvent());
     }
     @Test
-    void staterTest(){
+    void staterTest() throws IOException {
         //COMBATE ENTRE UN JUGADOR Y UNA COMPUTADORA
         combat.setCombat(unitsPlayer,unitsEnemy,null);
         combat.starter();
@@ -82,7 +83,7 @@ public class CombatTest {
     }
 
     @RepeatedTest(100)
-    void combatToDeath() {
+    void combatToDeath() throws IOException {
         unitsPlayer.setHpActual(3);
         unitsEnemy.setHpActual(3);
         combat.setCombat(unitsPlayer,unitsEnemy,null);

@@ -26,7 +26,7 @@ public class ElectionReceiveDamageTest {
 
     }
     @RepeatedTest(100)
-    void receiveDefenseTest(){
+    void receiveDefenseTest() throws IOException {
         final long testSeed = new Random().nextLong();
         sugur.setSeed(testSeed);
         int dam = new Random().nextInt(1,8);
@@ -45,7 +45,7 @@ public class ElectionReceiveDamageTest {
     }
 
     @RepeatedTest(100)
-    void receiveDodgeTest(){
+    void receiveDodgeTest() throws IOException {
         final long testSeed = new Random().nextLong();
         sugur.setSeed(testSeed);
         int dam = new Random().nextInt(1,8);
@@ -53,7 +53,7 @@ public class ElectionReceiveDamageTest {
         int vida_original = sugur.getHpActual();
 
         sugur.receiveDamagePlayer(dam);
-        sugur. option1();
+        sugur.option1();
 
         if (simRoll < dam){
             assertEquals(Math.max(0,vida_original-dam),sugur.getHpActual());

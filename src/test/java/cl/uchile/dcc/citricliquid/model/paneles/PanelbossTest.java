@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PanelbossTest {
@@ -59,7 +61,7 @@ class PanelbossTest {
     }
 
     @RepeatedTest(100)
-    void activatorTestWithBoss(){
+    void activatorTestWithBoss() throws IOException {
         panelboss.setBoss(true);
         panelboss.activator(unitsPlayer);
         if (panelboss.getBoss_actual().deadUnit()){
@@ -78,7 +80,7 @@ class PanelbossTest {
     }
 
     @RepeatedTest(100)
-    void activatorTestWithoutBoss(){
+    void activatorTestWithoutBoss() throws IOException {
         panelboss.activator(unitsPlayer);
         unitsPlayer.setHpActual(20);
         if (chicken.deadUnit()){assertEquals(Standby_mode_Player.class,unitsPlayer.getStatesPlayer().getClass());return;}

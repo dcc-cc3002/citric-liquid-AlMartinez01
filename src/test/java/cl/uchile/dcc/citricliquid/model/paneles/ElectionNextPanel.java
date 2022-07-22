@@ -2,6 +2,8 @@ package cl.uchile.dcc.citricliquid.model.paneles;
 
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.SelectNextPanel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Standly_mode_panel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StandbyPanel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -65,9 +67,11 @@ public class ElectionNextPanel {
 
         suguri.play();
         assertEquals(SelectNextPanel.class,panel1.statesPanel.getClass());
+        assertEquals(StandbyPanel.class,suguri.getStatesPlayer().getClass());
 
-        panel1.option2();
+        suguri.option2();
         assertEquals(Standly_mode_panel.class,panel1.statesPanel.getClass());
+        assertEquals(Standby_mode_Player.class,suguri.getStatesPlayer().getClass());
     }
 
     @RepeatedTest(100)
@@ -84,10 +88,12 @@ public class ElectionNextPanel {
         suguri.play();
 
         assertEquals(SelectNextPanel.class,panel2.statesPanel.getClass());
+        assertEquals(StandbyPanel.class,suguri.getStatesPlayer().getClass());
 
-        panel2.option0();
+        suguri.option0();
 
         assertEquals(Standly_mode_panel.class,panel2.statesPanel.getClass());
+        assertEquals(Standby_mode_Player.class,suguri.getStatesPlayer().getClass());
     }
 
     @RepeatedTest(200)
@@ -111,17 +117,18 @@ public class ElectionNextPanel {
         int i = new Random().nextInt(10);
         System.out.println(i);
         switch (i){
-            case 0 -> panel2.option0();
-            case 1 -> panel2.option1();
-            case 2 -> panel2.option2();
-            case 3 -> panel2.option3();
-            case 4 -> panel2.option4();
-            case 5 -> panel2.option5();
-            case 6 -> panel2.option6();
-            case 7 -> panel2.option7();
-            case 8 -> panel2.option8();
-            case 9 -> panel2.option9();
+            case 0 -> suguri.option0();
+            case 1 -> suguri.option1();
+            case 2 -> suguri.option2();
+            case 3 -> suguri.option3();
+            case 4 -> suguri.option4();
+            case 5 -> suguri.option5();
+            case 6 -> suguri.option6();
+            case 7 -> suguri.option7();
+            case 8 -> suguri.option8();
+            case 9 -> suguri.option9();
         }
         assertEquals(Standly_mode_panel.class,panel2.statesPanel.getClass());
+        assertEquals(Standby_mode_Player.class,suguri.getStatesPlayer().getClass());
     }
 }

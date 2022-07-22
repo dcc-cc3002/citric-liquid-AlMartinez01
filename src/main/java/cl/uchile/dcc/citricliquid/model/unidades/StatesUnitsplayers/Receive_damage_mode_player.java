@@ -75,12 +75,6 @@ public class Receive_damage_mode_player implements StatesPlayer{
     public void option9() {
         System.out.printf("\n Valor erroneo, desea defender(0) o esquivar(1)?");
     }
-
-    @Override
-    public void activeState() {
-
-    }
-
     @Override
     public void setUnitPlayers(UnitsPlayer unitPlayers) {
         this.player = unitPlayers;

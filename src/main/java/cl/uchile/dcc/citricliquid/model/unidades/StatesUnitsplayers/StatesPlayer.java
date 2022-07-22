@@ -6,21 +6,17 @@ import java.io.IOException;
 
 public interface StatesPlayer {
 
-    void rollDice() throws IOException;
-
-    void option0();
-
-    void option1();
-
-    void option2();
-
-    void option3();
-    void option4();
-    void option5();
-    void option6();
-    void option7();
-    void option8();
-    void option9();
-    void activeState();
-    void setUnitPlayers(UnitsPlayer unitPlayers);
+    default void rollDice() throws IOException{}
+    default void option0() throws IOException{}
+    default void option1() throws IOException{}
+    default void option2() throws IOException{}
+    default void option3() throws IOException{}
+    default void option4() throws IOException{}
+    default void option5() throws IOException{}
+    default void option6() throws IOException{}
+    default void option7() throws IOException{}
+    default void option8() throws IOException{}
+    default void option9() throws IOException{}
+    default void activeState(){}
+    default void setUnitPlayers(UnitsPlayer unitPlayers){}
 }

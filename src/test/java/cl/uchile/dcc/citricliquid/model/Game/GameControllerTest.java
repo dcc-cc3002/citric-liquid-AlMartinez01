@@ -12,6 +12,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -132,7 +133,7 @@ public class GameControllerTest {
         gameController.init_turn(); // El jugador 1 debería entrar en consulta si tirar dado
 
         p1.rollDice(); // El panel ahora debería esperar respuesta
-        assertEquals(Standby_mode_Player.class,p1.getStatesPlayer().getClass());
+        assertEquals(StandbyPanel.class,p1.getStatesPlayer().getClass());
         assertEquals(Standby_mode_Player.class,p2.getStatesPlayer().getClass());
         assertEquals(Select_player_PanelHome.class,panelHome.getStatesPanelHome().getClass());
 
@@ -140,6 +141,32 @@ public class GameControllerTest {
         assertEquals(Standby_mode_Player.class,p1.getStatesPlayer().getClass());
         assertEquals(Play_mode_player.class,p2.getStatesPlayer().getClass());
 
+    }
+
+    @Test
+    void initTurnWhitPanelHomeC() throws IOException {
+        tablero = new Panel[]{panel1,panel2,panel3,panelHome};
+        gameController.addTablero(tablero);
+        gameController.addPlayer(p1);
+        gameController.addPlayer(p2);
+        panel1.unitPlayer(p1);
+        panel2.unitPlayer(p2);
+        panel1.addNextPanel(panelHome);
+        panelHome.addNextPanel(panel2);
+        panel2.addNextPanel(panel3);
+        panel3.addNextPanel(panel1);
+
+        gameController.init_turn(); // El jugador 1 debería entrar en consulta si tirar dado
+
+        p1.rollDice(); // El panel ahora debería esperar respuesta
+        assertEquals(StandbyPanel.class,p1.getStatesPlayer().getClass());
+        assertEquals(Standby_mode_Player.class,p2.getStatesPlayer().getClass());
+        assertEquals(Select_player_PanelHome.class,panelHome.getStatesPanelHome().getClass());
+
+        p1.option1();
+        assertEquals(Standby_mode_Player.class,p1.getStatesPlayer().getClass());
+        assertEquals(Play_mode_player.class,p2.getStatesPlayer().getClass());
+        // similar pero en este se ocupara al jugador para controlar al panel
     }
 
     @Test
@@ -154,15 +181,20 @@ public class GameControllerTest {
         panelHome.addNextPanel(panel2);
         panel2.addNextPanel(panel3);
         panel3.addNextPanel(panel1);
-        p1.setLvlNorma(4);
+        p1.setLvlNorma(5);
         p1.setStars(1000);
         p1.setWins(1000);
 
         gameController.init_turn();
         p1.rollDice(); // El panel ahora debería esperar respuesta
+        assertEquals(panelHome,p1.getUbi());
+        assertEquals(StandbyPanel.class,p1.getStatesPlayer().getClass());
+        assertEquals(5,p1.getLvlNorma());
 
-        panelHome.option1();//El jugador debería ganar! y por ende todos deberian estar en modo espera
-        assertTrue(gameController.winner);
+        p1.option1();//El jugador debería ganar! y por ende todos deberian estar en modo espera
+        assertEquals(6,p1.getLvlNorma());
+        assertEquals(6,gameController.norma_maxima);
+        //assertTrue(gameController.winner);
         assertEquals(Standby_mode_Player.class,p1.getStatesPlayer().getClass());
         assertEquals(Standby_mode_Player.class,p2.getStatesPlayer().getClass());
     }
@@ -348,5 +380,96 @@ public class GameControllerTest {
     @Test
     void getRonda() {
         assertEquals(1,gameController.getRonda());
+    }
+
+    @Test
+    void createPlayerTest(){
+        var expectedSuguri = new UnitsPlayer("suguri",10,10,10,10);
+        var expectedSuguri2 = new UnitsPlayer("suguri2",10,10,10,10);
+        gameController.createAndIncludedPlayer("suguri",10,10,10,10);
+        assertEquals(expectedSuguri,gameController.players[0]);
+        gameController.createAndIncludedPlayer("suguri2",10,10,10,10);
+        assertEquals(expectedSuguri,gameController.players[0]);
+        assertEquals(expectedSuguri2,gameController.players[1]); //PERFECT FUNCIONO ASKAJSJA
+    }
+    @Test
+    void createPathTest(){
+        var panel1 = gameController.createPanel();
+        var panel2 = gameController.createPanel();
+        gameController.createTablero();
+        assertEquals(0,gameController.tablero.length);
+        gameController.createAndIncludedPlayer("suguri",10,3,4,3);
+        gameController.addToTablero(panel1);
+        gameController.addToTablero(panel2);
+        assertEquals(panel1,gameController.tablero[0]);
+        assertEquals(panel2,gameController.tablero[1]);
+
+        gameController.generateNext(panel1,panel2);
+        assertEquals(gameController.tablero[1],gameController.tablero[0].getNexts()[0]);
+
+        gameController.addToTablero(gameController.createPanelHome());
+        assertEquals(PanelHome.class,gameController.tablero[2].getClass());
+        gameController.addPanelHomeWithPlayer(gameController.players[0], (PanelHome) gameController.tablero[2]);
+        assertEquals(gameController.players[0],((PanelHome) gameController.tablero[2]).getHome()); //El jugador ahora es el dueño de esta casilla
+
+        gameController.addPlayerToPanel(gameController.players[0],gameController.tablero[1]);
+        assertEquals(gameController.players[0],gameController.tablero[1].getUnits()[0]);
+        assertEquals(gameController.tablero[1],gameController.players[0].getUbi());
+    }
+    @Test
+    void turnPlayerTest() throws IOException {
+        gameController.createAndIncludedPlayer("suguri",10,10,10,10);
+        gameController.createAndIncludedPlayer("suguri2",10,10,10,10);
+        gameController.createTablero();
+        gameController.addToTablero(gameController.createPanel());//0
+        gameController.addToTablero(gameController.createPanel());//1
+        gameController.addToTablero(gameController.createPanel());//2
+        gameController.addToTablero(gameController.createPanel());//3
+        gameController.addToTablero(gameController.createPanel());//4
+        gameController.addToTablero(gameController.createPanel());//5
+        gameController.addToTablero(gameController.createPanel());//6
+        gameController.addToTablero(gameController.createPanel());//7
+        gameController.addToTablero(gameController.createPanel());//8
+        gameController.addToTablero(gameController.createPanelHome());//9
+        gameController.addToTablero(gameController.createPanelBoss());//10
+        gameController.generateNext(gameController.tablero[0],gameController.tablero[1] );
+        gameController.generateNext(gameController.tablero[1],gameController.tablero[2] );
+        gameController.generateNext(gameController.tablero[2],gameController.tablero[3] );
+        gameController.generateNext(gameController.tablero[3],gameController.tablero[4] );
+        gameController.generateNext(gameController.tablero[4],gameController.tablero[5] );
+        gameController.generateNext(gameController.tablero[5],gameController.tablero[6] );
+        gameController.generateNext(gameController.tablero[6],gameController.tablero[7] );
+        gameController.generateNext(gameController.tablero[7],gameController.tablero[8] );
+        gameController.generateNext(gameController.tablero[8],gameController.tablero[9] );
+        gameController.generateNext(gameController.tablero[9],gameController.tablero[10] );
+        gameController.generateNext(gameController.tablero[10],gameController.tablero[1] );
+        gameController.associateTablero();
+        gameController.addPlayerToPanel(gameController.players[0],gameController.tablero[0]);
+        gameController.addPlayerToPanel(gameController.players[1],gameController.tablero[0]);
+        gameController.init_turn();
+
+        assertEquals(gameController.players[0],gameController.getPlayerInTurner());
+        assertEquals(Play_mode_player.class,gameController.players[0].getStatesPlayer().getClass());
+
+        //como los comandos dependen del jugador estos en este momento no deberia afectar en el progreso (creo)
+        gameController.option0();
+        gameController.option1();
+        gameController.option2();
+        gameController.option3();
+        gameController.option4();
+        gameController.option5();
+        gameController.option6();
+        gameController.option7();
+        gameController.option8();
+        gameController.option9();
+
+        gameController.optionPlayerInTurn();
+        gameController.optionRonda();
+        gameController.rollDice();
+        assertEquals(gameController.players[1],gameController.getPlayerInTurner());
+        gameController.rollDice();
+        gameController.optionPlayerInTurn();
+        gameController.optionRonda();
+
     }
 }

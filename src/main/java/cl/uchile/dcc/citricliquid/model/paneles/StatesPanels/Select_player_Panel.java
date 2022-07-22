@@ -3,6 +3,8 @@ package cl.uchile.dcc.citricliquid.model.paneles.StatesPanels;
 import cl.uchile.dcc.citricliquid.model.controller.SistemaCombate.CombatPlayers;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StandbyPanel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +19,8 @@ public class Select_player_Panel implements StatesPanel {
         this.player = player;
         this.count = count;
         System.out.println("deseas pelear contra:\n");
+        player.setStatesPlayer(new StandbyPanel());
+        player.setUbi(panel);
         int i = 0;
         for (UnitsPlayer players: panel.getUnits()) {
             System.out.println(players.getId() + " (" + i + ")\n");
@@ -30,6 +34,7 @@ public class Select_player_Panel implements StatesPanel {
 
     @Override
     public void option0() throws IOException {
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.setStatesPanel(new Standly_mode_panel());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[0], panel);
         combatPlayers.starter();
@@ -44,6 +49,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);
@@ -57,6 +63,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers;
         combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
@@ -71,6 +78,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);
@@ -84,6 +92,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         this.panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], this.panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);
@@ -97,6 +106,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);
@@ -110,6 +120,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);
@@ -123,6 +134,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);
@@ -136,6 +148,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);
@@ -149,6 +162,7 @@ public class Select_player_Panel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         CombatPlayers combatPlayers = new CombatPlayers(player,this.panel.getUnits()[i], panel);
         combatPlayers.starter();
         this.panel.unitPlayer(player);

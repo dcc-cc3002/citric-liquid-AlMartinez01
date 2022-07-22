@@ -1,6 +1,8 @@
 package cl.uchile.dcc.citricliquid.model.paneles.StatesPanels;
 
 import cl.uchile.dcc.citricliquid.model.paneles.Panel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StandbyPanel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ public class SelectNextPanel implements StatesPanel {
         this.panel = panel;
         this.restante = restante;
         this.player = player;
+        player.setStatesPlayer(new StandbyPanel());
 
         System.out.println(player.getId()+ " tiene las siguientes opciones para seguir: \n");
         int i = 0;
@@ -31,6 +34,7 @@ public class SelectNextPanel implements StatesPanel {
     @Override
     public void option0() throws IOException {
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[0].avanzar(player,restante-1);
 
@@ -39,6 +43,7 @@ public class SelectNextPanel implements StatesPanel {
     @Override
     public void option1() throws IOException {
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[1].avanzar(player,restante-1);
     }
@@ -50,6 +55,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[2].avanzar(player,restante-1);
     }
@@ -61,6 +67,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[3].avanzar(player,restante-1);
     }
@@ -72,6 +79,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[4].avanzar(player,restante-1);
     }
@@ -83,6 +91,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[5].avanzar(player,restante-1);
     }
@@ -94,6 +103,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[6].avanzar(player,restante-1);
     }
@@ -105,6 +115,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[7].avanzar(player,restante-1);
     }
@@ -116,6 +127,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[8].avanzar(player,restante-1);
     }
@@ -127,6 +139,7 @@ public class SelectNextPanel implements StatesPanel {
             return;
         }
         panel.setStatesPanel(new Standly_mode_panel());
+        player.setStatesPlayer(new Standby_mode_Player());
         panel.deletedPlayer(player);
         panel.getNexts()[9].avanzar(player,restante-1);
     }

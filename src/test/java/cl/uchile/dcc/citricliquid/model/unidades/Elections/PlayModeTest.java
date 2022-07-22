@@ -149,7 +149,7 @@ public class PlayModeTest {
     }
 
     @Test
-    void opcionesNulasTest(){
+    void opcionesNulasTest() throws IOException {
         player.setStatesPlayer(new Play_mode_player());
         player.option0();
         assertEquals(Play_mode_player.class,player.getStatesPlayer().getClass());

@@ -6,10 +6,13 @@ import cl.uchile.dcc.citricliquid.model.paneles.Panel;
 import cl.uchile.dcc.citricliquid.model.paneles.PanelBonus;
 import cl.uchile.dcc.citricliquid.model.paneles.PanelHome;
 import cl.uchile.dcc.citricliquid.model.paneles.Panelboss;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StandbyPanel;
 import cl.uchile.dcc.citricliquid.model.unidades.UnitsPlayer;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,7 +52,7 @@ public class TransferGameControllerTest {
     }
 
     @Test
-    void transmisicionDeDatosSeguidosTest(){
+    void transmisicionDeDatosSeguidosTest() throws IOException {
         panelHome.agrePlayer(sugur);
         panelHome.agrePlayer(sugur2);
         gameController.addPlayer(sugur);
@@ -58,6 +61,7 @@ public class TransferGameControllerTest {
         panelHome.addNextPanel(panel);
         panelHome.attach(gameController);
         panelHome.activator(sugur);
+        sugur.option0();
         assertEquals(2,sugur.getLvlNorma());//ALGUIEN SUBIO A NORMA2
         assertFalse(panel.getBoss());//PERO NO ES SUFICIENTE PARA ACTIVAR LOS PANELES BOSS
         assertEquals(2,gameController.norma_maxima);//SE DEBERIA GUARDAR ESTA NUEVA MAX EN GAMECONTROLLER

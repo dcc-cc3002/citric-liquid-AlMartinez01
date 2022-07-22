@@ -6,6 +6,7 @@ import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.SelectNextPanel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Standly_mode_panel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.StatesPanel;
 import cl.uchile.dcc.citricliquid.model.paneles.StatesPanels.Select_player_Panel;
+import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.StandbyPanel;
 import cl.uchile.dcc.citricliquid.model.unidades.StatesUnitsplayers.Standby_mode_Player;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Carts;
 import cl.uchile.dcc.citricliquid.model.unidades.abstracto.Units;
@@ -152,9 +153,13 @@ public class  Panel implements ObservableEvent, ObserverEvent{
         else{
             if (cantNexts() == 0) {activator(u1);return;}
             if (cantNexts() == 1 ) this.nexts[0].avanzar(u1,i-1);
-            else setStatesPanel(new SelectNextPanel(this,i,u1));
+            else {
+                this.unitPlayer(u1);
+                setStatesPanel(new SelectNextPanel(this, i, u1));
+            }
         }
     }
+
 
     public void addNextPanel(final Panel panel) {
         if (nexts == null){
